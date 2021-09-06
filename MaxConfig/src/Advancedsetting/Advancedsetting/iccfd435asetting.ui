@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ICCFD435ASetting</class>
+ <widget class="QWidget" name="ICCFD435ASetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>986</width>
+    <height>523</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Calibri</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>CFD435A驱动芯片设置</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_8">
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>10</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_35">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>30</number>
+           </property>
+           <property name="leftMargin">
+            <number>140</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>红芯片</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>绿芯片</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>蓝芯片</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="0,1">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>低灰均匀性提升：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>列消隐强度调整：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>列消隐增强模式：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>列消隐时长：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>耦合强度调整：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>耦合范围调整：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>耦合优化：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>预驱动使能：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>预驱动模式：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>预驱动时长设定：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>低灰补偿强度：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>低灰补偿时间设定：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>动态节能：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>唤醒设置：</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="LowGrayscaleRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayscaleGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayscaleBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="ColBlankAdjRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ColBlankAdjGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ColBlankAdjBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="ColBlankEnhanceRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="ColBlankEnhanceGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="ColBlankEnhanceBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="ColumnBlankTimeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ColumnBlankTimeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ColumnBlankTimeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="CouplingStrengthAdjRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CouplingStrengthAdjGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CouplingStrengthAdjBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="CouplingRangeAdjRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CouplingRangeAdjGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CouplingRangeAdjBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="CouplingOptimizationRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="CouplingOptimizationGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="CouplingOptimizationBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="PreDriveEnablementRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="PreDriveEnablementGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="PreDriveEnablementBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="PreDriveModeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PreDriveModeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PreDriveModeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="PreDriveTimeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PreDriveTimeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PreDriveTimeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_12">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="LowGrayStrengthRcomboBox">
+                 <property name="maxVisibleItems">
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayStrengthGcomboBox">
+                 <property name="maxVisibleItems">
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayStrengthBcomboBox">
+                 <property name="maxVisibleItems">
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="LowGrayTimeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayTimeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayTimeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="DynamicEnergySavingRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="DynamicEnergySavingGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="DynamicEnergySavingBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="WakeupSettingRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="WakeupSettingGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="WakeupSettingBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_17">
+           <property name="spacing">
+            <number>30</number>
+           </property>
+           <property name="leftMargin">
+            <number>140</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>红芯片</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>绿芯片</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>蓝芯片</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,1">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>开路检测阈值：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>开路检测点调整：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>开路保护使能：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>开路动态监测：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>扫描模式：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>GCLK双沿：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>恒流拐点设定：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>输出响应：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>PWM灰度设置：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>低灰显示优化：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>低灰优化模式：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_32">
+               <property name="text">
+                <string>电流挡位：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_33">
+               <property name="text">
+                <string>电流灰度：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="CurrentGraySettinglabel">
+               <property name="text">
+                <string>电流灰度设置：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="CurrentGrayBrightnesslabel">
+               <property name="text">
+                <string>电流灰度分量亮度：</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="OpenCircuitDetectionThresholdRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OpenCircuitDetectionThresholdGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OpenCircuitDetectionThresholdBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="OpenTestPointAdjRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OpenTestPointAdjGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OpenTestPointAdjBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_21">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitProtcetEnableRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitProtcetEnableGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitProtcetEnableBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitDynamicDetecRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitDynamicDetecGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="OpenCircuitDynamicDetecBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_23">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="ScanModeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ScanModeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ScanModeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_24">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="GclkDoubleAlongRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="GclkDoubleAlongGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="GclkDoubleAlongBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_25">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="ConstantCurrentPointRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ConstantCurrentPointGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="ConstantCurrentPointBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_26">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="OutputResponseRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OutputResponseGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="OutputResponseBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_27">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="PWMGraySettingRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PWMGraySettingGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="PWMGraySettingBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_28">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="LowGrayDisplayOptimizationRcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="LowGrayDisplayOptimizationGcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="LowGrayDisplayOptimizationBcheckBox">
+                 <property name="text">
+                  <string>开启</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_29">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="LowGrayOptimizationModeRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayOptimizationModeGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="LowGrayOptimizationModeBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_30">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="CurrentGearRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGearGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGearBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_31">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="CurrentGrayRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGrayGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGrayBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_32">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="CurrentGraySettingRcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGraySettingGcomboBox"/>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CurrentGraySettingBcomboBox"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_34">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QSpinBox" name="CurrentGrayBrightnessRspinBox">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="CurrentGrayBrightnessGspinBox">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="CurrentGrayBrightnessBspinBox">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_33">
+       <item>
+        <widget class="QPushButton" name="AdvancedSettingpushButton">
+         <property name="text">
+          <string>    高级模式    </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="SettingpushButton">
+         <property name="text">
+          <string>    设置    </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>ColBlankEnhanceRcheckBox</tabstop>
+  <tabstop>ColBlankEnhanceGcheckBox</tabstop>
+  <tabstop>ColBlankEnhanceBcheckBox</tabstop>
+  <tabstop>ColumnBlankTimeRcomboBox</tabstop>
+  <tabstop>ColumnBlankTimeGcomboBox</tabstop>
+  <tabstop>ColumnBlankTimeBcomboBox</tabstop>
+  <tabstop>CouplingOptimizationRcheckBox</tabstop>
+  <tabstop>CouplingOptimizationGcheckBox</tabstop>
+  <tabstop>CouplingOptimizationBcheckBox</tabstop>
+  <tabstop>PreDriveEnablementRcheckBox</tabstop>
+  <tabstop>PreDriveEnablementGcheckBox</tabstop>
+  <tabstop>PreDriveEnablementBcheckBox</tabstop>
+  <tabstop>DynamicEnergySavingRcheckBox</tabstop>
+  <tabstop>DynamicEnergySavingGcheckBox</tabstop>
+  <tabstop>DynamicEnergySavingBcheckBox</tabstop>
+  <tabstop>WakeupSettingRcomboBox</tabstop>
+  <tabstop>WakeupSettingGcomboBox</tabstop>
+  <tabstop>WakeupSettingBcomboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

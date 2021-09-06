@@ -1,0 +1,444 @@
+﻿QMainWindow {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid;
+    border-color: rgb(216, 56, 11);
+}
+
+
+/*QFrame QWidget{
+    background-color: rgb(255, 255, 255);
+}*/
+
+QListWidget#listSenderCard {
+    border: 2px solid #77ACF1;
+    border-radius: 3px;
+    min-width: 320px;
+}
+
+QListWidget#listSenderCard:item {
+    height: 125px;
+}
+
+QGroupBox {
+    border: 2px solid #77ACF1;
+    border-radius: 6px;
+    margin-top: 7px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 20px;
+    /*线的偏离度*/
+}
+
+QGroupBox#groupBoxSCItem {
+    border: 2px solid #11ACF1;
+    border-radius: 6px;
+    margin-top: 0px;
+}
+
+
+/* Button*/
+
+QLabel#labelSCListStatus[SCOnlineStatus="Online"] {
+    color: green;
+}
+
+QLabel#labelSCListStatus[SCOnlineStatus="Offline"] {
+    color: red;
+}
+
+
+/*QPushButton {
+border-image: url(:/Defaluat/Resources/Default/Button/Standard/Normal.png) 10,10,10,10;
+border-top: 10px transparent;
+border-bottom: 10px transparent;
+border-right: 10px transparent;
+border-left: 10px transparent;
+color: black;
+}
+
+QPushButton:hover {
+border-image: url(:/Defaluat/Resources/Default/Button/Standard/Hover.png) 10,10,10,10;
+border: 10px transparent;
+color: black;
+}
+
+QPushButton:pressed {
+border-image: url(:/Defaluat/Resources/Default/Button/Standard/Down.png) 10,10,10,10;
+border: 10px transparent;
+color: white;
+}
+
+QPushButton:checked {
+border-image: url(:/Defaluat/Resources/Default/Button/Standard/Down.png) 10,10,10,10;
+border: 10px transparent;
+color: white;
+}*/
+
+QPushButton {
+    /*min-height: 30px;*/
+    outline: none;
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigNormal.png) 10, 10, 10, 10;
+    border-top: 10px;
+    border-right: 10px;
+    border-bottom: 10px;
+    border-left: 10px;
+}
+
+QPushButton:hover {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigHover.png) 10, 10, 10, 10;
+}
+
+QPushButton:pressed {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigPress.png) 10, 10, 10, 10;
+}
+
+QPushButton:focus:!pressed:!checked:!disabled {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigHover.png) 10, 10, 10, 10;
+}
+
+QPushButton:checked {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigPress.png) 10, 10, 10, 10;
+}
+
+QPushButton:disabled {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/BigDisable.png) 10, 10, 10, 10;
+}
+
+
+/* QSlider Horizontal*/
+
+QSlider:horizontal {
+    height: 25px;
+}
+
+QSlider::groove:horizontal {
+    border: none;
+    height: 10px;
+    border-radius: 5px;
+    background: lightgray;
+}
+
+QSlider::handle:horizontal {
+    border: none;
+    margin: -5px 0px;
+    /* 上下边距和左右边距*/
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #77ACF1;
+    border-image: url(:/Defaluat/Resources/Default/Slider/while.png);
+}
+
+QSlider::handle:horizontal:hover {
+    border: none;
+    margin: -5px 0px;
+    /* 上下边距和左右边距*/
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #3EDBF0;
+    border-image: url(:/Defaluat/Resources/Default/Slider/while.png);
+}
+
+
+/*划过部分*/
+
+QSlider::sub-page:horizontal {
+    background: #77ACF1;
+    height: 8px;
+    border-radius: 4px;
+}
+
+
+/*未划过部分*/
+
+QSlider::add-page:horizontal {
+    background: lightgray;
+    height: 8px;
+    border-radius: 4px;
+}
+
+
+/* QSlider vertical*/
+
+QSlider:vertical {
+    width: 25px;
+}
+
+QSlider::groove:vertical {
+    border: none;
+    width: 10px;
+    border-radius: 5px;
+    background: lightgray;
+}
+
+QSlider::handle:vertical {
+    border: none;
+    margin: 0px -5px;
+    /* 上下边距和左右边距*/
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #77ACF1;
+    border-image: url(:/Defaluat/Resources/Default/Slider/while.png);
+}
+
+QSlider::handle:vertical:hover {
+    border: none;
+    margin: 0px -5px;
+    /* 上下边距和左右边距*/
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #3EDBF0;
+    border-image: url(:/Defaluat/Resources/Default/Slider/while.png);
+}
+
+QSlider::sub-page:vertical {
+    /*未划过部分*/
+    background: lightgray;
+    width: 8px;
+    border-radius: 4px;
+}
+
+QSlider::add-page:vertical {
+    /*划过部分*/
+    background: #77ACF1;
+    width: 8px;
+    border-radius: 4px;
+}
+
+
+/* QSpinBox*/
+
+QSpinBox {
+    /* 为箭头保留空间 */
+    padding-right: 20px;
+    border: 1px solid;
+    border-color: rgb(157, 171, 184);
+    background-color: rgb(255, 255, 255);
+    min-width: 40px;
+    min-height: 26px;
+}
+
+
+/* 向上按钮 */
+
+QSpinBox::up-button {
+    margin-top: 4px;
+    margin-right: 5px;
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    width: 8px;
+    height: 7px;
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditUp/Normal.png) stretch;
+    border-width: 1px;
+    border-bottom-width: 0;
+}
+
+
+/* 向上按钮 */
+
+QSpinBox::up-button:hover {
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditUp/Hover.png) 1 stretch;
+}
+
+
+/* 向上按钮 */
+
+QSpinBox::up-button:pressed {
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditUp/Down.png) 1 stretch;
+}
+
+
+/* 向下按钮 */
+
+QSpinBox::down-button {
+    margin-bottom: 4px;
+    margin-right: 5px;
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    width: 8px;
+    height: 7px;
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditDown/Normal.png) stretch;
+    border-width: 1px;
+    border-top-width: 0;
+}
+
+
+/* 向下按钮 */
+
+QSpinBox::down-button:hover {
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditDown/Hover.png) 1 stretch;
+}
+
+
+/* 向下按钮 */
+
+QSpinBox::down-button:pressed {
+    border-image: url(:/Defaluat/Resources/Default/Edit/EditDown/Down.png) 1 stretch;
+}
+
+
+/* QCheckBox*/
+
+QCheckBox::indicator {
+    width: 24px;
+    height: 24px;
+}
+
+QCheckBox::indicator:unchecked {
+    image: url(:/Defaluat/Resources/Default/Check/Unchecked/Normal.png);
+}
+
+QCheckBox::indicator:unchecked:hover {
+    image: url(:/Defaluat/Resources/Default/Check/Unchecked/Hover.png);
+}
+
+QCheckBox::indicator:unchecked:pressed {
+    image: url(:/Defaluat/Resources/Default/Check/Unchecked/Down.png);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/Defaluat/Resources/Default/Check/Checked/Normal.png);
+}
+
+QCheckBox::indicator:checked:hover {
+    image: url(:/Defaluat/Resources/Default/Check/Checked/Hover.png);
+}
+
+QCheckBox::indicator:checked:pressed {
+    image: url(:/Defaluat/Resources/Default/Check/Checked/Down.png);
+}
+
+QCheckBox::indicator:indeterminate:hover {
+    image: url(:/images/checkbox_indeterminate_hover.png);
+}
+
+QCheckBox::indicator:indeterminate:pressed {
+    image: url(:/images/checkbox_indeterminate_pressed.png);
+}
+
+
+/* QRadioButton*/
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QRadioButton::indicator::unchecked {
+    border-image: url(:/Defaluat/Resources/Default/Slider/Normal.png);
+}
+
+QRadioButton::indicator:unchecked:hover {
+    border-image: url(:/Defaluat/Resources/Default/Slider/Hover.png);
+}
+
+QRadioButton::indicator:unchecked:pressed {
+    border-image: url(:/Defaluat/Resources/Default/Slider/Down.png);
+}
+
+QRadioButton::indicator::checked {
+    border-image: url(:/Defaluat/Resources/Default/Check/RadioChecked/Normal.png);
+}
+
+QRadioButton::indicator:checked:hover {
+    border-image: url(:/Defaluat/Resources/Default/Check/RadioChecked/Hover.png);
+}
+
+QRadioButton::indicator:checked:pressed {
+    border-image: url(:/Defaluat/Resources/Default/Check/RadioChecked/Down.png);
+}
+
+
+/*QComboBox*/
+
+QComboBox {
+    /* border: 1px solid gray;
+border-radius: 3px;*/
+    padding: 1px 18px 1px 3px;
+    min-width: 6px;
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/Normal.png) 10, 10, 10, 10;
+    border-top: 10px transparent;
+    border-bottom: 10px transparent;
+    border-right: 10px transparent;
+    border-left: 10px transparent;
+}
+
+QComboBox:hover {
+    border-image: url(:/Defaluat/Resources/Default/Button/Standard/Hover.png) 10, 10, 10, 10;
+    border: 10px transparent;
+}
+
+QComboBox:editable {
+    background: white;
+}
+
+QComboBox:on {
+    /* shift the text when the popup opens */
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    padding-left: 6px;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    /*border-left-style: solid;*/
+    /* just a single line */
+    border-top-right-radius: 3px;
+    /* same radius as the QComboBox */
+    border-bottom-right-radius: 3px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/Defaluat/Resources/Default/Button/Combo/Normal.png);
+}
+
+QComboBox::down-arrow:hover {
+    image: url(:/Defaluat/Resources/Default/Button/Combo/Hover.png);
+}
+
+QComboBox::down-arrow:on {
+    /* shift the arrow when popup is open */
+    top: 1px;
+    left: 1px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+QComboBox QAbstractItemView::item {
+    height: 30px;
+}
+
+QProgressBar#progressBarUpgrade {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(220, 220, 220);
+    border-radius: 17px;
+    text-align: center;
+    /*文本的位置*/
+    color: #232323;
+    /*文本颜色*/
+    padding: 2px;
+}
+
+QProgressBar#progressBarUpgrade::chunk {
+    background-color: #77ACF1;
+    border-radius: 13px;
+}
+
+QGraphicsView {
+    padding: 0px;
+}

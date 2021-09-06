@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Button_Up_Click</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Button_Up_Click" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-16">
+            <g id="编组-15">
+                <path d="M1,0 L19,0 C19.5522847,-1.01453063e-16 20,0.44771525 20,1 L20,19 C20,19.5522847 19.5522847,20 19,20 L1,20 C0.44771525,20 6.76353751e-17,19.5522847 0,19 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="矩形" fill="#1F2C3D"></path>
+                <polygon id="三角形" fill="#596576" points="10 7 14 13 6 13"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

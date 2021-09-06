@@ -1,0 +1,2 @@
+#include "LBLReceiveCardStruct.h"
+#include "LBLGZReceiveCardStruct.h"
