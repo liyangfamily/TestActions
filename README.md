@@ -30,10 +30,8 @@
 [ios-badge]: https://github.com/liyangfamily/MaxConfig/workflows/IOS/badge.svg "IOS"
 
 [release-link]: https://github.com/liyangfamily/MaxConfig/releases "Release status"
-[release-badge]: https://img.shields.io/github/release/jaredtao/HelloActions-Qt.svg?style=flat-square "Release status"
 
 [download-link]: https://github.com/liyangfamily/MaxConfig/releases/latest "Download status"
-[download-badge]: https://img.shields.io/github/downloads/jaredtao/HelloActions-Qt/total.svg?style=flat-square "Download status"
 
 [license-link]: https://github.com/liyangfamily/MaxConfig/blob/master/LICENSE "LICENSE"
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg "MIT"
