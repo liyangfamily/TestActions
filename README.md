@@ -1,8 +1,8 @@
-# HelloActions-Qt
+# MaxConfig
 
 ## 简介
 
-演示github中的Qt项目，使用CI持续集成(Github actions)
+测试
 
 ## status
 | [Windows][win-link]| [Ubuntu][ubuntu-link]|[MacOS][macos-link]|[Android][android-link]|[IOS][ios-link]|
