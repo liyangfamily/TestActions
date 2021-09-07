@@ -21,15 +21,15 @@ VersionDialog::VersionDialog(QWidget *parent)
 
     QString buildGitSHA;
 //#ifdef IDE_REVISION
-    buildGitSHA = tr("<br/>From reversion %1-%2<br/>")
+    buildGitSHA = tr("<br/>From reversion %1<br/>")
             .arg(QString(GIT_BUILD_SHA))
-			.arg(QString(GIT_BUILD_TIME));
+            /*.arg(QString(GIT_BUILD_TIME))*/;
 //#endif
      QString buildGitDateInfo;
 #ifndef QTC_SHOW_BUILD_DATE
-     buildGitDateInfo = tr("<br/>Built on %1<br/>").arg(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss"));
-     //buildGitDateInfo = tr("<br/>Built on %1<br/>")
-             //.arg(QString(GIT_BUILD_TIME));
+     //buildGitDateInfo = tr("<br/>Built on %1<br/>").arg(QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss"));
+     buildGitDateInfo = tr("<br/>Built on %1<br/>")
+             .arg(QString(GIT_BUILD_TIME));
 #endif
 
     const QString br = QLatin1String("<br/>");

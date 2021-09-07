@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QTimer>
 
 #include "mcscreen.h"
 #include "mcconnection.h"
@@ -35,6 +36,7 @@ namespace Core
 {
 namespace Internal
 {
+#ifdef Q_OS_WIN
 MainWindow::MainWindow()
     : CFramelessWindow()
     , ui(new Ui::MainWindow)
@@ -44,6 +46,17 @@ MainWindow::MainWindow()
     setWindowFlag(Qt::FramelessWindowHint);
     init();
 }
+#else
+MainWindow::MainWindow()
+    : Utils::AppMainWindow()
+    , ui(new Ui::MainWindow)
+    , m_coreImpl(new ICore(this))
+{
+    ui->setupUi(this);
+    setWindowFlag(Qt::FramelessWindowHint);
+    init();
+}
+#endif
 
 MainWindow::~MainWindow()
 {
@@ -78,6 +91,7 @@ void MainWindow::restart()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
+#ifdef Q_OS_WIN
     if (this->getIsMax()) {
         ui->toolBtnMaxSize->setToolTip(tr("Normal"));
         ui->toolBtnMaxSize->setProperty("maximizeProperty", "restore");
@@ -92,15 +106,49 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         ui->toolBtnMaxSize->style()->polish(ui->toolBtnMaxSize);
         ui->toolBtnMaxSize->update();
     }
+#endif
     QMainWindow::resizeEvent(event);
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+#ifndef Q_OS_WIN
+    if (event->button() == Qt::LeftButton)
+    {
+        m_ptPress = event->pos();
+        m_bPressed = ui->frameAppTitle->rect().contains(m_ptPress);
+    }
+#endif
+    QMainWindow::mousePressEvent(event);
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+#ifndef Q_OS_WIN
+    if (m_bPressed)
+    {
+        move(pos() + event->pos() - m_ptPress);
+    }
+#endif
+    QMainWindow::mouseMoveEvent(event);
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+#ifndef Q_OS_WIN
+    m_bPressed = false;
+#endif
+    QMainWindow::mouseReleaseEvent(event);
 }
 
 bool MainWindow::init()
 {
+#ifdef Q_OS_WIN
     setTitleBar(ui->frameAppTitle);
     addIgnoreWidget(ui->toolBtnMinSize);
     addIgnoreWidget(ui->toolBtnMaxSize);
     addIgnoreWidget(ui->toolBtnClose);
+#endif
     //addIgnoreWidget(ui->labelAppName);
     ui->frameAppTitle->setMouseTracking(true);
     this->setMouseTracking(true);

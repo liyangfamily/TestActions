@@ -27,8 +27,11 @@ namespace Core {
 
 namespace Internal {
 
-//		class MainWindow : public Utils::AppMainWindow
+#ifdef Q_OS_WIN
 class MainWindow : public CFramelessWindow
+#else
+class MainWindow : public Utils::AppMainWindow
+#endif
 {
     Q_OBJECT
 
@@ -41,7 +44,10 @@ private:
 public:
     void restart();
 protected:
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event)override;
+    void mousePressEvent(QMouseEvent *event)override;
+    void mouseMoveEvent(QMouseEvent *event)override;
+    void mouseReleaseEvent(QMouseEvent *event)override;
 private:
     bool init();
     void updateSCList();
@@ -84,6 +90,9 @@ private:
     QMap<QUuid, QListWidgetItem*> m_detectSCWidgetMap;
 
     VersionDialog *m_versionDialog = nullptr;
+
+    bool m_bPressed;
+    QPoint m_ptPress;
 };
 
 }// namespace Internal

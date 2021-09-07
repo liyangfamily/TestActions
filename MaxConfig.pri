@@ -60,6 +60,23 @@ defineReplace(stripSrcDir) {
     return($$relative_path($$absolute_path($$1, $$OUT_PWD), $$_PRO_FILE_PWD_))
 }
 
+# Copies the given files to the destination directory
+defineTest(copyToDestdir) {
+    files = $$1
+
+    for(FILE, files) {
+        DDIR = $$DESTDIR
+
+        # Replace slashes in paths with backslashes for Windows
+        win32:FILE ~= s,/,\\\\,g
+        win32:DDIR ~= s,/,\\\\,g
+
+        QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$FILE) $$quote($$DDIR) $$escape_expand(\\\
+\\\\t)
+    }
+
+    export(QMAKE_POST_LINK)
+}
 
 isEmpty(PRO_LIBRARY_BASENAME) {
     PRO_LIBRARY_BASENAME = lib
@@ -126,4 +143,21 @@ for(ever) {
     }
     QTC_LIB_DEPENDS = $$unique(QTC_LIB_DEPENDS)
     QTC_LIB_DEPENDS -= $$unique(done_libs)
+}
+
+#Param Path Copy
+include(shard/function.prf)
+PRO_SOURCE_SHARD = $$PRO_SOURCE_TREE/shard
+
+ParamSrcFilePath += \
+    $$PRO_SOURCE_SHARD/Parameter \
+
+for(path, ParamSrcFilePath) {
+        sub_dir = $$path
+        sub_dir ~= s,^$$re_escape($$PRO_SOURCE_SHARD),,
+        paramSrcDir  = $$path/*
+        paramDestDir = $$clean_path($$PRO_BIN_PATH$$sub_dir)
+        copyDir($$paramSrcDir, $$paramDestDir) #copy"redist" folder to"$$DESTDIR"
+        message(src = $$path/*)
+        message(dest = $$paramDestDir)
 }

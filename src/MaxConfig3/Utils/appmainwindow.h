@@ -24,10 +24,10 @@ namespace Utils
 #else  
 		virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result)override;
 #endif //QT_VERSION < 0x050000
-		bool event(QEvent *event) override;
+        bool event(QEvent *event) override;
 #endif //Q_OS_WIN
 
-	private:
+    private:
 		const int m_deviceEventId;
 	};
 } // Utils

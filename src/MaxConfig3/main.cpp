@@ -40,7 +40,5 @@ int main(int argc, char *argv[])
     Core::Internal::MainWindow w;
     //MainWindow_New w;
 	w.show();
-    int i=0;
-    i=1;
     return a.exec();
 }

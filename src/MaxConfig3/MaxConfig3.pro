@@ -31,6 +31,14 @@ message(git sha = $$GIT_SHA)
 DEFINES += GIT_BUILD_SHA=\"\\\"$$GIT_SHA\\\"\"
 DEFINES += GIT_BUILD_TIME=\"\\\"$$GIT_TIME\\\"\"
 
+#sfSrcFile = $$PRO_SOURCE_TREE/shard/Parameter/*
+#sfSrcFile = $$replace(sfSrcFile, /, \\)
+
+#sfDestDir = $$PRO_BIN_PATH/Parameter
+#sfDestDir = $$replace(sfDestDir, /, \\)
+#QMAKE_PRE_LINK += echo d | xcopy /y $$sfSrcFile $$sfDestDir # 拷贝shard/Parameter下的所有文件到目标文件目录
+
+
 ## get-version-from-git.pri
 ## 版本号构成 MAJAR_NUMBER.MINOR_NUMBER.CHANGE_NUMBER.BUILD_NUMBER
 #message(/**************[START] reading app version**************/)
