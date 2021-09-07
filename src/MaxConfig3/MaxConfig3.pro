@@ -11,7 +11,7 @@ RC_ICONS = Resources/Normal/MaxConfig.ico
 TARGET = $$PRO_APP_TARGET
 DESTDIR = $$PRO_APP_PATH
 
-exists (../../../.git) {
+exists (../../.git) {
     GIT_BRANCH   = $$system(git rev-parse --abbrev-ref HEAD)
     GIT_SHA      = $$system(git rev-parse --short=8 HEAD)
     GIT_TIME     = $$system(git log --pretty=format:\"%cd\" --date=format:\"%Y%m%d-%H%M%S\" -1 HEAD)
