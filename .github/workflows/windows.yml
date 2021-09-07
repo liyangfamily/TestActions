@@ -2,16 +2,11 @@ name: Windows
 on: 
   # push代码时触发workflow
   push:
-    # paths:
-    #   - '*.pro'
-    #   - 'MaxConfig/src/**'
-    #   - 'MaxConfig/src/MaxConfig3/**'
-    #   - '.github/workflows/windows.yml'
+    branches:
+      - master
   pull_request:
-    paths:
-      - '*.pro'
-      - 'MaxConfig/src/**'
-      - '.github/workflows/windows.yml' 
+    branches:
+      - master
 jobs:
   build:
     name: Build
