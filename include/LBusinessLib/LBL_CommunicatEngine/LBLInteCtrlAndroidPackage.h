@@ -13,6 +13,9 @@ protected:
 	quint16 CmdNum() const override {
 		return quint16(ECommand::EC_Read_AndroidVersion);
 	}
+        quint16 CmdRetNum() const override {
+                return CmdNum()+1;
+        }
 	QByteArray CmdContent() const override;
 private:
 	quint64 m_versionType = 0;
