@@ -4,6 +4,7 @@ include(MaxConfig3.pri)
 
 QT       += core gui network opengl openglextensions printsupport
 QT += concurrent
+QT += serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
 CONFIG += c++11
