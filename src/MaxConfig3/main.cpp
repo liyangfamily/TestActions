@@ -7,6 +7,7 @@
 
 #include <QtWidgets/QApplication>
 
+#include <QSerialPort>
 #include <QHostInfo>
 #include <QFile>
 #include "app.h"

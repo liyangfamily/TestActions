@@ -60,7 +60,7 @@ quint32 LBLPackageInteCtrl_ReadSCFPGARegister::getAddress() const
 	if (buffer.size() < 5) {
 		return value;
 	}
-	memcpy_s(&value, 3, buffer.constData() + 2, 3);
+    memcpy(&value, buffer.constData() + 2, 3);
 	return value;
 }
 
@@ -71,7 +71,7 @@ quint16 LBLPackageInteCtrl_ReadSCFPGARegister::getDataLength() const
 	if (buffer.size() < 7) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 5, 2);
+    memcpy(&value, buffer.constData() + 5, 2);
 	return value;
 }
 
@@ -131,7 +131,7 @@ quint8 LBLPackageInteCtrl_SendConnection::getOperatFailReason() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 

@@ -209,7 +209,7 @@ namespace Internal
 		void MCCusFileUpgradeWidget::creatPreparUpgradeTransitions()
 		{
 			QSignalTransition* transition = m_UpgradingBackState->addTransition(this, &MCCusFileUpgradeWidget::sig_PrepareUpgrade, m_prepareUpgradeState);
-			QPropertyAnimation *animation;
+            QPropertyAnimation *animation =nullptr;
 			foreach(QWidget *widget, extraWidgets) {
 				if (QGraphicsOpacityEffect *effect =
 					static_cast<QGraphicsOpacityEffect*>(

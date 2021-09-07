@@ -28,7 +28,7 @@ namespace LBL
 		public:
 			SNT68400PenetratCommunicat() {};
 			SNT68400PenetratCommunicat(QByteArray reData){
-					memcpy_s(this, reData.size(), reData.constData(), reData.size());
+                    memcpy(this, reData.constData(), reData.size());
 			}
 			SNT68400PenetratCommunicat(quint8 mainCMDFlage, quint8 childCMDFlage, quint8 channel, QByteArray data)
 			{
@@ -40,7 +40,7 @@ namespace LBL
 				m_data.mainCMDFlage = mainCMDFlage;
 				m_data.childCMDFlage = childCMDFlage;
 				m_data.channel = channel;
-				memcpy_s(m_data.addData, data.size(), data.constData(), data.size());
+                memcpy(m_data.addData, data.constData(), data.size());
 				dateLength = 6 + data.size();
 			}
 			

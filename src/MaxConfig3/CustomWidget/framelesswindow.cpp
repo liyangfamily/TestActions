@@ -10,9 +10,11 @@
 #include <dwmapi.h>
 #include <objidl.h> // Fixes error C2504: 'IUnknown' : base class undefined
 #include <gdiplus.h>
-#include <GdiPlusColor.h>
+
+#ifdef Q_CC_MSVC
 #pragma comment (lib,"Dwmapi.lib") // Adds missing library, fixes error LNK2019: unresolved external symbol __imp__DwmExtendFrameIntoClientArea
 #pragma comment (lib,"user32.lib")
+#endif
 
 CFramelessWindow::CFramelessWindow(QWidget *parent)
 	: QMainWindow(parent),
@@ -45,7 +47,7 @@ void CFramelessWindow::setResizeable(bool resizeable)
 		//we will get rid of titlebar and thick frame again in nativeEvent() later
 		HWND hwnd = (HWND)this->winId();
 		DWORD style = ::GetWindowLong(hwnd, GWL_STYLE);
-		::SetWindowLong(hwnd, GWL_STYLE, style /*| WS_MAXIMIZEBOX*/ | WS_THICKFRAME |WS_CAPTION & ~WS_MAXIMIZE);
+        ::SetWindowLong(hwnd, GWL_STYLE, style /*| WS_MAXIMIZEBOX*/ | WS_THICKFRAME |(WS_CAPTION & ~WS_MAXIMIZE));
 	}
 	else {
 		setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
@@ -60,7 +62,7 @@ void CFramelessWindow::setResizeable(bool resizeable)
 	//
 	//we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
 	const MARGINS shadow = { 1, 1, 1, 1 };
-	DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+    //DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
 
 	setVisible(visible);
 }

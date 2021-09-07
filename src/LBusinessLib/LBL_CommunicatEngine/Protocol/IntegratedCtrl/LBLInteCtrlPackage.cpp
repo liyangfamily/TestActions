@@ -129,7 +129,7 @@ QUuid LBLPackageInteCtrl_ReadSenderCardUuid::getSenderCardUuid() const
 	if (buffer.size() < 17) {
 		return value;
 	}
-	memcpy_s(&value, sizeof(QUuid), buffer.constData() + 1, sizeof(QUuid));
+    memcpy(&value, buffer.constData() + 1, sizeof(QUuid));
 	return value;
 }
 
@@ -161,7 +161,7 @@ QUuid LBLPackageInteCtrl_WriteSenderCardUuid::getSenderCardUuid() const
 	if (buffer.size() < 2+17) {
 		return value;
 	}
-	memcpy_s(&value, sizeof(QUuid), buffer.constData() + 3, sizeof(QUuid));
+    memcpy(&value, buffer.constData() + 3, sizeof(QUuid));
 	return value;
 }
 

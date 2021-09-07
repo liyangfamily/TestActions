@@ -160,7 +160,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_INTECTRL_Success) {
-				memcpy_s(&(d->m_MS9570Data.version), 2, replyData.constData() + 2, 2);
+                memcpy(&(d->m_MS9570Data.version), replyData.constData() + 2, 2);
 			}
 			return ret;
 		}

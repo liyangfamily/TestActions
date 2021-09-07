@@ -620,7 +620,7 @@ namespace LBL
 		quint16 SenderCardItem_2ndPlus::writeHDMIRGBGain(const int rValue, const int gValue, const int bValue, bool sync, int msec)
 		{
 			Q_D(SenderCardItem_2ndPlus);
-			quint16 ret;
+            quint16 ret =0;
 			if (-3 == rValue + gValue + bValue) {
 				ret = d->m_HDMIChip->writeRGBGain(rValue, gValue, bValue, sync, msec);
 			}

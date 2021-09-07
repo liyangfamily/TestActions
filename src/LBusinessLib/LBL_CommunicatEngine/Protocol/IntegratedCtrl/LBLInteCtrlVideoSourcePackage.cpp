@@ -19,7 +19,7 @@ quint8 LBLPackageInteCtrl_ReadVideoSourceByPass::getBypass() const
 	if (buffer.size() < 1) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData(), 1);
+    memcpy(&value, buffer.constData(), 1);
 	return value;
 }
 
@@ -40,7 +40,7 @@ quint8 LBLPackageInteCtrl_ReadVideoSourceRatio::getRatio() const
 	if (buffer.size() < 1) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData(), 1);
+    memcpy(&value, buffer.constData(), 1);
 	return value;
 }
 
@@ -61,7 +61,7 @@ quint8 LBLPackageInteCtrl_ReadVideoSource::getSource() const
 	if (buffer.size() < 1) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData(), 1);
+    memcpy(&value, buffer.constData(), 1);
 	return value;
 }
 
@@ -82,7 +82,7 @@ quint8 LBLPackageInteCtrl_ReadVideoSourceContrast::getContrast() const
 	if (buffer.size() < 1) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData(), 1);
+    memcpy(&value, buffer.constData(), 1);
 	return value;
 }
 
@@ -103,7 +103,7 @@ quint8 LBLPackageInteCtrl_ReadVideoSourceColortemperature::getColortemperature()
 	if (buffer.size() < 1) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData(), 1);
+    memcpy(&value, buffer.constData(), 1);
 	return value;
 }
 
@@ -271,9 +271,9 @@ QSize LBLPackageInteCtrl_ReadVideoSourceResolution::getResolution() const
 		return value;
 	}
 	quint32 tempValue = 0;
-	memcpy_s(&tempValue, 4, buffer.constData(), 4);
+    memcpy(&tempValue, buffer.constData(), 4);
 	value.setWidth(tempValue);
-	memcpy_s(&tempValue, 4, buffer.constData() + 4, 4);
+    memcpy(&tempValue, buffer.constData() + 4, 4);
 	value.setHeight(tempValue);
 	return value;
 }

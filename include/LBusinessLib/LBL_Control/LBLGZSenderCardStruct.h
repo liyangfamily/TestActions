@@ -35,13 +35,13 @@ namespace LBL
 		//		if (8 != array.size())
 		//			return false;
 		//		quint16 value;
-		//		memcpy_s(&value, sizeof(quint16), array.constData(), sizeof(quint16));
+        //		memcpy(&value, array.constData(), sizeof(quint16));
 		//		m_rect.setX(value);
-		//		memcpy_s(&value, sizeof(quint16), array.constData() + 2, sizeof(quint16));
+        //		memcpy(&value, array.constData() + 2, sizeof(quint16));
 		//		m_rect.setY(value);
-		//		memcpy_s(&value, sizeof(quint16), array.constData() + 4, sizeof(quint16));
+        //		memcpy(&value, array.constData() + 4, sizeof(quint16));
 		//		m_rect.setWidth(value);
-		//		memcpy_s(&value, sizeof(quint16), array.constData() + 6, sizeof(quint16));
+        //		memcpy(&value, array.constData() + 6, sizeof(quint16));
 		//		m_rect.setHeight(value);
 		//		return true;
 		//	}

@@ -105,7 +105,7 @@ int LBL_TaskEngine_IntegratedCtrlTask::filter_message(const LBLEnginePackage& bl
 		if (m_currentMessageSize == sizeof(SIntegratedFrameLimit))
 		{
 			const char * headerptr = m_currentBlock.constData();
-			memcpy_s((void *)&m_currentFrameLimit, sizeof(SIntegratedFrameLimit), headerptr, sizeof(SIntegratedFrameLimit));
+            memcpy((void *)&m_currentFrameLimit, headerptr, sizeof(SIntegratedFrameLimit));
 		}
 
 		if (m_currentFrameLimit == m_standerFrameLimit)
@@ -128,7 +128,7 @@ int LBL_TaskEngine_IntegratedCtrlTask::filter_message(const LBLEnginePackage& bl
 			else if (m_currentMessageSize == sizeof(SIntegratedCtrlHeader))//包头刚刚完成
 			{
 				const char * headerptr = m_currentBlock.constData();
-				memcpy_s((void *)&m_currentHeader, sizeof(SIntegratedCtrlHeader), headerptr, sizeof(SIntegratedCtrlHeader));
+                memcpy((void *)&m_currentHeader, headerptr, sizeof(SIntegratedCtrlHeader));
 
 				//如果有数据剩下则继续读
 				if (block.data().length() > offset)

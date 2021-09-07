@@ -192,7 +192,7 @@ quint16 MCScreen::onParseReadAndroidVersion(const QByteArray & data)
     LBLPackageInteCtrl_ReadAndroidVersionNum pack(data);
     QByteArray replyData = pack.getReplyData();
     quint16 len = 0;
-    memcpy_s(&len, 2, replyData.constData(), 2);
+    memcpy(&len, replyData.constData(), 2);
     QString name(replyData.mid(2, len));
     //ui->textEdit->append(tr("Android版本：%1\n").arg(name));
     return LBLPackage::EOR_Success;

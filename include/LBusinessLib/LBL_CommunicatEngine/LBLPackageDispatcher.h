@@ -35,7 +35,7 @@ public:
 	{
 		QMutexLocker locker(&m_mutex_protect);
 		quint8 protocolNum = package.CmdProtocolNum();
-		quint16 cmdNum = package.CmdRetNum();
+        quint16 cmdNum = package.CmdRetNum();
 		ProtocolMap::iterator iProtocolMap = m_maps.find(protocolNum);
 		if (iProtocolMap != m_maps.end()) {
 			CmdMap::iterator iCmdNumber = iProtocolMap.value().find(cmdNum);

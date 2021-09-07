@@ -37,13 +37,13 @@ bool LBLSPort::fromByteArray(const QByteArray& array)
 	if (8 != array.size())
 		return false;
 	quint16 value;
-	memcpy_s(&value, sizeof(quint16), array.constData(), sizeof(quint16));
+    memcpy(&value, array.constData(), sizeof(quint16));
 	m_rect.setX(value);
-	memcpy_s(&value, sizeof(quint16), array.constData() + 2, sizeof(quint16));
+    memcpy(&value, array.constData() + 2, sizeof(quint16));
 	m_rect.setY(value);
-	memcpy_s(&value, sizeof(quint16), array.constData() + 4, sizeof(quint16));
+    memcpy(&value, array.constData() + 4, sizeof(quint16));
 	m_rect.setWidth(value);
-	memcpy_s(&value, sizeof(quint16), array.constData() + 6, sizeof(quint16));
+    memcpy(&value, array.constData() + 6, sizeof(quint16));
 	m_rect.setHeight(value);
 	return true;
 }
@@ -119,17 +119,17 @@ public:
 			quint8 moduleIndex = *dptr - 1;
 			quint16 startPos_X = 0, startPos_Y = 0, width = 0, height = 0;
 			//宽低8位
-			memcpy_s(&width, 1, (dptr + 1), 1);
+            memcpy(&width, (dptr + 1), 1);
 			//高低8位
-			memcpy_s(&height, 1, (dptr + 2), 1);
+            memcpy(&height, (dptr + 2), 1);
 			//x
-			memcpy_s(&startPos_X, 2, dptr + 3, 2);
+            memcpy(&startPos_X, dptr + 3, 2);
 			//y
-			memcpy_s(&startPos_Y, 2, dptr + 5, 2);
+            memcpy(&startPos_Y, dptr + 5, 2);
 			
 			//宽高高位
 			quint16 temp = 0;
-			memcpy_s(&temp, 1, dptr + 7, 1);
+            memcpy(&temp, dptr + 7, 1);
 			width = (width & 0x00FF) | ((temp << 8) & 0x0F00);
 			height = (height & 0x00FF) | ((temp << 4) & 0x0F00);
 			tempMap.insert(moduleIndex, QRectF(startPos_X, startPos_Y, width + 1, height + 1));
@@ -191,7 +191,7 @@ public:
 		if (m_data.size() < 2) {
 			return length;
 		}
-		memcpy_s(&length, sizeof(quint16), m_data.constData(), sizeof(quint16));
+        memcpy(&length, m_data.constData(), sizeof(quint16));
 		return length;
 	}
 	virtual quint8 portIndex() {
@@ -222,9 +222,9 @@ public:
 			return tempMap;
 		for (int i = 0; i < tempCount; ++i) {
 			quint16 startPos_X = 0, startPos_Y = 0;
-			memcpy_s(&startPos_X, sizeof(quint16), posData.constData() + pos, sizeof(quint16));
+            memcpy(&startPos_X, posData.constData() + pos, sizeof(quint16));
 			pos += sizeof(quint16);
-			memcpy_s(&startPos_Y, sizeof(quint16), posData.constData() + pos, sizeof(quint16));
+            memcpy(&startPos_Y, posData.constData() + pos, sizeof(quint16));
 			pos += sizeof(quint16);
 			tempMap.insert(i, QPointF(startPos_X, startPos_Y));
 		}
@@ -271,7 +271,7 @@ public:
 		if (m_data.size() < 4) {
 			return value;
 		}
-		memcpy_s(&value, sizeof(quint16), m_data.constData() + 2, sizeof(quint16));
+        memcpy(&value, m_data.constData() + 2, sizeof(quint16));
 		return value;
 	}
 	quint8 portIndex() {
@@ -318,9 +318,9 @@ public:
 			return tempMap;
 		for (int i = 0; i < tempCount; ++i) {
 			quint16 startPos_X = 0, startPos_Y = 0;
-			memcpy_s(&startPos_X, sizeof(quint16), posData.constData() + pos, sizeof(quint16));
+            memcpy(&startPos_X, posData.constData() + pos, sizeof(quint16));
 			pos += sizeof(quint16);
-			memcpy_s(&startPos_Y, sizeof(quint16), posData.constData() + pos, sizeof(quint16));
+            memcpy(&startPos_Y, posData.constData() + pos, sizeof(quint16));
 			pos += sizeof(quint16);
 			tempMap.insert(i, QPointF(startPos_X, startPos_Y));
 		}
@@ -716,11 +716,11 @@ quint16 LBLConnection::parseConnectionDataV1(const QByteArray & data)
 	QByteArray header(dataptr, fileHeaderMaxLen);
 	pos += fileHeaderMaxLen;
 	
-	memcpy_s(&d->m_moduleWidth, sizeof(quint16), dataptr + pos, sizeof(quint16));
+    memcpy(&d->m_moduleWidth, dataptr + pos, sizeof(quint16));
 	pos += sizeof(quint16);
-	memcpy_s(&d->m_moduleHeight, sizeof(quint16), dataptr + pos, sizeof(quint16));
+    memcpy(&d->m_moduleHeight, dataptr + pos, sizeof(quint16));
 	pos += sizeof(quint16);
-	memcpy_s(&d->m_portCount, sizeof(quint8), dataptr + pos, sizeof(quint8));
+    memcpy(&d->m_portCount, dataptr + pos, sizeof(quint8));
 	pos += sizeof(quint8);
 	
 	if (d->m_portCount > LBL_Max_UsingSenderCardPort)
@@ -730,7 +730,7 @@ quint16 LBLConnection::parseConnectionDataV1(const QByteArray & data)
 		quint16 packageLength = 0;
 		if (pos + sizeof(quint16) > datalen)
             return LAPI::EResult::ER_CONNECT_IllegalData;
-		memcpy_s(&packageLength, sizeof(quint16), dataptr + pos, sizeof(quint16));
+        memcpy(&packageLength, dataptr + pos, sizeof(quint16));
         if (quint32(pos + packageLength)> datalen) //判断子包长度
             return LAPI::EResult::ER_CONNECT_IllegalData;
 
@@ -764,11 +764,11 @@ quint16 LBLConnection::parseConnectionDataV2(const QByteArray & data)
 	QByteArray header(dataptr, fileHeaderMaxLen);
 	pos += fileHeaderMaxLen;
 
-	memcpy_s(&d->m_moduleWidth, sizeof(quint16), dataptr + pos, sizeof(quint16));
+    memcpy(&d->m_moduleWidth, dataptr + pos, sizeof(quint16));
 	pos += sizeof(quint16);
-	memcpy_s(&d->m_moduleHeight, sizeof(quint16), dataptr + pos, sizeof(quint16));
+    memcpy(&d->m_moduleHeight, dataptr + pos, sizeof(quint16));
 	pos += sizeof(quint16);
-	memcpy_s(&d->m_portCount, sizeof(quint8), dataptr + pos, sizeof(quint8));
+    memcpy(&d->m_portCount, dataptr + pos, sizeof(quint8));
 	pos += sizeof(quint8);
 
 	if (d->m_portCount > LBL_Max_UsingSenderCardPort)
@@ -778,7 +778,7 @@ quint16 LBLConnection::parseConnectionDataV2(const QByteArray & data)
 		quint16 packageLength = 0;
 		if (pos + sizeof(quint16) > datalen)
             return LAPI::EResult::ER_CONNECT_IllegalData;
-		memcpy_s(&packageLength, sizeof(quint16), dataptr + pos, sizeof(quint16));
+        memcpy(&packageLength, dataptr + pos, sizeof(quint16));
         if (quint32(pos + packageLength )> datalen) //判断子包长度
             return LAPI::EResult::ER_CONNECT_IllegalData;
 
@@ -819,7 +819,7 @@ quint16 LBLConnection::parseConnectionDataV0(const QByteArray & data)
 	QByteArray header(dataptr, fileHeaderMaxLen);
 	pos += fileHeaderMaxLen;
 
-	memcpy_s(&d->m_portCount, sizeof(quint8), dataptr + pos, sizeof(quint8));
+    memcpy(&d->m_portCount, dataptr + pos, sizeof(quint8));
 	pos += sizeof(quint8);
 
 	if (d->m_portCount > LBL_Max_UsingSenderCardPort)
@@ -831,13 +831,13 @@ quint16 LBLConnection::parseConnectionDataV0(const QByteArray & data)
 			break;
 			return LAPI::EResult::ER_CONNECT_IllegalData;
 		}
-		memcpy_s(&portIndex, sizeof(quint8), dataptr + pos, sizeof(quint8));
+        memcpy(&portIndex, dataptr + pos, sizeof(quint8));
 		pos += sizeof(quint8);
 		if (pos + sizeof(quint8) > datalen) {
 			break;
 			return LAPI::EResult::ER_CONNECT_IllegalData;
 		}
-		memcpy_s(&moduleCount, sizeof(quint8), dataptr + pos, sizeof(quint8));
+        memcpy(&moduleCount, dataptr + pos, sizeof(quint8));
 		pos += sizeof(quint8);
 		quint16 packageLength = moduleCount * 16;
         if (quint32(pos + packageLength )> datalen) { //判断子包长度

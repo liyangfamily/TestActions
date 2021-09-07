@@ -340,7 +340,7 @@ namespace LBL
 			if (reData.startsWith(QByteArray::fromHex("F00F"))) {
 				//广州
 				d->m_rcStatusInfo.clear();
-				for (int i = 0; i < reData.size() / sizeof(SRCStatusInfo); ++i) {
+                for (int i = 0; i < reData.size() / int(sizeof(SRCStatusInfo)); ++i) {
                     SRCStatusInfo temp;
                     QByteArray data=QByteArray(reData.constData() + i * (sizeof(SRCStatusInfo)), sizeof(SRCStatusInfo));
                     temp.SetData(data);

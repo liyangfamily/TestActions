@@ -131,8 +131,8 @@ namespace LBL
 				memset(this, 0, sizeof(tagRCStatusInfo));
 			}
 			void SetData(QByteArray& data) {
-                quint16 size = quint16(data.size() > sizeof(tagRCStatusInfo) ? sizeof(tagRCStatusInfo) : data.size());
-				memcpy_s(this, size, data.constData(), size);
+                quint16 size = data.size() > quint16(sizeof(tagRCStatusInfo)) ? quint16(sizeof(tagRCStatusInfo)) : data.size();
+                memcpy(this, data.constData(), size);
 			}
 			bool IsVaild() const{
 				QByteArray reData;
@@ -250,7 +250,7 @@ namespace LBL
 			}
 			void SetData(QByteArray& data) {
 				if (data.size() == sizeof(tagMonitorPortInfo)) {
-					memcpy_s(this, data.size(), data.constData(), data.size());
+                    memcpy(this, data.constData(), data.size());
 				}
 			}
 			QList<SRCMonitorInfo> GetPortMonitorList() {

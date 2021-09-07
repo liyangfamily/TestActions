@@ -92,7 +92,7 @@ quint16 LBLPackageFileTransfer_CommonStartSendFile::getMaxLengthOfSinglePackage(
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 2, 2);
+    memcpy(&value, buffer.constData() + 2, 2);
 	return value;
 }
 
@@ -103,7 +103,7 @@ quint32 LBLPackageFileTransfer_CommonStartSendFile::getSendFileID() const
 	if (buffer.size() < 8) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 4, 4);
+    memcpy(&value, buffer.constData() + 4, 4);
 	return value;
 }
 
@@ -155,7 +155,7 @@ quint8 LBLPackageFileTransfer_CommonRequestUpgrade::getOperatFailReason() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 
@@ -183,7 +183,7 @@ quint8 LBLPackageFileTransfer_CommonQueryUpgradeStatus::getOperatSteps() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 
@@ -194,7 +194,7 @@ quint8 LBLPackageFileTransfer_CommonQueryUpgradeStatus::getOperatProgress() cons
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 3, 1);
+    memcpy(&value, buffer.constData() + 3, 1);
 	return value;
 }
 
@@ -233,7 +233,7 @@ quint8 LBLPackageFileTransfer_RequestUpgradeForMCU::getPortIndex() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 
@@ -244,7 +244,7 @@ quint16 LBLPackageFileTransfer_RequestUpgradeForMCU::getModuleIndex() const
 	if (buffer.size() < 5) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 3, 2);
+    memcpy(&value, buffer.constData() + 3, 2);
 	return value;
 }
 
@@ -255,7 +255,7 @@ quint16 LBLPackageFileTransfer_RequestUpgradeForMCU::getFileType() const
 	if (buffer.size() < 7) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 5, 2);
+    memcpy(&value, buffer.constData() + 5, 2);
 	return value;
 }
 
@@ -266,7 +266,7 @@ quint16 LBLPackageFileTransfer_RequestUpgradeForMCU::getMaxLengthOfSinglePackage
 	if (buffer.size() < 9) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 7, 2);
+    memcpy(&value, buffer.constData() + 7, 2);
 	return value;
 }
 
@@ -298,7 +298,7 @@ quint8 LBLPackageFileTransfer_SendFileDataForMCU::getPortIndex() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 
@@ -309,7 +309,7 @@ quint16 LBLPackageFileTransfer_SendFileDataForMCU::getModuleIndex() const
 	if (buffer.size() < 5) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 3, 2);
+    memcpy(&value, buffer.constData() + 3, 2);
 	return value;
 }
 
@@ -320,7 +320,7 @@ quint16 LBLPackageFileTransfer_SendFileDataForMCU::getFileType() const
 	if (buffer.size() < 7) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 5, 2);
+    memcpy(&value, buffer.constData() + 5, 2);
 	return value;
 }
 
@@ -331,7 +331,7 @@ quint32 LBLPackageFileTransfer_SendFileDataForMCU::getPackageIndex() const
 	if (buffer.size() < 11) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 7, 4);
+    memcpy(&value, buffer.constData() + 7, 4);
 	return value;
 }
 
@@ -363,7 +363,7 @@ quint16 LBLPackageFileTransfer_RequestFileForMCU::getFileType() const
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 2, 2);
+    memcpy(&value, buffer.constData() + 2, 2);
 	return value;
 }
 
@@ -374,7 +374,7 @@ quint32 LBLPackageFileTransfer_RequestFileForMCU::getTotalFileLength() const
 	if (buffer.size() < 8) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 4, 4);
+    memcpy(&value, buffer.constData() + 4, 4);
 	return value;
 }
 
@@ -385,7 +385,7 @@ quint16 LBLPackageFileTransfer_RequestFileForMCU::getSinglePackageLenth() const
 	if (buffer.size() < 10) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 8, 2);
+    memcpy(&value, buffer.constData() + 8, 2);
 	return value;
 }
 
@@ -413,7 +413,7 @@ quint16 LBLPackageFileTransfer_ReceiveFileDataForMCU::getFileType() const
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 2, 2);
+    memcpy(&value, buffer.constData() + 2, 2);
 	return value;
 }
 
@@ -424,7 +424,7 @@ quint32 LBLPackageFileTransfer_ReceiveFileDataForMCU::getPackageIndex() const
 	if (buffer.size() < 8) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 4, 4);
+    memcpy(&value, buffer.constData() + 4, 4);
 	return value;
 }
 

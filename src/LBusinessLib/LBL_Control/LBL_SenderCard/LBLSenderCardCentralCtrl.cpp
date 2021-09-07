@@ -832,56 +832,57 @@ namespace LBL
 			{
 			case ENormalSettingRegAddrs::ENSRA_FPGABigVersion:
 			{
-				memcpy_s(&(d->m_gzData.normalSetting.FPGABigVersio), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.normalSetting.FPGABigVersio), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case ENormalSettingRegAddrs::ENSRA_SenderCardFeatureSwitch:
 			{
-				memcpy_s(&(d->m_gzData.normalSetting.scFeatureSwitch), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.normalSetting.scFeatureSwitch), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case ENormalSettingRegAddrs::ENSRA_ReceiveCardFeatureSwitch:
 			{
-				memcpy_s(&(d->m_gzData.normalSetting.rcFeatureSwitch), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.normalSetting.rcFeatureSwitch), d->senderCardReadFPGARegister, len);
 			}
+            break;
 			case ENormalSettingRegAddrs::ENSRA_ZoomWidht:
 			{
-				memcpy_s(&(d->m_gzData.normalSetting.zoomWidth), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.normalSetting.zoomWidth), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case ESelfTestRegAddrs::ESTRA_TestModeStatus:
 			{
-				memcpy_s(&(d->m_gzData.selfTest.testModeStatus), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.selfTest.testModeStatus), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case ESelfTestRegAddrs::ESTRA_TestSourceMode:
 			{
-				memcpy_s(&(d->m_gzData.selfTest.testSourceMode), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.selfTest.testSourceMode), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case ESelfTestRegAddrs::ESTRA_TestSourceSpeed:
 			{
-				memcpy_s(&(d->m_gzData.selfTest.testSourceSpeed), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.selfTest.testSourceSpeed), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case EEthLoadRegAddrs::EELRA_EthLoadArea:
 			{
-				memcpy_s(&(d->m_gzData.sendCardEthLoad.ethLoadArea), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.sendCardEthLoad.ethLoadArea), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case EReciverCtrlRegAddrs::ERCRA_ScreenCtrlParam:
 			{
-				memcpy_s(&(d->m_gzData.reciverCtrl.screenCtrlPara), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.reciverCtrl.screenCtrlPara), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case EReciverCtrlRegAddrs::ERCRA_ProtocolType:
 			{
-				memcpy_s(&(d->m_gzData.reciverCtrl.protocolType), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.reciverCtrl.protocolType), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			case EProjectSelfTestRegAddrs::EPSTRA_EthErrorRate:
 			{
-				memcpy_s(&(d->m_gzData.projectSelfTest.errorRate), len, d->senderCardReadFPGARegister, len);
+                memcpy(&(d->m_gzData.projectSelfTest.errorRate), d->senderCardReadFPGARegister, len);
 			}
 			break;
 			default:

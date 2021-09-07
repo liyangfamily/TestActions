@@ -46,7 +46,7 @@ quint8 LBLPackageInteCtrl_ReadRCFPGARegister::getPortIndex() const
 	if (buffer.size() < 3) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 2, 1);
+    memcpy(&value, buffer.constData() + 2, 1);
 	return value;
 }
 
@@ -57,7 +57,7 @@ quint8 LBLPackageInteCtrl_ReadRCFPGARegister::getModuleIndex() const
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 1, buffer.constData() + 3, 1);
+    memcpy(&value, buffer.constData() + 3, 1);
 	return value;
 }
 
@@ -68,7 +68,7 @@ quint32 LBLPackageInteCtrl_ReadRCFPGARegister::getAddress() const
 	if (buffer.size() < 8) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 4, 4);
+    memcpy(&value, buffer.constData() + 4, 4);
 	return value;
 }
 
@@ -79,7 +79,7 @@ quint16 LBLPackageInteCtrl_ReadRCFPGARegister::getDataLength() const
 	if (buffer.size() < 10) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 8, 2);
+    memcpy(&value, buffer.constData() + 8, 2);
 	return value;
 }
 
@@ -241,7 +241,7 @@ quint32 LBLPackageInteCtrl_ReadRCMonitorInfo::getAddress() const
 	if (buffer.size() < 5) {
 		return value;
 	}
-	memcpy_s(&value, 3, buffer.constData() + 2, 3);
+    memcpy(&value, buffer.constData() + 2, 3);
 	return value;
 }
 
@@ -252,7 +252,7 @@ quint16 LBLPackageInteCtrl_ReadRCMonitorInfo::getDataLength() const
 	if (buffer.size() < 7) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData() + 5, 2);
+    memcpy(&value, buffer.constData() + 5, 2);
 	return value;
 }
 

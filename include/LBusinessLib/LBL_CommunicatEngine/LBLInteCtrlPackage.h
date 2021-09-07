@@ -124,8 +124,12 @@ protected:
 	//集控协议，总定义协议类型和版本
 	quint8 CmdProtocolNum() const override;
 	quint8 CmdProtocolVersion() const override; 
+    quint16 CmdNum() const override {
+        qDebug() << "LBLInteCtrlPackage::you need to implement CmdNum() into Subclass.";
+        return quint16();
+    }
 	quint16 CmdRetNum() const override {
-		return quint16(CmdNum() + 1);
+        return quint16(this->CmdNum() + 1);
 	}
 
 private:

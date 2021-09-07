@@ -10,11 +10,11 @@ MCUpgrade::MCUpgrade(QWidget *parent) :
 {
     ui->setupUi(this);
 
-	gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadMCUAppVersion(), this);
-	gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadMCUBootVersion(), this);
-	gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadAndroidVersionNum(), this);
-	gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadSCFPGARegister(), this);
-	gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_Penetrate(), this);
+    gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadMCUAppVersion(), this);
+    gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadMCUBootVersion(), this);
+    gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadAndroidVersionNum(), this);
+    gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadSCFPGARegister(), this);
+    gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_Penetrate(), this);
 
 	QStringList upgradeType;
 	upgradeType << "SenderCard-MCU" << "SenderCard-FPGA" << "ReceiveCard-FPGA" << "HDMI Decoding Chip" << "16BitGamma" << "16BitGamma_512Byte";
@@ -38,10 +38,10 @@ MCUpgrade::~MCUpgrade()
 {
     delete ui;
 
-	gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadMCUAppVersion(), this);
-	gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadMCUBootVersion(), this);
-	gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadAndroidVersionNum(), this);
-	gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadSCFPGARegister(), this);
+    gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadMCUAppVersion(), this);
+    gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadMCUBootVersion(), this);
+    gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadAndroidVersionNum(), this);
+    gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadSCFPGARegister(), this);
 }
 
 bool MCUpgrade::event(QEvent *e)
@@ -118,56 +118,56 @@ void MCUpgrade::updateUpgrade()
 
 quint16 MCUpgrade::onParseReadMCUAppVersion(const QByteArray& data)
 {
-	LBLPackageInteCtrl_ReadMCUAppVersion pack(data);
-	ui->labelMCUVer->setText(tr("%1").arg(pack.getVersion()));
+    LBLPackageInteCtrl_ReadMCUAppVersion pack(data);
+    ui->labelMCUVer->setText(tr("%1").arg(pack.getVersion()));
 	return LBLPackage::EOR_Success;
 }
 
 quint16 MCUpgrade::onParseReadMCUBootVersion(const QByteArray& data)
 {
-	LBLPackageInteCtrl_ReadMCUBootVersion pack(data);
+    LBLPackageInteCtrl_ReadMCUBootVersion pack(data);
 	//ui->textEdit->append(tr("MCU Boot：%1\n").arg(pack.getVersion()));
 	return LBLPackage::EOR_Success;
 }
 
 quint16 MCUpgrade::onParseReadAndroidVersion(const QByteArray& data)
 {
-	LBLPackageInteCtrl_ReadAndroidVersionNum pack(data);
-	QByteArray replyData = pack.getReplyData();
-	quint16 len = 0;
-	memcpy_s(&len, 2, replyData.constData(), 2);
-	QString name(replyData.mid(2, len));
-	ui->labelAndroidVer->setText(tr("%1").arg(name));
-	return LBLPackage::EOR_Success;
+    LBLPackageInteCtrl_ReadAndroidVersionNum pack(data);
+    QByteArray replyData = pack.getReplyData();
+    quint16 len = 0;
+    memcpy(&len, replyData.constData(), 2);
+    QString name(replyData.mid(2, len));
+    ui->labelAndroidVer->setText(tr("%1").arg(name));
+    return quint16(LBLPackage::EOR_Success);
 }
 
 quint16 MCUpgrade::onParseReadSCFPGARegister(const QByteArray& data)
 {
-	LBLPackageInteCtrl_ReadSCFPGARegister pack(data);
-	QByteArray packData = pack.getReplyData();
-	switch (pack.getAddress())
-	{
-	case LBL::SC::ENormalSettingRegAddrs::ENSRA_FPGABigVersion:
-	{
-		QString version;
-		version = LAPI::GetSCFPGAVersion();
-		ui->labelSCFPGAVer->setText(tr("%1").arg(version));
-		return LBLPackage::EOR_Success;
-	}
-	break;
-	default:
-		break;
-	}
-	return 0;
+    LBLPackageInteCtrl_ReadSCFPGARegister pack(data);
+    QByteArray packData = pack.getReplyData();
+    switch (pack.getAddress())
+    {
+    case LBL::SC::ENormalSettingRegAddrs::ENSRA_FPGABigVersion:
+    {
+        QString version;
+        version = LAPI::GetSCFPGAVersion();
+        ui->labelSCFPGAVer->setText(tr("%1").arg(version));
+        return quint16(LBLPackage::EOR_Success);
+    }
+    break;
+    default:
+        break;
+    }
+    return 0;
 }
 
 quint16 MCUpgrade::onParseNT68400Data(const QByteArray& data)
 {
-	LBLPackageInteCtrl_Penetrate pack(data);
-	QByteArray packData = pack.getReplyData();
-	QString nt68400Version = LAPI::GetHDMIVersion();
-	//ui->labelHDMIVer->setText(nt68400Version);
-	return 0;
+    LBLPackageInteCtrl_Penetrate pack(data);
+    QByteArray packData = pack.getReplyData();
+    QString nt68400Version = LAPI::GetHDMIVersion();
+    //ui->labelHDMIVer->setText(nt68400Version);
+    return 0;
 }
 
 void MCUpgrade::slot_ConnectItem()

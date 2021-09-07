@@ -26,25 +26,25 @@ S6PPixelData::S6PPixelData(const QPoint& pt, const char* pixel, const int& len, 
 {
 	if (len >= 18) {
 		int pos = 0;
-		memcpy_s(&m_r, 2, pixel + pos, 2);
+        memcpy(&m_r, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_rg, 2, pixel + pos, 2);
+        memcpy(&m_rg, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_rb, 2, pixel + pos, 2);
+        memcpy(&m_rb, pixel + pos, 2);
         pos += 2;
 
-		memcpy_s(&m_gr, 2, pixel + pos, 2);
+        memcpy(&m_gr, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_g, 2, pixel + pos, 2);
+        memcpy(&m_g, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_gb, 2, pixel + pos, 2);
+        memcpy(&m_gb, pixel + pos, 2);
         pos += 2;
 
-		memcpy_s(&m_br, 2, pixel + pos, 2);
+        memcpy(&m_br, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_bg, 2, pixel + pos, 2);
+        memcpy(&m_bg, pixel + pos, 2);
 		pos += 2;
-		memcpy_s(&m_b, 2, pixel + pos, 2);
+        memcpy(&m_b, pixel + pos, 2);
 	}
 	else {
 		qDebug() << __FUNCTION__ << ": ByteArray is too short, less than 18Byte, this class will not work.";
@@ -102,7 +102,7 @@ char* S6PPixelData::buildFlage(char* d)
 char* S6PPixelData::buildR(char* d)
 {
 	quint32 value = pixelColorConvert_R(m_r, m_rg, m_rg);
-    memcpy_s(d, 4, &value, 4);
+    memcpy(d, &value, 4);
     d+=4;
     return d;
 }
@@ -110,7 +110,7 @@ char* S6PPixelData::buildR(char* d)
 char* S6PPixelData::buildG(char* d)
 {
 	quint32 value = pixelColorConvert_G(m_gr, m_g, m_gb);
-    memcpy_s(d, 4, &value, 4);
+    memcpy(d, &value, 4);
     d+=4;
     return d;
 }
@@ -118,7 +118,7 @@ char* S6PPixelData::buildG(char* d)
 char* S6PPixelData::buildB(char* d)
 {
 	quint32 value = pixelColorConvert_B(m_br, m_bg, m_b);
-    memcpy_s(d, 4, &value, 4);
+    memcpy(d, &value, 4);
     d+=4;
     return d;
 }
@@ -488,7 +488,7 @@ QSharedPointer<QByteArray> CorrectDataHelper::imageTo8PData(const QImage & img, 
             for (int i = 0; i < effectivePicCount; ++i) {
                 int blockOffset = (i*(tileByteCount / 4));
                 int pos = insideBlockStartPos + blockOffset;
-                memcpy_s(dataArray->data() + pos, offset, cache + (i*offset), offset);
+                memcpy(dataArray->data() + pos, cache + (i*offset), offset);
             }
         }
     }
@@ -523,7 +523,7 @@ QSharedPointer<QByteArray> CorrectDataHelper::fileTo8PData(const QByteArray& fil
             for (int i = 0; i < effectivePicCount; ++i) {
                 int blockOffset = (i*(tileByteCount / 4));
                 int pos = insideBlockStartPos + blockOffset;
-                memcpy_s(dataArray->data() + pos, offset, cache + (i*offset), offset);
+                memcpy(dataArray->data() + pos, cache + (i*offset), offset);
             }
             filePos += effectiveDataBlockLen;
         }
@@ -548,7 +548,7 @@ QImage CorrectDataHelper::creat8PHeaderImage(const int index, const QRect& rect)
     int tileByteCount = (countPerPixel / effectivePicCount) * rect.width() * rect.height();
     QImage headerImg = QImage(rect.width(), rect.height(), QImage::Format_RGB888);
     for (int i = 0; i < tileByteCount / ciHeaderLength; ++i) {
-        memcpy_s(headerImg.bits() + (i*ciHeaderLength), ciHeaderLength, ciEightHeader[index], ciHeaderLength);
+        memcpy(headerImg.bits() + (i*ciHeaderLength), ciEightHeader[index], ciHeaderLength);
     }
     return headerImg;
 }

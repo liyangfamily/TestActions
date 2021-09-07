@@ -384,7 +384,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 1 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_PQNormalData, sizeof(SNT68400PictureQualityNormal), replyData.constData()+1, sizeof(SNT68400PictureQualityNormal));
+                memcpy(&d->m_NT68400Data.m_PQNormalData, replyData.constData()+1, sizeof(SNT68400PictureQualityNormal));
 			}
 			return ret;
 		}
@@ -531,7 +531,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
             if (ret == LAPI::EResult::ER_Success && (int)sizeof(SNT68400PictureQualityAdvanced)+1 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_PQAdvanceData, sizeof(SNT68400PictureQualityAdvanced), replyData.constData() + 1, sizeof(SNT68400PictureQualityAdvanced));
+                memcpy(&d->m_NT68400Data.m_PQAdvanceData, replyData.constData() + 1, sizeof(SNT68400PictureQualityAdvanced));
 			}
 			return ret;
 		}
@@ -726,7 +726,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
             if (ret == LAPI::EResult::ER_Success && (int)sizeof(SNT68400DisPlayNormal)+1 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPNormalData, sizeof(SNT68400DisPlayNormal), replyData.constData() + 1, sizeof(SNT68400DisPlayNormal));
+                memcpy(&d->m_NT68400Data.m_DPNormalData, replyData.constData() + 1, sizeof(SNT68400DisPlayNormal));
 			}
 			return ret;
 		}
@@ -869,8 +869,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Width, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Height, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Width, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Height, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -891,8 +891,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Width, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Height, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Width, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowSize_Height, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -916,8 +916,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowPos_X, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowPos_Y, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowPos_X, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowPos_Y, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -938,8 +938,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowPos_X, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.windowPos_Y, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowPos_X, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.windowPos_Y, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1004,7 +1004,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.ratio_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.ratio_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1025,7 +1025,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.ratio_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.ratio_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1048,7 +1048,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.ratio_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.ratio_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1069,7 +1069,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.ratio_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.ratio_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1092,7 +1092,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.start_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.start_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1113,7 +1113,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.start_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.start_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1136,7 +1136,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.start_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.start_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1157,7 +1157,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.start_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.start_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1180,7 +1180,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.size_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.size_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1201,7 +1201,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.size_H, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.size_H, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1224,7 +1224,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.size_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.size_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1245,7 +1245,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 2 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.size_V, sizeof(quint16), replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.size_V, replyData.constData(), sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1310,7 +1310,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 14 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData, 13, replyData.constData() + 1, 13);
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData, replyData.constData() + 1, 13);
 			}
 			return ret;
 		}
@@ -1333,7 +1333,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 15 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_DPAdvanceData.videoWall, 14, replyData.constData() + 1, 14);
+                memcpy(&d->m_NT68400Data.m_DPAdvanceData.videoWall, replyData.constData() + 1, 14);
 			}
 			return ret;
 		}
@@ -1529,7 +1529,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
             if (ret == LAPI::EResult::ER_Success && (int)sizeof(SNT68400SettingAudio)+1 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SettingAudioData, sizeof(SNT68400SettingAudio), replyData.constData() + 1, sizeof(SNT68400SettingAudio));
+                memcpy(&d->m_NT68400Data.m_SettingAudioData, replyData.constData() + 1, sizeof(SNT68400SettingAudio));
 			}
 			return ret;
 		}
@@ -1641,7 +1641,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
             if (ret == LAPI::EResult::ER_Success && (int)sizeof(SNT68400SettingOther)+1 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SettingOtherData, sizeof(SNT68400SettingOther), replyData.constData() + 1, sizeof(SNT68400SettingOther));
+                memcpy(&d->m_NT68400Data.m_SettingOtherData, replyData.constData() + 1, sizeof(SNT68400SettingOther));
 			}
 			return ret;
 		}
@@ -1767,7 +1767,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
             if (ret == LAPI::EResult::ER_Success && (int)sizeof(tagNT68400SystemNormal)-4 >= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SysNormalData, replyData.size(), replyData.constData(), replyData.size());
+                memcpy(&d->m_NT68400Data.m_SysNormalData, replyData.constData(), replyData.size());
 			}
 			return ret;
 		}
@@ -1791,8 +1791,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SysNormalData.disWidth, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_SysNormalData.disHeight, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_SysNormalData.disWidth, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_SysNormalData.disHeight, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1813,8 +1813,8 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SysNormalData.disWidth, sizeof(quint16), replyData.constData(), sizeof(quint16));
-				memcpy_s(&d->m_NT68400Data.m_SysNormalData.disHeight, sizeof(quint16), replyData.constData() + 2, sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_SysNormalData.disWidth, replyData.constData(), sizeof(quint16));
+                memcpy(&d->m_NT68400Data.m_SysNormalData.disHeight, replyData.constData() + 2, sizeof(quint16));
 			}
 			return ret;
 		}
@@ -1836,7 +1836,7 @@ namespace LBL
 			QByteArray replyData;
 			quint16 ret = syncSend(pack.getDataToSend(), replyData, true, msec);
 			if (ret == LAPI::EResult::ER_Success && 4 <= replyData.size()) {
-				memcpy_s(&d->m_NT68400Data.m_SignalData, sizeof(SNT68400Signal), replyData.constData(), sizeof(SNT68400Signal));
+                memcpy(&d->m_NT68400Data.m_SignalData, replyData.constData(), sizeof(SNT68400Signal));
 			}
 			return ret;
 		}

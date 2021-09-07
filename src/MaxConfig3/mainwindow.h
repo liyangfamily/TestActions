@@ -28,6 +28,10 @@ namespace Core {
 namespace Internal {
 
 #ifdef Q_OS_WIN
+#undef Q_OS_WIN
+#endif
+
+#ifdef Q_OS_WIN
 class MainWindow : public CFramelessWindow
 #else
 class MainWindow : public Utils::AppMainWindow

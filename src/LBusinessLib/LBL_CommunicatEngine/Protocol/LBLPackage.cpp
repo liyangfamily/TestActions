@@ -304,7 +304,7 @@ quint8 LBLPackage::CmdProtocolVersion() const
 quint16 LBLPackage::CmdNum() const
 {
 	qDebug() << "LBLPackage::you need to implement CmdNum() into Subclass.";
-	return quint8();
+    return quint16();
 }
 
 quint16 LBLPackage::CmdRetNum() const

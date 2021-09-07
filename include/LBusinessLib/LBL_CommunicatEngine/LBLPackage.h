@@ -45,7 +45,7 @@ public:\
 	QByteArray buffer = getContent(); \
 	if (buffer.size() < 2) { \
 		return value; }\
-	memcpy_s(&value, sizeof(quint16), buffer, sizeof(quint16)); \
+    memcpy(&value, buffer, sizeof(quint16)); \
 	return value; \
 
 //此类提供给不同协议的Package类在onReceive中调用

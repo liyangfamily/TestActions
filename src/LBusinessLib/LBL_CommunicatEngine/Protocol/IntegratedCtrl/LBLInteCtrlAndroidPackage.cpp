@@ -12,7 +12,7 @@ quint64 LBLPackageInteCtrl_ReadAndroidVersionNum::getVersionType() const
 	if (buffer.size() < 4) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData(), 4);
+    memcpy(&value, buffer.constData(), 4);
 	return value;
 }
 
@@ -57,7 +57,7 @@ quint64 LBLPackageInteCtrl_ReadAndroidNetInfo::getRandomCode() const
 	if (buffer.size() < 44) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 40, 4);
+    memcpy(&value, buffer.constData() + 40, 4);
 	return value;
 }
 
@@ -225,7 +225,7 @@ quint64 LBLPackageInteCtrl_WriteAndroidNetInfo::getRandomCode() const
 	if (buffer.size() < 6) {
 		return value;
 	}
-	memcpy_s(&value, 4, buffer.constData() + 2, 4);
+    memcpy(&value, buffer.constData() + 2, 4);
 	return value;
 }
 
@@ -404,7 +404,7 @@ QString LBLPackageInteCtrl_ReadAndroidHotInfo::getSSID() const
 		return value;
 	}
 	quint16 len;
-	memcpy_s(&len, 2, buffer.constData() + 3, 2);
+    memcpy(&len, buffer.constData() + 3, 2);
 	if (buffer.size() < 5 + len) {
 		return value;
 	}
@@ -420,12 +420,12 @@ QString LBLPackageInteCtrl_ReadAndroidHotInfo::getPSW() const
 		return value;
 	}
 	quint16 len1;
-	memcpy_s(&len1, 2, buffer.constData() + 3, 2);
+    memcpy(&len1, buffer.constData() + 3, 2);
 	if (buffer.size() < 5 + len1) {
 		return value;
 	}
 	quint16 len2;
-	memcpy_s(&len2, 2, buffer.constData() + 5 + len1, 2);
+    memcpy(&len2, buffer.constData() + 5 + len1, 2);
 	if (buffer.size() < 7 + len1 + len2) {
 		return value;
 	}
@@ -652,7 +652,7 @@ QList<quint16> LBLPackageInteCtrl_ReadAndroidKeyTestResult::getResultList() cons
 	for (int i = 0; i < keyCount; ++i) {
 		quint16 keyCode = 0;
 		QByteArray keyArray = buffer.mid(pos, 2);
-		memcpy_s(&keyCode, 2, keyArray.constData(), 2);
+        memcpy(&keyCode, keyArray.constData(), 2);
 		value.append(keyCode);
 		pos += 2;
 	}
@@ -666,7 +666,7 @@ quint16 LBLPackageInteCtrl_ReadAndroidOpticalSensorParam::getParam() const
 	if (buffer.size() < 2) {
 		return value;
 	}
-	memcpy_s(&value, 2, buffer.constData(), 2);
+    memcpy(&value, buffer.constData(), 2);
 	return value;
 }
 

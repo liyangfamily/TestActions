@@ -2,9 +2,8 @@ include($$replace(_PRO_FILE_PWD_, ([^/]+$), \\1/\\1_dependencies.pri))
 include(../../MaxConfig.pri)
 include(MaxConfig3.pri)
 
-QT       += core gui network opengl openglextensions printsupport
+QT += core gui serialport network opengl openglextensions printsupport
 QT += concurrent
-QT += serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
 CONFIG += c++11

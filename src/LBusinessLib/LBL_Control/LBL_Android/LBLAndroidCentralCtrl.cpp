@@ -569,7 +569,7 @@ namespace LBL
 			case 0x01:
 			{
 				quint16 len = 0;
-				memcpy_s(&len, 2, version.constData(), 2);
+                memcpy(&len, version.constData(), 2);
 				d->m_androidVersion = version.mid(2, len);
 			}
 			break;
