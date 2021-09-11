@@ -93,6 +93,18 @@ isEmpty(PRO_BUILD_TREE) {
 PRO_APP_PATH = $$PRO_BUILD_TREE/bin
 
 osx{
+    PRO_APP_TARGET   = "$$PRO_DISPLAY_NAME"
+    exists($$PRO_BUILD_TREE/Contents/MacOS/$$PRO_APP_TARGET): PRO_APP_BUNDLE = $$PRO_BUILD_TREE
+    else: PRO_APP_BUNDLE = $$PRO_APP_PATH/$${PRO_APP_TARGET}.app
+    # target output path if not set manually
+    isEmpty(PRO_OUTPUT_PATH): PRO_OUTPUT_PATH = $$PRO_APP_BUNDLE/Contents
+
+    PRO_LIBRARY_PATH = $$PRO_OUTPUT_PATH/Frameworks
+    PRO_PLUGIN_PATH  = $$PRO_LIBRARY_PATH/PlugIns
+    PRO_DATA_PATH    = $$PRO_OUTPUT_PATH/Resources
+    PRO_DOC_PATH     = $$PRO_DATA_PATH/doc
+    PRO_BIN_PATH     = $$PRO_OUTPUT_PATH/MacOS
+
 
 }else{
     PRO_APP_TARGET   = $$PRO_ID

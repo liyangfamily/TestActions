@@ -8,7 +8,7 @@ win32 {
 }
 
 DESTDIR = $$PRO_LIBRARY_PATH
-
+LIBS *= -L$$PRO_LIBRARY_PATH
 TARGET = $$qtLibraryTargetName($$TARGET)
 
 TEMPLATE = lib
