@@ -83,13 +83,6 @@ FORMS += \
     Advancedsetting/smartsetting.ui \
       Advancedsetting/smartsecondsettingxian.ui
 
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LAPI_Control)
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_SenderCardItem)
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_CommunicatEngine)
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Control)
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Core)
-INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Advanced)
-
 
 
 
