@@ -14,10 +14,10 @@ jobs:
     strategy:
       matrix:
         os: [macos-10.15]
-        qt_ver: [5.9.9,5.12.10,5.15.2]
+        qt_ver: [5.12.10,5.15.2]
         qt_arch: [clang_64]
     env:
-      targetName: MaxConfig.exe
+      targetName: MaxConfig
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.13.0
@@ -35,12 +35,12 @@ jobs:
       - name: package
         run: |
           # 拷贝依赖
-          macdeployqt bin/release/${targetName}.app -qmldir=. -verbose=1 -dmg
+          macdeployqt bin/${targetName}.app -verbose=1 -dmg
       # 上传artifacts          
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.targetName }}_${{ matrix.os }}_${{matrix.qt_ver}}.zip
-          path: bin/release/${{ env.targetName }}.app
+          path: bins/${{ env.targetName }}.app
       # tag 上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')
