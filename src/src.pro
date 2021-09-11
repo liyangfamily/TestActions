@@ -3,6 +3,6 @@ CONFIG   += ordered
 
 SUBDIRS += \
     LBusinessLib \
-    AdvancedSetting \
+    Advancedsetting \
     MaxConfig3
 
