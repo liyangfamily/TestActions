@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QTimer>
+#include <QMouseEvent>
 
 #include "mcscreen.h"
 #include "mcconnection.h"

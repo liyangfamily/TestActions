@@ -13,6 +13,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 class QEvent;
 class QResizeEvent;
+class QMouseEvent;
 class QButtonGroup;
 class MCScreen;
 class MCConnection;
