@@ -60,7 +60,7 @@ bool LBLClusterProxy::syncSend(const LBLEnginePackage& sendPack, LBLEnginePackag
 		return false;
 	}
 }
-
+#include <LBL_Core/LBLUIHelper>
 bool LBLClusterProxy::exclusiveSyncSend(const LBLEnginePackage & sendPack, LBLEnginePackage & recPack, int mesc, bool force)
 {
 	if (isItemExlusive(sendPack.hostName())) {
@@ -71,9 +71,9 @@ bool LBLClusterProxy::exclusiveSyncSend(const LBLEnginePackage & sendPack, LBLEn
 	}
 	LBLSyncWaiter syncLocker(sendPack);
 	gCluster->slot_SendData(sendPack.socketObj(), sendPack);
-	if (syncLocker.syncLock(mesc, force))
-	{
-		recPack = syncLocker.syncRecPackage();
+    if (syncLocker.syncLockEventLoop(mesc))
+    {
+        recPack = syncLocker.syncRecPackage();
 		return true;
 	}
 	else

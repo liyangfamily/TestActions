@@ -21,7 +21,8 @@ class LBL_COMMUNICATENGINE_EXPORT LBLSyncWaiter : public QObject
 public:
 	LBLSyncWaiter(LBLEnginePackage packInfo);
 	~LBLSyncWaiter();
-	bool syncLock(int msec = 1500, bool force = false);
+    bool syncLock(int msec = 1500, bool force = false);
+    bool syncLockEventLoop(int msec = 1500);
 	LBLEnginePackage syncRecPackage();
 protected:
 	bool event(QEvent* e) override;

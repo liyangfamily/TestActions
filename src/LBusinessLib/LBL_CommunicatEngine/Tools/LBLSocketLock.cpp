@@ -75,6 +75,26 @@ bool LBLSyncWaiter::syncLock(int msec /*= 3000*/, bool force/* = false*/)
 	return waiter.wait(msec, force);
 }
 
+#include <QTimer>
+bool LBLSyncWaiter::syncLockEventLoop(int msec /*= 3000*/)
+{
+    QEventLoop loop;
+    QTimer outTimer;
+    outTimer.setSingleShot(true);
+    connect(&outTimer, &QTimer::timeout, &loop, &QEventLoop::quit);
+    connect(this, &LBLSyncWaiter::sig_syncFinnish, &loop, &QEventLoop::quit);
+    outTimer.start(msec); // 超时
+    loop.exec();
+    if(outTimer.isActive()){
+        outTimer.stop();
+        return true;
+    }
+    else{
+        outTimer.stop();
+        return false;
+    }
+}
+
 LBLEnginePackage LBLSyncWaiter::syncRecPackage()
 {
 	return m_syncRecPackage;
