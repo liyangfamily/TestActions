@@ -53,7 +53,7 @@ MainWindow::MainWindow()
     , m_coreImpl(new ICore(this))
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::FramelessWindowHint);
+    //setWindowFlag(Qt::FramelessWindowHint);
     init();
 }
 #endif

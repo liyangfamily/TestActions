@@ -14,7 +14,6 @@ osx {
 DESTDIR = $$PRO_LIBRARY_PATH
 
 TARGET = $$qtLibraryTargetName($$TARGET)
-message(111111=$$TARGET)
 
 TEMPLATE = lib
 CONFIG += shared dll
