@@ -125,9 +125,12 @@ void LBLDetectServer::prepareComDevice()
 	portDescriptionList.append("Silicon Labs CP210x USB to UART Bridge");
 	portDescriptionList.append("Prolific PL2303GC USB Serial COM Port");
 	portDescriptionList.append("Prolific USB-to-Serial Comm Port");
+#ifdef Q_OS_MACOS
+    portDescriptionList.append("USB-Serial Controller ");
+#endif
 
 	foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
-	{
+    {
 		if (portDescriptionList.contains(info.description()))
 		{
 			qDebug() << " Find serialPortName:" << info.portName();
@@ -251,7 +254,7 @@ void LBLDetectServer::slot_detectTimeOut()
 		}
 		if (!m_detectServerTimer.isActive())
 		{
-			m_detectServerTimer.start(m_everyDetectIntervalTime);
+            m_detectServerTimer.start(m_everyDetectIntervalTime);
 		}
 		emit sig_DetectComplite();
 		//checkHeartBeating();
