@@ -60,22 +60,12 @@ defineReplace(stripSrcDir) {
     return($$relative_path($$absolute_path($$1, $$OUT_PWD), $$_PRO_FILE_PWD_))
 }
 
-# Copies the given files to the destination directory
-defineTest(copyToDestdir) {
-    files = $$1
-
-    for(FILE, files) {
-        DDIR = $$DESTDIR
-
-        # Replace slashes in paths with backslashes for Windows
-        win32:FILE ~= s,/,\\\\,g
-        win32:DDIR ~= s,/,\\\\,g
-
-        QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$FILE) $$quote($$DDIR) $$escape_expand(\\\
-\\\\t)
-    }
-
-    export(QMAKE_POST_LINK)
+# Replace the given Path to Native
+defineReplace(nativePath) {
+    path = $$1
+    # Replace slashes in paths with backslashes for Windows
+    win32:path ~= s,/,\\\\,g
+    return($$path)
 }
 
 isEmpty(PRO_LIBRARY_BASENAME) {

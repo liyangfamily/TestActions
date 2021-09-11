@@ -11,6 +11,13 @@ RC_ICONS = Resources/Normal/MaxConfig.ico
 TARGET = $$PRO_APP_TARGET
 DESTDIR = $$PRO_APP_PATH
 
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LAPI_Control)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_SenderCardItem)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_CommunicatEngine)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Control)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Core)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Advanced)
+
 exists (../../.git) {
     GIT_BRANCH   = $$system(git rev-parse --abbrev-ref HEAD)
     GIT_SHA      = $$system(git rev-parse --short=8 HEAD)

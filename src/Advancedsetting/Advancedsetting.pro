@@ -10,11 +10,6 @@ DEFINES += Advancedsetting_LIBRARY
 
 CONFIG += c++11 qt debug_and_release
 
-
-
-
-
-
 SOURCES += \
     Advancedsetting/advancedcustom.cpp \
     Advancedsetting/advancedotherpara.cpp \
@@ -88,12 +83,12 @@ FORMS += \
     Advancedsetting/smartsetting.ui \
       Advancedsetting/smartsecondsettingxian.ui
 
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LAPI_Control
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LBL_SenderCardItem
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LBL_CommunicatEngine
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LBL_Control
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LBL_Core
-INCLUDEPATH += $$LBUSINESSLIB_INCLUDE/LBL_Advanced
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LAPI_Control)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_SenderCardItem)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_CommunicatEngine)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Control)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Core)
+INCLUDEPATH += $$nativePath($$LBUSINESSLIB_INCLUDE/LBL_Advanced)
 
 
 
