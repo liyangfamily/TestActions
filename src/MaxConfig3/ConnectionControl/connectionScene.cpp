@@ -6,6 +6,8 @@
 
 #include <QDebug>
 #include <QGraphicsView>
+#include <QGraphicsSceneMouseEvent>
+#include <QKeyEvent>
 #include "Utils/correctdatahelper.h"
 #include "Core/icore.h"
 

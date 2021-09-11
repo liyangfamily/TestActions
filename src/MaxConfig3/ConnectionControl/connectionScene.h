@@ -8,6 +8,7 @@
 
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
+class QKeyEvent;
 class QMenu;
 QT_END_NAMESPACE
 
