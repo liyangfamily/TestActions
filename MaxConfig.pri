@@ -152,6 +152,7 @@ for(ever) {
             error("Library dependency $$dep not found")
         include($$dependencies_file)
         LIBS += -l$$qtLibraryTargetName($$QTC_LIB_NAME)
+        #QMAKE_LFLAGS += -l$$qtLibraryTargetName($$QTC_LIB_NAME)
     }
     QTC_LIB_DEPENDS = $$unique(QTC_LIB_DEPENDS)
     QTC_LIB_DEPENDS -= $$unique(done_libs)
