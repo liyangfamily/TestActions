@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include "Core/icore.h"
+#ifdef Q_OS_WIN
+#include "CustomWidget/framelesswindow.h"
+#else
 #include "Utils/appmainwindow.h"
-//#include "CustomWidget/framelesswindow.h"
+#endif
 
 #include <QListWidgetItem>
 #include <QStatusBar>
@@ -28,9 +31,9 @@ namespace Core {
 
 namespace Internal {
 
-#ifdef Q_OS_WIN
-#undef Q_OS_WIN
-#endif
+//#ifdef Q_OS_WIN
+//#undef Q_OS_WIN
+//#endif
 
 #ifdef Q_OS_WIN
 class MainWindow : public CFramelessWindow

@@ -61,8 +61,10 @@ void CFramelessWindow::setResizeable(bool resizeable)
 	//保留一个像素的边框宽度，否则系统不会绘制边框阴影
 	//
 	//we better left 1 piexl width of border untouch, so OS can draw nice shadow around it
+#ifdef Q_CC_MSVC
 	const MARGINS shadow = { 1, 1, 1, 1 };
-    //DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+    DwmExtendFrameIntoClientArea(HWND(winId()), &shadow);
+#endif
 
 	setVisible(visible);
 }

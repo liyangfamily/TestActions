@@ -38,6 +38,24 @@ message(git sha = $$GIT_SHA)
 DEFINES += GIT_BUILD_SHA=\"\\\"$$GIT_SHA\\\"\"
 DEFINES += GIT_BUILD_TIME=\"\\\"$$GIT_TIME\\\"\"
 
+
+#Param Path Copy
+include(../../shard/function.prf)
+PRO_SOURCE_SHARD = $$PRO_SOURCE_TREE/shard
+
+ParamSrcFilePath += \
+    $$PRO_SOURCE_SHARD/Parameter
+
+for(path, ParamSrcFilePath) {
+        sub_dir = $$path
+        sub_dir ~= s,^$$re_escape($$PRO_SOURCE_SHARD),,
+        paramSrcDir  = $$path/*
+        paramDestDir = $$clean_path($$PRO_BIN_PATH$$sub_dir)
+        copyDir($$nativePath($$paramSrcDir), $$nativePath($$paramDestDir))
+        message(src = $$nativePath($$paramSrcDir))
+        message(dest = $$nativePath($$paramDestDir))
+}
+
 #sfSrcFile = $$PRO_SOURCE_TREE/shard/Parameter/*
 #sfSrcFile = $$replace(sfSrcFile, /, \\)
 

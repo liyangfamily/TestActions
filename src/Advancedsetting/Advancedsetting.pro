@@ -6,7 +6,7 @@ QT -= gui
 #TARGET = Advancedsetting
 
 #TEMPLATE = lib
-DEFINES += Advancedsetting_LIBRARY
+DEFINES += ADVANCEDSETTING_LIBRARY
 
 CONFIG += c++11 qt debug_and_release
 

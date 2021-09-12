@@ -8,6 +8,7 @@ SOURCES += \
     $$PWD/Core/mainwindow_new.cpp \
     $$PWD/Core/versiondialog.cpp \
     $$PWD/CustomWidget/flowlayout.cpp \
+    $$PWD/CustomWidget/framelesswindow.cpp \
     $$PWD/CustomWidget/mccusfileupgradewidget.cpp \
     $$PWD/CustomWidget/mccusswitchbutton.cpp \
     $$PWD/CustomWidget/mcelevatedclass.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     $$PWD/Core/mainwindow_new.h \
     $$PWD/Core/versiondialog.h \
     $$PWD/CustomWidget/flowlayout.h \
+    $$PWD/CustomWidget/framelesswindow.h \
     $$PWD/CustomWidget/mccusfileupgradewidget.h \
     $$PWD/CustomWidget/mccusswitchbutton.h \
     $$PWD/CustomWidget/mcelevatedclass.h \
