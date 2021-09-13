@@ -11,3 +11,8 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += src
+
+TRANSLATIONS += \
+    shard/translations/MaxConfig3_zh_CN.ts \
+    shard/translations/MaxConfig3_zh_TW.ts \
+    shard/translations/MaxConfig3_en.ts

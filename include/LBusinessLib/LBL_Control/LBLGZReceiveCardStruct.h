@@ -107,7 +107,10 @@ namespace LBL
 			unsigned int recivedPackages;
 			unsigned int correctPackages;
 			unsigned int totalPackages;
-			unsigned char hardwareVersion[8];
+            unsigned short hardwareVersion1;
+            unsigned short hardwareVersion2;
+            unsigned short hardwareVersion3;
+            unsigned short hardwareVersion4;
 			unsigned char softwareVendor[4];
 			unsigned char softwareVersion_Year1;
 			unsigned char softwareVersion_Year2;
@@ -119,8 +122,9 @@ namespace LBL
 			unsigned char softwareVersion_SmallA;
 			unsigned char softwareVersion_SmallB;
 			unsigned short reciveCardPixel_Width;
-			unsigned short reciveCardPixel_Height;
-			unsigned char reserve3[215];
+            unsigned short reciveCardPixel_Height;
+            unsigned char protocolType;
+            unsigned char reserve3[214];
 
 			tagRCStatusInfo() {
 				SetToDefalut();
@@ -166,15 +170,19 @@ namespace LBL
 			quint8 GetModuleIndex()const {
 				return moduleInex;
 			}
-			QString GetHardwareVendor()const {
-				QByteArray ver((const char*)hardwareVersion, 8);
-				return ver;
+            QString GetHardwareVendor()const {
+                return QString("%1-%2-%3-%4").arg(hardwareVersion1,4,16,QLatin1Char('0'))
+                        .arg(hardwareVersion2,4,16,QLatin1Char('0'))
+                        .arg(hardwareVersion3,4,16,QLatin1Char('0'))
+                        .arg(hardwareVersion4,4,16,QLatin1Char('0'));
+                //QByteArray ver((const char*)hardwareVersion, 8);
+                //return ver;
 			}
 			QString GetSoftwareVendor()const {
 				QByteArray ver((const char*)softwareVendor, 4);
 				return ver;
 			}
-			QString GetFPGAVersion()const {
+            QString GetSoftwareVersion()const {
 				QString strVersion;
 				strVersion.sprintf(("20%c%c-%c%c-%c%c %c %c.%c"), softwareVersion_Year1, softwareVersion_Year2,
 					softwareVersion_Month1, softwareVersion_Month2,
@@ -184,7 +192,21 @@ namespace LBL
 			}
 			QSize GetModuleResolution()const {
 				return QSize(reciveCardPixel_Width, reciveCardPixel_Height);
-			}
+            }
+
+            QString GetPotocolType()const {
+                switch(protocolType)
+                {
+                case 0:
+                    return QString("V2.0");
+                case 1:
+                    return QString("V3.2");
+                case 2:
+                    return QString("V3.3");
+                default:
+                    return QString("-");
+                }
+            }
 		}SRCStatusInfo;
 
 		/*接收卡模组监控信息结构体*/

@@ -10,14 +10,14 @@
 QString LBLUIHelper::appName()
 {
 	//没有必要每次都获取,只有当变量为空时才去获取一次
-	static QString name;
-	if (name.isEmpty()) {
-		name = qApp->applicationFilePath();
-		QStringList list = name.split("/");
-		name = list.at(list.count() - 1).split(".").at(0);
+    static QString appName;
+    if (appName.isEmpty()) {
+        appName = qApp->applicationFilePath();
+        QStringList list = appName.split("/");
+        appName = list.at(list.count() - 1).split(".").at(0);
 	}
 
-	return name;
+    return appName;
 }
 
 QString LBLUIHelper::appPath()
@@ -30,7 +30,7 @@ QString LBLUIHelper::appDocumentsPath()
     static QString appDocumentsPath;
     if (appDocumentsPath.isEmpty()) {
         QString tempPath= QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-        tempPath.append(tr("/MaxConfig3/AppLocalData"));
+        tempPath.append(tr("/MaxConfig3"));
         appDocumentsPath=tempPath;
     }
     return appDocumentsPath;
@@ -38,44 +38,58 @@ QString LBLUIHelper::appDocumentsPath()
 
 QString LBLUIHelper::appDataLocation()
 {
-	static QString path;
-    if (path.isEmpty()) {
+    static QString appDataLocation;
+    if (appDataLocation.isEmpty()) {
         QDir _appPath(appPath());
-        QString tempPath = _appPath.absolutePath() + tr("/AppLocalData");
+        QString tempPath = _appPath.absolutePath();
 		QDir dir;
 		if (dir.mkpath(tempPath)) {
-            path = tempPath;
+            appDataLocation = tempPath;
 		}
 	}
-	return path;
+    return appDataLocation;
 }
 
 QString LBLUIHelper::appConfigDataLocation()
 {
-	static QString path;
-	if (path.isEmpty()) {
+    static QString appConfigDataLocation;
+    if (appConfigDataLocation.isEmpty()) {
         QString tempPath = LBLUIHelper::appDocumentsPath();
 		tempPath.append(tr("/Config"));
 		QDir dir;
 		if (dir.mkpath(tempPath)) {
-			path = tempPath;
+            appConfigDataLocation = tempPath;
 		}
 	}
-	return path;
+    return appConfigDataLocation;
 }
 
 QString LBLUIHelper::appParamDataLocation()
 {
-	static QString path;
-	if (path.isEmpty()) {
+    static QString appParamDataLocation;
+    if (appParamDataLocation.isEmpty()) {
 		QString tempPath = LBLUIHelper::appDataLocation();
         tempPath.append(tr("/Parameter"));
 		QDir dir;
 		if (dir.mkpath(tempPath)) {
-			path = tempPath;
+            appParamDataLocation = tempPath;
 		}
 	}
-	return path;
+    return appParamDataLocation;
+}
+
+QString LBLUIHelper::appLocalsLocation()
+{
+    static QString appLocalsLocation;
+    if (appLocalsLocation.isEmpty()) {
+        QString tempPath = LBLUIHelper::appDataLocation();
+        tempPath.append(tr("/Locals"));
+        QDir dir;
+        if (dir.mkpath(tempPath)) {
+            appLocalsLocation = tempPath;
+        }
+    }
+    return appLocalsLocation;
 }
 
 QString LBLUIHelper::appLogDataLocation()

@@ -113,11 +113,11 @@ void MCConnection::on_btnConnectionRead_clicked()
 		LBLConnection* connection = LAPI::GetConnection();
 		if (connection) {
             m_scene->drawConnection(connection);
-            ICore::statusBar()->showMessage(tr("连接关系读取成功."), 1000);
+            ICore::statusBar()->showMessage(tr("Connection relationship read successfully."), 1000);
 		}
 	}
 	else {
-        ICore::statusBar()->showMessage(tr("连接关系读取失败."), 1000);
+        ICore::statusBar()->showMessage(tr("Connection relationship read failed."), 1000);
 	}
 }
 
@@ -127,10 +127,10 @@ void MCConnection::on_btnConnectionSend_clicked()
     if (connection) {
         m_scene->creatConnection(connection);
         if (LAPI::EResult::ER_Success == LAPI::WriteConnection(connection)) {
-            ICore::statusBar()->showMessage(tr("连接关系发送成功."), 1000);
+            ICore::statusBar()->showMessage(tr("Connection relationship send successfully."), 1000);
         }
         else {
-            ICore::statusBar()->showMessage(tr("连接关系发送失败."), 1000);
+            ICore::statusBar()->showMessage(tr("Connection relationship send failed."), 1000);
         }
     }
 }

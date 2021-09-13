@@ -95,11 +95,11 @@ void MCCorrect::on_btnConnectionRead_clicked()
         LBLConnection* connection = LAPI::GetConnection();
         if (connection) {
             m_scene->drawConnection(connection);
-            ICore::statusBar()->showMessage(tr("连接关系读取成功."), 1000);
+            ICore::statusBar()->showMessage(tr("Connection relationship read successfully."), 1000);
         }
     }
     else {
-        ICore::statusBar()->showMessage(tr("连接关系读取失败."), 1000);
+        ICore::statusBar()->showMessage(tr("Connection relationship read failed."), 1000);
     }
 }
 

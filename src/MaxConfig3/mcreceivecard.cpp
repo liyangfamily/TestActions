@@ -71,7 +71,7 @@ void MCReceiveCard::initRCStatusInfo()
 	ui->tableWidgetSRCInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	QStringList header;
-	header << tr("PortIndex") << tr("ModuleIndex") << tr("HardWareVer") << tr("SoftwareVer") << tr("FPGAVer") << tr("PackageLoseRate") << tr("BitErrorRate") << tr("Upgrade");
+    header << tr("PortIndex") << tr("ModuleIndex") << tr("HardWareVer") << tr("SoftwareVer") << tr("ProtocolVer") << tr("PackageLoseRate") << tr("BitErrorRate") << tr("Upgrade");
 	ui->tableWidgetSRCInfo->setColumnCount(header.size()); //设置列数
 	ui->tableWidgetSRCInfo->setHorizontalHeaderLabels(header);
 	ui->tableWidgetSRCInfo->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
@@ -101,11 +101,11 @@ void MCReceiveCard::updateRCStatusInfo(QList<LBL::RC::SRCStatusInfo>&rcStatusInf
 		ui->tableWidgetSRCInfo->setItem(i, ECol_HardWareVer, new QTableWidgetItem(tempInfo.GetHardwareVendor()));
 		ui->tableWidgetSRCInfo->item(i, ECol_HardWareVer)->setTextAlignment(Qt::AlignCenter);
 
-		ui->tableWidgetSRCInfo->setItem(i, ECol_SoftWareVer, new QTableWidgetItem(tempInfo.GetSoftwareVendor()));
+        ui->tableWidgetSRCInfo->setItem(i, ECol_SoftWareVer, new QTableWidgetItem(tempInfo.GetSoftwareVersion()));
 		ui->tableWidgetSRCInfo->item(i, ECol_SoftWareVer)->setTextAlignment(Qt::AlignCenter);
 
-		ui->tableWidgetSRCInfo->setItem(i, ECol_FPGAVer, new QTableWidgetItem(tempInfo.GetFPGAVersion()));
-		ui->tableWidgetSRCInfo->item(i, ECol_FPGAVer)->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidgetSRCInfo->setItem(i, ECol_ProtocolType, new QTableWidgetItem(tempInfo.GetPotocolType()));
+        ui->tableWidgetSRCInfo->item(i, ECol_ProtocolType)->setTextAlignment(Qt::AlignCenter);
 
 		ui->tableWidgetSRCInfo->setItem(i, ECol_PackLoseRate, new QTableWidgetItem(QString("%1%2")\
 			.arg(QString::number(tempInfo.GetPackageLoseRate(), 'f', 2))\
@@ -157,7 +157,9 @@ void MCReceiveCard::on_btnParamImport_clicked()
 	QString fileName = QFileDialog::getOpenFileName(this,
 		tr("Select File"),
 		App::lastOpenPath,
-		QString("%1;;%2;;%3").arg(Utils::FileFilter::MODULEPARAM_FILTER).arg(Utils::FileFilter::DRIVEICPARAM_FILTER).arg(Utils::FileFilter::DECODINGICPARAM_FILTER),
+        QString("%1;;%2;;%3").arg(tr(Utils::FileFilter::MODULEPARAM_FILTER))
+                             .arg(tr(Utils::FileFilter::DRIVEICPARAM_FILTER)
+                             .arg(tr(Utils::FileFilter::DECODINGICPARAM_FILTER))),
 		&selectFilter);
 	if (fileName.isEmpty()) {
 		return;
@@ -169,11 +171,11 @@ void MCReceiveCard::on_btnParamImport_clicked()
 	if (file.size() != 1024) { 
 		return;
 	}
-	if (selectFilter == Utils::FileFilter::MODULEPARAM_FILTER) {
+    if (selectFilter == tr(Utils::FileFilter::MODULEPARAM_FILTER)) {
 		ui->labelRCModuleFileName->setText(file.fileName());
 		ui->labelRCModuleFileName->setToolTip(file.filePath());
 	}
-	else if (selectFilter == Utils::FileFilter::DRIVEICPARAM_FILTER) {
+    else if (selectFilter == tr(Utils::FileFilter::DRIVEICPARAM_FILTER)) {
 		ui->labelRCDriveICFileName->setText(file.fileName());
 		ui->labelRCDriveICFileName->setToolTip(file.filePath());
 	}
@@ -188,20 +190,20 @@ void MCReceiveCard::on_btnModuleExport_clicked()
 {
 	QByteArray data = LAPI::ReadModuleParam(0, 0);
 	if (data.isEmpty()) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("读取失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
 		return;
 	}
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
 		App::lastOpenPath, \
-		QString("%1").arg(Utils::FileFilter::MODULEPARAM_FILTER));
+        QString("%1").arg(tr(Utils::FileFilter::MODULEPARAM_FILTER)));
 	if (fileName.isEmpty()) {
 		return;
 	}
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("文件打开失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}
 	file.write(data);
 	file.close();
@@ -218,8 +220,8 @@ void MCReceiveCard::on_btnModuleSend_clicked()
 	LAPI::EResult ret = LAPI::WriteModuleParam(0xFF, 0xFF, data);
 	Core::ICore::showMessageLAPIResult(ret);
 	/*if (LAPI::EResult::ER_Success != ret) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("发送失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
 	}*/
 }
 
@@ -227,20 +229,20 @@ void MCReceiveCard::on_btnDriveICExport_clicked()
 {
 	QByteArray data = LAPI::ReadDriveICParam(0, 0);
 	if (data.isEmpty()) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("读取失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
 		return;
 	}
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
 		App::lastOpenPath, \
-		QString("%1").arg(Utils::FileFilter::DRIVEICPARAM_FILTER));
+        QString("%1").arg(tr(Utils::FileFilter::DRIVEICPARAM_FILTER)));
 	if (fileName.isEmpty()) {
 		return;
 	}
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("文件打开失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}
 	file.write(data);
 	file.close();
@@ -257,8 +259,8 @@ void MCReceiveCard::on_btnDriveICSend_clicked()
 	LAPI::EResult ret = LAPI::WriteDriveICParam(0xFF, 0xFF, data);
 	Core::ICore::showMessageLAPIResult(ret);
 	/*if (LAPI::EResult::ER_Success != ret) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("发送失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
 	}*/
 }
 
@@ -266,20 +268,20 @@ void MCReceiveCard::on_btnDecodingICExport_clicked()
 {
 	QByteArray data = LAPI::ReadDecodingICParam(0, 0);
 	if (data.isEmpty()) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("读取失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
 		return;
 	}
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
 		App::lastOpenPath, \
-		QString("%1").arg(Utils::FileFilter::DECODINGICPARAM_FILTER));
+        QString("%1").arg(tr(Utils::FileFilter::DECODINGICPARAM_FILTER)));
 	if (fileName.isEmpty()) {
 		return;
 	}
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("文件打开失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}
 	file.write(data);
 	file.close();
@@ -296,8 +298,8 @@ void MCReceiveCard::on_btnDecodingICSend_clicked()
 	LAPI::EResult ret = LAPI::WriteDecodingICParam(0xFF, 0xFF, data);
 	Core::ICore::showMessageLAPIResult(ret);
 	/*if (LAPI::EResult::ER_Success != ret) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("发送失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
 	}*/
 }
 
@@ -355,8 +357,8 @@ void MCReceiveCard::on_btnRegWrite_clicked()
 	buffer.replace(0, length > text.size() ? text.size() : length, text);
 	LAPI::EResult ret = LAPI::WriteRCFPGARegister(port, module, addr, buffer);
 	/*if (LAPI::EResult::ER_Success != LAPI::WriteRCFPGARegister(port, module, addr, buffer)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("寄存器写入失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Register write Failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}*/
 	Core::ICore::showMessageLAPIResult(ret);
 }
@@ -367,7 +369,7 @@ void MCReceiveCard::on_btnRegImport_clicked()
 	QString fileName = QFileDialog::getOpenFileName(this,
 		tr("Select File"),
 		App::lastOpenPath,
-		QString("%1").arg(Utils::FileFilter::BINPARAM_FILTER),
+        QString("%1").arg(tr(Utils::FileFilter::BINPARAM_FILTER)),
 		&selectFilter);
 	if (fileName.isEmpty()) {
 		return;
@@ -399,14 +401,14 @@ void MCReceiveCard::on_btnRegExport_clicked()
 	}
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
 		App::lastOpenPath, \
-		QString("%1").arg(Utils::FileFilter::BINPARAM_FILTER));
+        QString("%1").arg(tr(Utils::FileFilter::BINPARAM_FILTER)));
 	if (fileName.isEmpty()) {
 		return;
 	}
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("文件打开失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}
 	file.write(data);
 	file.close();

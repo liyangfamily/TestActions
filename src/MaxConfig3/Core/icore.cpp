@@ -129,7 +129,7 @@ namespace Core
     }
 	void ICore::showMessageLAPIResult(LAPI::EResult ret, int msec)
 	{
-        ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), msec);
+        ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("Successful operation.") : tr("operation failed."), msec);
     }
 
     void ICore::showMessage(const QString &message, int msec)

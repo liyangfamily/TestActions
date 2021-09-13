@@ -17,7 +17,7 @@ class MCReceiveCard : public QWidget
 		ECol_ModuleIndex,
 		ECol_HardWareVer,
 		ECol_SoftWareVer,
-		ECol_FPGAVer,
+		ECol_ProtocolType,
 		ECol_PackLoseRate,
 		ECol_BitErrorRate,
 		ECol_Upgrade,

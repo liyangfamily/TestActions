@@ -3,7 +3,7 @@
 #include <QButtonGroup>
 #include <LAPIControl>
 #include <QThread>
-//#include <LBL_Advanved/Advancedsetting>
+#include <LBL_Advanved/Advancedsetting>
 MCScreen::MCScreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::mcScreen)
@@ -286,8 +286,8 @@ void MCScreen::on_radioBtnCCT_clicked()
 
 void MCScreen::on_btnModuleParam_clicked()
 {
-    //AdvancedSetting *advancedsetting = new AdvancedSetting();
-    //advancedsetting->show();
+    AdvancedSetting *advancedsetting = new AdvancedSetting();
+    advancedsetting->show();
 }
 
 

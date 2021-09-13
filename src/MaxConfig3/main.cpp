@@ -2,6 +2,7 @@
 #if(LBL_MemoryLeaksDetect)
 #include <vld.h>
 #endif
+#include "app.h"
 #include "mainwindow.h"
 #include "Core/mainwindow_new.h"
 
@@ -10,7 +11,6 @@
 #include <QSerialPort>
 #include <QHostInfo>
 #include <QFile>
-#include "app.h"
 int main(int argc, char *argv[])
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
@@ -38,6 +38,24 @@ int main(int argc, char *argv[])
 	App::ConfigFile = QString("%1/%2.ini").arg(LBLUIHelper::appPath()).arg(LBLUIHelper::appName());
 	App::readConfig();
 
+    QTranslator translator;
+    QStringList uiLanguages = QLocale::system().uiLanguages();
+    if(App::lastLanguage.isEmpty()){
+        App::lastLanguage=uiLanguages.first();
+        App::writeConfig();
+    }
+    QString overrideLanguage = App::lastLanguage;
+    if (!overrideLanguage.isEmpty())
+        uiLanguages.prepend(overrideLanguage);
+    const QString &appTrPath = LBLUIHelper::appLocalsLocation();
+    for (QString locale : qAsConst(uiLanguages)) {
+        locale = QLocale(locale).name();
+        if (translator.load("maxconfig3_" + locale, appTrPath)) {
+            a.installTranslator(&translator);
+            break;
+        }
+    }
+    
     Core::Internal::MainWindow w;
     //MainWindow_New w;
 	w.show();

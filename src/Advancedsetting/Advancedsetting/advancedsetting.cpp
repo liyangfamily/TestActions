@@ -114,8 +114,8 @@ void AdvancedSetting::LoadingPara()
     ui->comboBox_6->clear();
     ui->TXDcomboBox->addItems(DclkGclkList);
     ui->comboBox_6->addItems(DclkGclkList);
-    ui->TXDcomboBox->setCurrentIndex(-1);
-    ui->comboBox_6->setCurrentIndex(-1);
+//    ui->TXDcomboBox->setCurrentIndex(-1);
+//    ui->comboBox_6->setCurrentIndex(-1);
 
     InitCombobox = false;
 
@@ -1246,6 +1246,9 @@ int AdvancedSetting::VisionRefresh()
     //int SubField = ICPara[5];
     //扫描数
     int Scannum = ModulePara[0x25];
+    if(0==Scannum){
+        return VR;
+    }
     //扫描方向芯片数
     //int Chipnum =
 

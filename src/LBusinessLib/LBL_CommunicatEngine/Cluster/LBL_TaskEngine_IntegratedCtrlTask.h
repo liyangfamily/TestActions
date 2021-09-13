@@ -9,6 +9,7 @@
 class LBLCluster;
 class LBL_TaskEngine_IntegratedCtrlTask : public LBL_TaskEngine_TaskBase
 {
+    Q_OBJECT
 public:
 	explicit LBL_TaskEngine_IntegratedCtrlTask(LBLCluster* pCluster, QObject* pSocket, QObject * parent = 0);
 	~LBL_TaskEngine_IntegratedCtrlTask();

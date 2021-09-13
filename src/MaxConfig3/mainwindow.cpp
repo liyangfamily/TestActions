@@ -348,12 +348,12 @@ void MainWindow::slot_SenderCardOffline(SDetectItemInfo info)
 
 void MainWindow::slot_StartDetect()
 {
-    this->statusBar()->showMessage("正在刷新发送卡...");
+    this->statusBar()->showMessage(tr("Refreshing..."));
 }
 
 void MainWindow::slot_DetectComplit()
 {
-    this->statusBar()->showMessage("刷新完成.", 1000);
+    this->statusBar()->showMessage(tr("Refresh complete."), 1000);
     updateSCList();
 }
 

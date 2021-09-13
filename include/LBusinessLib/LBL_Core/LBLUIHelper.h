@@ -24,10 +24,12 @@ public:
 	//程序数据路径
 	static QString appDataLocation();
 
-    //程序配置数据路径-doc
-	static QString appConfigDataLocation();
     //程序参数数据路径-exe
-	static QString appParamDataLocation();
+    static QString appParamDataLocation();
+    //程序语言路径-exe
+    static QString appLocalsLocation();
+    //程序配置数据路径-doc
+    static QString appConfigDataLocation();
     //程序Log数据路径-doc
 	static QString appLogDataLocation();
     //程序runtime数据路径-doc

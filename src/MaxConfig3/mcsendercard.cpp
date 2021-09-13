@@ -181,8 +181,8 @@ void MCSenderCard::on_btnRegWrite_clicked()
 	buffer.replace(0, length > text.size() ? text.size() : length, text);
 	LAPI::EResult ret = LAPI::WriteSCFPGARegister(addr, buffer);
 	/*if (LAPI::EResult::ER_Success != LAPI::WriteSCFPGARegister(addr, buffer)) {
-		QMessageBox::information(NULL, tr("提示"), \
-			tr("寄存器写入失败."), QMessageBox::Yes, QMessageBox::Yes);
+        QMessageBox::information(NULL, tr("Tip"), \
+            tr("Register write failed."), QMessageBox::Yes, QMessageBox::Yes);
 	}*/
 	Core::ICore::showMessageLAPIResult(ret);
 }
@@ -193,7 +193,7 @@ void MCSenderCard::on_btnSwitch3_0Sys_clicked()
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitch3_0Sys->setSwitchStatus(!ui->btnSwitch3_0Sys->isChecked());
 	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchBlackScreen_clicked()
@@ -201,8 +201,8 @@ void MCSenderCard::on_btnSwitchBlackScreen_clicked()
 	LAPI::EResult ret = LAPI::WriteSCScreenBlack(ui->btnSwitchBlackScreen->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchBlackScreen->setSwitchStatus(!ui->btnSwitchBlackScreen->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchLockScreen_clicked()
@@ -210,8 +210,8 @@ void MCSenderCard::on_btnSwitchLockScreen_clicked()
 	LAPI::EResult ret = LAPI::WriteSCScreenLock(ui->btnSwitchLockScreen->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchLockScreen->setSwitchStatus(!ui->btnSwitchLockScreen->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchErrorBitRateClean_clicked()
@@ -219,8 +219,8 @@ void MCSenderCard::on_btnSwitchErrorBitRateClean_clicked()
 	LAPI::EResult ret = LAPI::WriteSCErrorBitRateStatisticalSwitch(ui->btnSwitchErrorBitRateClean->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchErrorBitRateClean->setSwitchStatus(!ui->btnSwitchErrorBitRateClean->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchCorrect_clicked()
@@ -228,8 +228,8 @@ void MCSenderCard::on_btnSwitchCorrect_clicked()
 	LAPI::EResult ret = LAPI::WriteSCCorrectionSwitch(ui->btnSwitchCorrect->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchCorrect->setSwitchStatus(!ui->btnSwitchCorrect->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchSCS_clicked()
@@ -237,8 +237,8 @@ void MCSenderCard::on_btnSwitchSCS_clicked()
 	LAPI::EResult ret = LAPI::WriteSCSpreadSpectrumSwitch(ui->btnSwitchSCS->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchSCS->setSwitchStatus(!ui->btnSwitchSCS->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitch24BitGamma_clicked()
@@ -246,8 +246,8 @@ void MCSenderCard::on_btnSwitch24BitGamma_clicked()
 	LAPI::EResult ret = LAPI::WriteSC24BitGammaSwitch(ui->btnSwitch24BitGamma->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitch24BitGamma->setSwitchStatus(!ui->btnSwitch24BitGamma->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnSwitchZoomMode_clicked()
@@ -256,8 +256,8 @@ void MCSenderCard::on_btnSwitchZoomMode_clicked()
 	LAPI::EResult ret = LAPI::WriteSCZoomMode(ui->btnSwitchZoomMode->isChecked());
 	if (ret != LAPI::EResult::ER_Success) {
 		ui->btnSwitchZoomMode->setSwitchStatus(!ui->btnSwitchZoomMode->isChecked());
-	}
-	Core::ICore::statusBar()->showMessage(ret == LAPI::EResult::ER_Success ? tr("操作成功") : tr("操作失败"), 1000);
+    }
+    Core::ICore::showMessageLAPIResult(ret);
 }
 
 void MCSenderCard::on_btnZoomSizeSend_clicked()

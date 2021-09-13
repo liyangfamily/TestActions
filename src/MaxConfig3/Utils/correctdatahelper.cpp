@@ -290,7 +290,7 @@ QPair<CorrectDataHelper*, QSharedPointer<QByteArray>> CorrectDataHelper::concurr
     qDebug() << pair.first << pair.second;
     QSharedPointer<QByteArray> data;
     qDebug() << QTime::currentTime();
-    if (pair.first->selectFilter() == Utils::FileFilter::PICTURECORRECT_FILTER) {
+    if (pair.first->selectFilter() == tr(Utils::FileFilter::PICTURECORRECT_FILTER)) {
         QImage image;
         if (!image.load(pair.second)) {
             if(image.isNull()){
@@ -308,7 +308,7 @@ QPair<CorrectDataHelper*, QSharedPointer<QByteArray>> CorrectDataHelper::concurr
         image = image.scaled(pair.first->paintRect().size());
         data = imageToCorrectData(image, pair.first->paintRect(), pair.first->correctDataType());
     }
-    else if (pair.first->selectFilter() == Utils::FileFilter::CORRECT_FILTER) {
+    else if (pair.first->selectFilter() == tr(Utils::FileFilter::CORRECT_FILTER)) {
         QFile file(pair.second);
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << __FUNCTION__ << ": Correct File Open Failed.";
@@ -327,7 +327,7 @@ bool CorrectDataHelper::addCorrectFile()
 	QString imagePath = QFileDialog::getOpenFileName(nullptr,
 		QApplication::tr("Open Correction File"),
 		App::lastOpenPath,
-		QString("%1;;%2").arg(Utils::FileFilter::CORRECT_FILTER).arg(Utils::FileFilter::PICTURECORRECT_FILTER),
+        QString("%1;;%2").arg(tr(Utils::FileFilter::CORRECT_FILTER)).arg(tr(Utils::FileFilter::PICTURECORRECT_FILTER)),
 		&m_selectFilter);
 	if (imagePath.isEmpty())
 	{

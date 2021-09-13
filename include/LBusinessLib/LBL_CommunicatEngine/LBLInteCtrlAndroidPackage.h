@@ -53,6 +53,9 @@ protected:
 	quint16 CmdNum() const override {
 		return quint16(ECommand::EC_Read_AndroidIPInfo);
 	}
+    quint16 CmdRetNum() const override {
+        return CmdNum()+1;
+    }
 	QByteArray CmdContent() const override {
 		return QByteArray((char *)&m_type, 1);
 	}

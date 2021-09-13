@@ -3,6 +3,7 @@
 QString App::ConfigFile = "config.ini";
 
 QString App::lastOpenPath = "";
+QString App::lastLanguage = "";
 
 void App::readConfig()
 {
@@ -14,6 +15,7 @@ void App::readConfig()
 
     set.beginGroup("UIParam");
     App::lastOpenPath = set.value("LastOpenPath").toString();
+    App::lastLanguage = set.value("LastLanguage").toString();
     set.endGroup();
 
 }
@@ -23,7 +25,8 @@ void App::writeConfig()
     QSettings set(App::ConfigFile, QSettings::IniFormat);
 
     set.beginGroup("UIParam");
-	set.setValue("LastOpenPath", App::lastOpenPath);
+    set.setValue("LastOpenPath", App::lastOpenPath);
+    set.setValue("LastLanguage", App::lastLanguage);
     set.endGroup();
 }
 
@@ -53,10 +56,10 @@ bool App::checkConfig()
             QStringList list = line.split("=");
 
             if (list.count() == 2) {
-				if (list.at(0) != "LastOpenPath"&& list.at(1) == "") {
-					ok = false;
-					break;
-				}
+                if (list.at(0) != "LastOpenPath"&& list.at(1) == "") {
+                    ok = false;
+                    break;
+                }
             }
         }
     file.close();

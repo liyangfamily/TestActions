@@ -19,13 +19,13 @@ bool MCMonitorTemperatureTable::loadTxtFile(QString filePath)
 	QFile paramFile(filePath);
 	if (!paramFile.open(QIODevice::ReadOnly))
 	{
-        Core::ICore::statusBar()->showMessage(QApplication::tr("无法打开ADC温度采集曲线数值表。"), 1500);
+        Core::ICore::statusBar()->showMessage(QApplication::tr("Unable to open the ADC temperature acquisition curve value table."), 1500);
 		return false;
 	}
 	//读取文件
 	if (0 == paramFile.size())
 	{
-        Core::ICore::statusBar()->showMessage(QApplication::tr("无法打开ADC温度采集曲线数值表。"), 1500);
+        Core::ICore::statusBar()->showMessage(QApplication::tr("Unable to open the ADC temperature acquisition curve value table."), 1500);
 		return false;
 	}
 	m_elementList.clear();
@@ -176,7 +176,7 @@ void MCMonitor::processTabelData(QList<LBL::RC::SRCMonitorInfo> rcMonitorInfoLis
 		int tempature = m_tTable.getTemperature(tempInfo.monitorStuct.GetTempature());
 		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString("%1%2")\
 			.arg(tempature)\
-			.arg(tr("℃"))));
+            .arg(tr("℃"))));
 		ui->tableWidget->item(i, 3)->setTextAlignment(Qt::AlignCenter);
 	}
 }

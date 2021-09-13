@@ -30,6 +30,7 @@ QScrollArea {
 /*************************************************QTableView************************************************************/
 
 QTableView {
+    min-height: 90px;
     outline: 0px;
     border: 1px solid #4a5d72;
     background-color: #14202F;
@@ -1137,5 +1138,9 @@ QMainWindow {
 }
 
 QDialog {
+    background-color: #14202F;
+}
+
+AdvancedSetting {
     background-color: #14202F;
 }

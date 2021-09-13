@@ -254,7 +254,7 @@ void LBLDetectServer::slot_detectTimeOut()
 		}
 		if (!m_detectServerTimer.isActive())
 		{
-            m_detectServerTimer.start(m_everyDetectIntervalTime);
+			m_detectServerTimer.start(m_everyDetectIntervalTime);
 		}
 		emit sig_DetectComplite();
 		//checkHeartBeating();

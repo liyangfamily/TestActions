@@ -7,10 +7,6 @@ win32 {
     DLLDESTDIR = $$PRO_APP_PATH
 }
 
-osx {
-
-}
-
 DESTDIR = $$PRO_LIBRARY_PATH
 
 TARGET = $$qtLibraryTargetName($$TARGET)

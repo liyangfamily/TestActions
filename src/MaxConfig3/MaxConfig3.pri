@@ -73,8 +73,8 @@ FORMS += \
     mainwindow.ui \
     mcscreen.ui
 
-TRANSLATIONS += \
-    MaxConfig3_zh_CN.ts
+#TRANSLATIONS += \
+#    MaxConfig3_zh_CN.ts
 
 DISTFILES += \
     $$PWD/Core/normal.css \

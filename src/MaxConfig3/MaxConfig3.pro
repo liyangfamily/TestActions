@@ -31,38 +31,47 @@ exists (../../.git) {
     GIT_TIME           = --
     GIT_BUILD_INFO     = --
 }
-#message(git branch = $$GIT_BRANCH)
 message(git time = $$GIT_TIME)
-#message(git build info = $$GIT_BUILD_INFO)
 message(git sha = $$GIT_SHA)
 
 DEFINES += GIT_BUILD_SHA=\"\\\"$$GIT_SHA\\\"\"
 DEFINES += GIT_BUILD_TIME=\"\\\"$$GIT_TIME\\\"\"
-
 
 #Param Path Copy
 include(../../shard/function.prf)
 PRO_SOURCE_SHARD = $$PRO_SOURCE_TREE/shard
 
 ParamSrcFilePath += \
-    $$PRO_SOURCE_SHARD/Parameter
+    $$PRO_SOURCE_SHARD/Parameter \
+    $$PRO_SOURCE_SHARD/Locals \
 
-for(path, ParamSrcFilePath) {
-        sub_dir = $$path
-        sub_dir ~= s,^$$re_escape($$PRO_SOURCE_SHARD),,
-        paramSrcDir  = $$path/*
-        paramDestDir = $$clean_path($$PRO_BIN_PATH$$sub_dir)
-        copyDir($$nativePath($$paramSrcDir), $$nativePath($$paramDestDir))
-        message(src = $$nativePath($$paramSrcDir))
-        message(dest = $$nativePath($$paramDestDir))
-}
+# 配置file_copies
+CONFIG += file_copies
+Locals.files = $$PRO_SOURCE_SHARD/Locals/*
+Locals.path = $$PRO_BIN_PATH/Locals
 
-#sfSrcFile = $$PRO_SOURCE_TREE/shard/Parameter/*
-#sfSrcFile = $$replace(sfSrcFile, /, \\)
+Parameter.files = $$PRO_SOURCE_SHARD/Parameter/*
+Parameter.path = $$PRO_BIN_PATH/Parameter
 
-#sfDestDir = $$PRO_BIN_PATH/Parameter
-#sfDestDir = $$replace(sfDestDir, /, \\)
-#QMAKE_PRE_LINK += echo d | xcopy /y $$sfSrcFile $$sfDestDir # 拷贝shard/Parameter下的所有文件到目标文件目录
+COPIES += Locals Parameter
+
+#paramSrcDir  = $$PRO_SOURCE_SHARD/Locals
+#paramDestDir = $$PRO_BIN_PATH/Locals
+#copyDir($$paramSrcDir, $$paramDestDir)
+
+#paramSrcDir  = $$PRO_SOURCE_SHARD/Parameter
+#paramDestDir = $$PRO_BIN_PATH/Parameter
+#copyDir($$paramSrcDir, $$paramDestDir)
+
+#for(path, ParamSrcFilePath) {
+#        sub_dir = $$path
+#        sub_dir ~= s,^$$re_escape($$PRO_SOURCE_SHARD),,
+#        paramSrcDir  = $$path/**
+#        paramDestDir = $$clean_path($$PRO_BIN_PATH$$sub_dir)
+#        message(111111111=$$paramSrcDir)
+#        copyDir($$nativePath($$paramSrcDir), $$nativePath($$paramDestDir))
+
+#}
 
 
 ## get-version-from-git.pri

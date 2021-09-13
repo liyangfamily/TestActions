@@ -60,7 +60,7 @@ bool LBLClusterProxy::syncSend(const LBLEnginePackage& sendPack, LBLEnginePackag
 		return false;
 	}
 }
-#include <LBL_Core/LBLUIHelper>
+
 bool LBLClusterProxy::exclusiveSyncSend(const LBLEnginePackage & sendPack, LBLEnginePackage & recPack, int mesc, bool force)
 {
 	if (isItemExlusive(sendPack.hostName())) {
