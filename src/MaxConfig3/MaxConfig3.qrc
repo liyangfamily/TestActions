@@ -134,5 +134,6 @@
         <file>Resources/Normal/Icon_Spread_Normal.svg</file>
         <file>Resources/Normal/Switch_Open_Disable.svg</file>
         <file>Resources/Normal/MaxConfig.icns</file>
+        <file>Resources/Normal/macos_install_BG.png</file>
     </qresource>
 </RCC>
