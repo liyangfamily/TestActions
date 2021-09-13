@@ -7,7 +7,8 @@ QT += concurrent
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
 CONFIG += c++11
-RC_ICONS = Resources/Normal/MaxConfig.ico
+win32:RC_ICONS = Resources/Normal/MaxConfig.ico
+osx:ICON = Resources/Normal/MaxConfig.icns
 TARGET = $$PRO_APP_TARGET
 DESTDIR = $$PRO_APP_PATH
 

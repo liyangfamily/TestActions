@@ -133,5 +133,6 @@
         <file>Resources/Normal/Icon_Spread_Hover.svg</file>
         <file>Resources/Normal/Icon_Spread_Normal.svg</file>
         <file>Resources/Normal/Switch_Open_Disable.svg</file>
+        <file>Resources/Normal/MaxConfig.icns</file>
     </qresource>
 </RCC>
