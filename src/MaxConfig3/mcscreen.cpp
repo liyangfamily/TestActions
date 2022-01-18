@@ -1,9 +1,17 @@
 ﻿#include "mcscreen.h"
 #include "ui_mcscreen.h"
+#include "Core/icore.h"
 #include <QButtonGroup>
 #include <LAPIControl>
 #include <QThread>
 #include <LBL_Advanved/Advancedsetting>
+#include <HDMIChip/mcnt68400advsetting.h>
+#include <HDMIChip/mcms9570advsetting.h>
+#include <CustomWidget/mcelevatedclass.h>
+
+#include "ConnectionControl/connectionView.h"
+#include "ConnectionControl/connectionScene.h"
+
 MCScreen::MCScreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::mcScreen)
@@ -15,12 +23,36 @@ MCScreen::MCScreen(QWidget *parent) :
     gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadVideoSourceColortemperature(), this);
 
     // 连接信号槽（相互改变）
-    connect(ui->spinBoxBrightness, SIGNAL(valueChanged(int)), ui->hSliderBrightness, SLOT(setValue(int)));
-    connect(ui->spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(slot_BrightnessValueChanged(int)));
+    connect(ui->hSliderBrightness, SIGNAL(sliderMoved(int)), ui->spinBoxBrightness, SLOT(setValue(int)));
+    connect(ui->hSliderBrightness, QOverload<int>::of(&QSlider::valueChanged), [=](int d){
+        ui->spinBoxBrightness->blockSignals(true);
+        ui->spinBoxBrightness->setValue(d);
+        ui->spinBoxBrightness->blockSignals(false);
+        if(!ui->hSliderBrightness->isSliderDown()){
+            LAPI::WriteBrightness(d);
+        }
+    });
+
+    connect(ui->spinBoxBrightness, QOverload<int>::of(&QSpinBox::valueChanged), [=](int d){
+        ui->hSliderBrightness->blockSignals(true);
+        ui->hSliderBrightness->setValue(d);
+        ui->hSliderBrightness->blockSignals(false);
+        LAPI::WriteBrightness(d,true);
+    });
     connect(ui->hSliderBrightness, &QSlider::sliderReleased, [=]() {
-        LAPI::WriteBrightness(ui->hSliderBrightness->value()); });
-    connect(ui->hSliderBrightness, SIGNAL(valueChanged(int)), ui->spinBoxBrightness, SLOT(setValue(int)));
-    //connect(ui->hSliderBrightness, SIGNAL(valueChanged(int)), this, SLOT(slot_BrightnessValueChanged(int)));
+        LAPI::WriteBrightness(ui->spinBoxBrightness->value()); });
+        
+    BindingSliderAndSpinBox* colorR = new BindingSliderAndSpinBox(ui->hSliderColorR,ui->spinBoxColorR,this);
+    connect(colorR, &BindingSliderAndSpinBox::sig_singleShotValueChange, [=](int value)
+         { LAPI::WriteHDMIRGBGain(value); });
+
+    BindingSliderAndSpinBox* colorG = new BindingSliderAndSpinBox(ui->hSliderColorG,ui->spinBoxColorG,this);
+    connect(colorG, &BindingSliderAndSpinBox::sig_singleShotValueChange, [=](int value)
+         { LAPI::WriteHDMIRGBGain(-1,value); });
+
+    BindingSliderAndSpinBox* colorB = new BindingSliderAndSpinBox(ui->hSliderColorB,ui->spinBoxColorB,this);
+    connect(colorB, &BindingSliderAndSpinBox::sig_singleShotValueChange, [=](int value)
+         { LAPI::WriteHDMIRGBGain(-1,-1,value); });
 
     QButtonGroup* pButtonGroup = new QButtonGroup(this);
     pButtonGroup->setExclusive(true);
@@ -42,11 +74,36 @@ MCScreen::MCScreen(QWidget *parent) :
     pButtonGroup1->addButton(ui->radioBtnRGB);
     pButtonGroup1->addButton(ui->radioButtonHide2);
     ui->radioButtonHide2->setVisible(false);
+
+     //advancedsetting = new AdvancedSetting(this);
+
+    // Test Hide , There is currently no functionality
+    ui->radioBtnCCT->setVisible(false);
+    on_radioBtnCCT_toggled(false);
+    //ui->radioBtnRGB->hide();
+    on_radioBtnRGB_toggled(false);
+
+    ui->radioButton->hide();
+    ui->radioButton_2->hide();
+    ui->radioButton_3->hide();
+    ui->radioButton_4->hide();
+    //ui->labelLoadSignal->hide();
+    //ui->labelLoadSignalDisplay->hide();
 }
 
 MCScreen::~MCScreen()
 {
     delete ui;
+    if(m_nt68400advSetDlg){
+        m_nt68400advSetDlg->close();
+        delete m_nt68400advSetDlg;
+        m_nt68400advSetDlg=nullptr;
+    }
+    if(m_ms9570advSetDlg){
+        m_ms9570advSetDlg->close();
+        delete m_ms9570advSetDlg;
+        m_ms9570advSetDlg=nullptr;
+    }
     gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadVideoSourceBrightness(), this);
     gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_SCReadBrightness(), this);
     gDispatcher->unregisterDispatcherPackage(LBLPackageInteCtrl_ReadVideoSourceColortemperature(), this);
@@ -103,6 +160,10 @@ void MCScreen::cleanScreenWidget()
     ui->radioButtonHide2->setChecked(true);
     ui->labelInputSignalDisplay->clear();
     ui->labelLoadSignalDisplay->clear();
+    bool bshow=LAPI::HasNT68400();
+    ui->radioBtnAndroid->setVisible(bshow);
+    ui->radioBtnDP->setVisible(bshow);
+    ui->radioBtnPC->setVisible(bshow);
 }
 
 void MCScreen::updateScreen()
@@ -110,9 +171,22 @@ void MCScreen::updateScreen()
     LAPI::ReadBrightness();
     LAPI::ReadHDMIInputSource(true);
     onParseReadVideoSource(LAPI::GetHDMIInputSource());
-    LAPI::ReadHDMIImageColorTtemperature();
+    LAPI::ReadHDMIImageColorTtemperature(true);
     LAPI::ReadHDMIInputSignalInfo(true);
     ui->labelInputSignalDisplay->setText(LAPI::GetHDMIInputSignalInfo());
+    LAPI::ReadHDIMIDisplayArea(LAPI::UI::EHDMIChannel::EHC_All);
+    QSize displayArea = LAPI::GetHDIMIDisplayArea();
+    if(!displayArea.isEmpty()){
+        ui->labelLoadSignalDisplay->setText(QString("%1X%2").arg(displayArea.width()).arg(displayArea.height()));
+    }
+    if(LAPI::ER_Success == LAPI::ReadHDMIRGBGain(true)){
+        QList<quint8> colorGain = LAPI::GetHDMIRGBGain();
+        if(colorGain.count()==3){
+            ui->hSliderColorR->setValue(colorGain.at(0));
+            ui->hSliderColorG->setValue(colorGain.at(1));
+            ui->hSliderColorB->setValue(colorGain.at(2));
+        }
+    }
 }
 
 quint16 MCScreen::onParseReadBrightness(const QByteArray & data)
@@ -165,9 +239,16 @@ quint16 MCScreen::onParseSourceColortemperature(const QByteArray & data)
         ui->radioBtnCool->setChecked(true);
         break;
     case LAPI::UI::ECT_User:
-        ui->radioBtnCCT->setChecked(true);
+    {
+        if(!ui->radioBtnCCT->isChecked()||!ui->radioBtnRGB->isChecked()){
+            ui->radioBtnRGB->setChecked(true);
+        }
+    }
         break;
-    default:
+    default:{
+        on_radioBtnCCT_toggled(false);
+        on_radioBtnRGB_toggled(false);
+    }
         break;
     }
     return LBLPackage::EOR_Success;
@@ -226,6 +307,7 @@ void MCScreen::slot_ConnectItem()
 
 void MCScreen::slot_EnterNavigatPage()
 {
+    ConnectionFrame::instance()->setCurrentMode(ConnectionDiagramScene::Mode::NONE);
     updateScreen();
 }
 
@@ -279,15 +361,56 @@ void MCScreen::on_radioBtnCool_clicked()
     LAPI::WriteHDMIImageColorTtemperature(LAPI::UI::ECT_Cool);
 }
 
-void MCScreen::on_radioBtnCCT_clicked()
+void MCScreen::on_radioBtnCCT_toggled(bool checked)
 {
-    LAPI::WriteHDMIImageColorTtemperature(LAPI::UI::ECT_User);
+    ui->hSliderColorTemp->setVisible(checked);
+    ui->labelWarm->setVisible(checked);
+    ui->labelDefault->setVisible(checked);
+    ui->labelCool->setVisible(checked);
+    if(checked){
+        LAPI::WriteHDMIImageColorTtemperature(LAPI::UI::ECT_User);
+    }
+}
+
+void MCScreen::on_radioBtnRGB_toggled(bool checked)
+{
+    ui->frameColorRGB->setVisible(checked);
+}
+
+void MCScreen::on_radioBtnRGB_clicked()
+{
+    LAPI::WriteHDMIImageColorTtemperature(LAPI::UI::ECT_User,true);
 }
 
 void MCScreen::on_btnModuleParam_clicked()
 {
-    AdvancedSetting *advancedsetting = new AdvancedSetting();
+    if(!advancedsetting){
+        advancedsetting = new AdvancedSetting(this);
+    }
+    advancedsetting->raise();
     advancedsetting->show();
+}
+
+void MCScreen::on_btnVideoSetting_clicked()
+{
+    if(LAPI::HasNT68400()){
+        if(nullptr==m_nt68400advSetDlg){
+            m_nt68400advSetDlg=new MCNT68400AdvSetting();
+            Core::ICore::showCenter(m_nt68400advSetDlg);
+        }
+        else{
+            Core::ICore::showRaise(m_nt68400advSetDlg);
+        }
+    }
+    else{
+        if(nullptr==m_ms9570advSetDlg){
+            m_ms9570advSetDlg=new MCMS9570AdvSetting();
+            Core::ICore::showCenter(m_ms9570advSetDlg);
+        }
+        else{
+            Core::ICore::showRaise(m_ms9570advSetDlg);
+        }
+    }
 }
 
 

@@ -118,6 +118,7 @@ private slots:
     void toggleFitInView();
     void toggleAntialiasing();
     void print();
+    void clearScene();
 
 private:
     InteractiveView *graphicsView;
@@ -131,6 +132,7 @@ private:
     QToolButton *antialiasButton;
     QToolButton *printButton;
     QToolButton *resetButton;
+    QToolButton *clearButton;
 
     ConnectionDiagramScene::Mode m_currentMode=ConnectionDiagramScene::Mode::SceneEdit;
     static ConnectionFrame* s_connectionView;

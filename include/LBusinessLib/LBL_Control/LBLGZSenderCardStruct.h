@@ -96,6 +96,8 @@ namespace LBL
 			ENSRA_ReceiveCardFeatureSwitch = 0x000027,
 			ENSRA_ZoomWidht = 0x00002A,
 			ENSRA_ZoomHeight = 0x00002C,
+            ENSRA_NT68400Resolution = 0x00002E,
+            ENSRA_10BitSource = 0x00002F,
 			ENSRA_ReservedSpace = 0x000028,
 		};
 
@@ -132,7 +134,8 @@ namespace LBL
 			unsigned short zoomWidth;				//[0x00002A] 缩放宽度设置
 			unsigned short zoomHeight;				//[0x00002C] 缩放高度设置
 			unsigned char NT68400SignalResolution;	//[0x00002E] NT68400信号源分辨率
-			unsigned char reservedSpace[17];		//[0x00002F] 预留
+            unsigned char _10BitSource;            	//[0x00002F] 10Bit源
+            unsigned char reservedSpace[16];		//[0x000030] 预留
 
 			tagNormalSetting()
 			{

@@ -4,6 +4,7 @@
 #include <QScopedPointer>
 #endif // CVTE_SCOPEDPT
 #include "LBL_SCItem_Factory.h"
+#include <LBL_CommunicatEngine/LBLClusterProxy>
 
 #include <QtConcurrent/QtConcurrentRun>
 namespace LBL
@@ -19,8 +20,7 @@ namespace LBL
 
 		LBLSCItemManager::~LBLSCItemManager()
 		{
-			stopDetectServer();
-			qDebug() << __FUNCTION__;
+            stopDetectServer();
 			/*if (m_detectServer)
 				m_detectServer->deleteLater();*/
 				//qDeleteAll(m_list_allItem);
@@ -172,7 +172,7 @@ namespace LBL
 			return true;
 		}
 
-		QList<LBLAbstractSCItem*> LBLSCItemManager::getUsingItemList()
+        QList<LBLAbstractSCItem*> LBLSCItemManager::getUsingItemList()
 		{
 			QMutexLocker locker(&m_mutex_protect_itemList);
 			return m_list_usingItem;
@@ -339,7 +339,14 @@ namespace LBL
 						qDebug() << "Socket of " << senderCardItem->hostName() << " is in Exclusive, pass parsing.";
 						++it;
 						continue;
-					}
+                    }
+                    if (LBLClusterProxy::isItemExlusive(senderCardItem->hostName()))
+                    {
+                        //防止启用独占模式，探卡服务还在继续运行，解析不到数据导致断线
+                        qDebug() << "Socket of " << senderCardItem->hostName() << " is in Exclusive, pass parsing.";
+                        ++it;
+                        continue;
+                    }
 					//掉线了
 					qDebug() << tempS.hostName << " offline**********************************************************************.";
 					emit sig_SenderCardOffline(tempS);
@@ -467,8 +474,7 @@ namespace LBL
 
 		LBLSCItemManager::LBLSCItemManager(QObject* parent/* = 0*/) :
 			QObject(parent)
-		{
-			qDebug() << __FUNCTION__;
+        {
 			m_detectServer = new LBLDetectServer(this);
             connect(m_detectServer, &LBLDetectServer::sig_StartDetect, this, &LBLSCItemManager::sig_StartDetect);
 			connect(m_detectServer, &LBLDetectServer::sig_DetectComplite, this, &LBLSCItemManager::slot_DetectComplit);

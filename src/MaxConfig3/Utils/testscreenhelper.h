@@ -13,6 +13,8 @@ public:
 	~TestScreenHelper();
     void showImageList(QList<QPair<CorrectDataHelper*, QSharedPointer<QByteArray>>> imageData,
                        const CorrectDataHelper::CorrectDataType type);
+    void showFullScreenImageList(QList<QPair<CorrectDataHelper*, QSharedPointer<QByteArray>>> imageData,
+                       const CorrectDataHelper::CorrectDataType type);
 
     static void setPaintStartPos(const QPoint& pt);
     static QPoint paintStartPos();
@@ -29,4 +31,5 @@ private:
 	QList<QPair<CorrectDataHelper*, QList<QImage>>> m_imageList;
 
     static QPoint m_paintStartPos;
+    bool m_bFullScreen=false;
 };

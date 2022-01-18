@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>411</width>
+    <width>384</width>
     <height>135</height>
    </rect>
   </property>
@@ -157,7 +157,7 @@
          <item>
           <widget class="QPushButton" name="SettingpushButton">
            <property name="text">
-            <string>    设置    </string>
+            <string>设置</string>
            </property>
           </widget>
          </item>

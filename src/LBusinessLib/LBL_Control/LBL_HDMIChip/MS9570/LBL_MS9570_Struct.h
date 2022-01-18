@@ -139,7 +139,7 @@ namespace LBL
 			unsigned char rGain = UCHAR_MAX; //R
 			unsigned char gGain = UCHAR_MAX; //R 0 G 1 B 2
 			unsigned char bGain = UCHAR_MAX; //R 0 G 1 B 2
-			unsigned int  outputlWidth = UINT_MAX;	//EDID width
+			unsigned int  outputWidth = UINT_MAX;	//EDID width
 			unsigned int  outputHeight= UINT_MAX; //EDID height
 			unsigned char outputFrequency = UCHAR_MAX; //频率
 

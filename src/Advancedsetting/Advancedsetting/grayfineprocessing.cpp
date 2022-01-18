@@ -3,14 +3,22 @@
 #include "advancedsetting.h"
 
 GrayFineProcessing::GrayFineProcessing(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::GrayFineProcessing)
 {
     ui->setupUi(this);
 
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
+
     LoadForm();
 }
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 GrayFineProcessing::~GrayFineProcessing()
 {
     delete ui;
@@ -18,13 +26,13 @@ GrayFineProcessing::~GrayFineProcessing()
 
 void GrayFineProcessing::LoadForm()
 {
-    ui->CompensationRhorizontalSlider->setValue((unsigned char)ModulePara[0x37]);
-    ui->CompensationGhorizontalSlider->setValue((unsigned char)ModulePara[0x38]);
-    ui->CompensationBhorizontalSlider->setValue((unsigned char)ModulePara[0x39]);
-    ui->ValuespinBox->setValue((unsigned char)ModulePara[0x3A]);
-    ui->LimitRhorizontalSlider->setValue((unsigned char)ModulePara[0x3B]);
-    ui->LimitGhorizontalSlider->setValue((unsigned char)ModulePara[0x3C]);
-    ui->LimitBhorizontalSlider->setValue((unsigned char)ModulePara[0x3D]);
+    ui->CompensationRhorizontalSlider->setValue((uchar)ModulePara[0x37]);
+    ui->CompensationGhorizontalSlider->setValue((uchar)ModulePara[0x38]);
+    ui->CompensationBhorizontalSlider->setValue((uchar)ModulePara[0x39]);
+    ui->ValuespinBox->setValue((uchar)ModulePara[0x3A]);
+    ui->LimitRhorizontalSlider->setValue((uchar)ModulePara[0x3B]);
+    ui->LimitGhorizontalSlider->setValue((uchar)ModulePara[0x3C]);
+    ui->LimitBhorizontalSlider->setValue((uchar)ModulePara[0x3D]);
 }
 
 void GrayFineProcessing::on_pushButton_clicked()
@@ -42,10 +50,10 @@ void GrayFineProcessing::on_pushButton_clicked()
     this->setCursor(Qt::ArrowCursor);
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 }
 

@@ -35,7 +35,6 @@ LBLPackageDispatcher::LBLPackageDispatcher(QObject *parent)
 
 LBLPackageDispatcher::~LBLPackageDispatcher()
 {
-	qDebug() << __FUNCTION__;
 }
 
 LBLPackageDispatcher * LBLPackageDispatcher::instance()
@@ -144,9 +143,15 @@ bool LBLPackageDispatcher::transitPackage(const LBLEnginePackage &package)
 	}
 	return true;
 }
-
+#include <QTime>
+#include <LBL_Core/LBLUIHelper>
 void LBLPackageDispatcher::slot_ParsingInteCtrlDataFrame(QObject* objSocket, LBLEnginePackage pack)
 {
+    if(LBLUIHelper::enableCommunicatLog()){
+        QString frame;
+        frame = LBLUIHelper::byteArrayToHexStr(pack.data());
+        qInfo()<<QString("RX:Host:%2, Length:%3, Data:%4").arg(pack.hostName()).arg(pack.data().size()).arg(frame);
+    }
     Q_UNUSED(objSocket)
 	//转发包，让对应的对象去处理
 	this->transitPackage(pack);

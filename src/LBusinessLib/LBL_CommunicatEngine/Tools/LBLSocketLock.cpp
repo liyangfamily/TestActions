@@ -63,7 +63,7 @@ LBLSyncWaiter::LBLSyncWaiter(LBLEnginePackage packInfo):
 
 LBLSyncWaiter::~LBLSyncWaiter()
 {
-	qDebug() << "LBLSyncWaiter unlocked.";
+    //qDebug() << "LBLSyncWaiter unlocked.";
 	gDispatcher->unregisterTransitObject(this);
 }
 
@@ -190,7 +190,7 @@ LBLSocketExclusiveLock::LBLSocketExclusiveLock(QObject * socketObj):
 LBLSocketExclusiveLock::~LBLSocketExclusiveLock()
 {
 	gCluster->slot_SetSocketExlusive(m_socketObj, false);
-	qDebug() << "LBLItemExclusiveLock unlocked.";
+    //qDebug() << "LBLItemExclusiveLock unlocked.";
 }
 
 bool LBLSocketExclusiveLock::autoLock(int msec)
@@ -230,7 +230,7 @@ LBLItemExclusiveLock::LBLItemExclusiveLock(QString hostName) :
 LBLItemExclusiveLock::~LBLItemExclusiveLock()
 {
 	LBLClusterProxy::setItemExlusive(m_hostName, false);
-	qDebug() << "LBLItemExclusiveLock unlocked.";
+    //qDebug() << "LBLItemExclusiveLock unlocked.";
 }
 
 bool LBLItemExclusiveLock::autoLock()

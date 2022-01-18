@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/TestDemo">
+        <file>resource/progressbar.png</file>
+        <file>resource/toggleprogressdetails.png</file>
+    </qresource>
+</RCC>

@@ -8,6 +8,8 @@
 #include <qmenu.h>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <math.h>
+#include "../MaxConfig3/Core/icore.h"
 
 //普通界面
 #include "universalinterface.h"
@@ -15,20 +17,26 @@
 #include "rgbchange.h"
 #include "datagroup.h"
 #include "currentgain.h"
-#include "mos5366config.h"
-#include "mos5957config.h"
-#include "moscfd2138.h"
 #include "flashsetting.h"
 #include "grayfineprocessing.h"
 #include "scanparamater.h"
 #include "advancedotherpara.h"
 #include "advancedcustom.h"
+#include "colorgamut.h"
 
+//行管界面
+#include "mos5366config.h"
+#include "mos5957config.h"
+#include "moscfd2138config.h"
+#include "mosc82018config.h"
+#include "mosicnd2018config.h"
 
 //芯片界面
 #include "icadvancedsetting.h"
 #include "iccfd435asetting.h"
 #include "iccfd455asetting.h"
+#include "icxm10480gsetting.h"
+#include "icxm11202gsetting.h"
 
 
 QByteArray ModulePara;
@@ -36,15 +44,24 @@ QByteArray ICPara;
 QByteArray DataPara;
 
 
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 
 int TXDWorkClk = 150;
 
 AdvancedSetting::AdvancedSetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::AdvancedSetting)
 {
     ui->setupUi(this);
+    //setWindowFlag(Qt::WindowContextHelpButtonHint,true);
+
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
 
 
     ui->comboBox_7->addItem("1");
@@ -69,18 +86,18 @@ AdvancedSetting::AdvancedSetting(QWidget *parent) :
         ICPara = UniversalInterface::Readbin(LBLUIHelper::appParamDataLocation() + "//ICPara.bin");
     }
 
-
-
+    //setFixedSize(this->width(),this->height());
 
     LoadingPara();
 
     CreateAction();
 
 
+    //ui->ButtonColorGamdat->setVisible(false);
 
     //ui->pushButton_2->setVisible(false);
 
-    //qDebug() << "=========================";
+
 
 
 }
@@ -112,6 +129,7 @@ void AdvancedSetting::LoadingPara()
     initList();
     ui->TXDcomboBox->clear();
     ui->comboBox_6->clear();
+    qDebug()<<"-------------------------------------";
     ui->TXDcomboBox->addItems(DclkGclkList);
     ui->comboBox_6->addItems(DclkGclkList);
 //    ui->TXDcomboBox->setCurrentIndex(-1);
@@ -128,39 +146,39 @@ void AdvancedSetting::LoadingPara()
      //ShowPara = true;
     if ((int)ModulePara[0x18] != 0)
     {
-        ui->comboBox_2->setCurrentText(QString::number(ModulePara[0x19] * 100 / ModulePara[0x18]));
+        ui->comboBox_2->setCurrentText(QString::number((uchar)ModulePara[0x19] * 100 / (uchar)ModulePara[0x18]));
     }
 
-    ui->comboBox_3->setCurrentText(QString::number((unsigned char)ModulePara[0x1A]));
+    ui->comboBox_3->setCurrentText(QString::number((uchar)ModulePara[0x1A]));
 
 
     ShowPara = true;
-    ui->lineEdit->setText(QString::number(((unsigned char)ModulePara[0x06] + (unsigned char)ModulePara[0x07] * 256),10));
-    ui->lineEdit_2->setText(QString::number(((unsigned char)ModulePara[0x08] + (unsigned char)ModulePara[0x09] * 256),10));
+    ui->lineEdit->setText(QString::number(((uchar)ModulePara[0x02] + (uchar)ModulePara[0x03] * 256),10));
+    ui->lineEdit_2->setText(QString::number(((uchar)ModulePara[0x04] + (uchar)ModulePara[0x05] * 256),10));
 
     Showic();
 
-    ui->lineEdit_4->setText(QString::number((unsigned char)ModulePara[0x25]));
+    ui->lineEdit_4->setText(QString::number((uchar)ModulePara[0x25]));
 
     showMOS();
 
-    ui->lineEdit_6->setText(QString::number((unsigned char)ModulePara[0x26]));
+    ui->lineEdit_6->setText(QString::number((uchar)ModulePara[0x26]));
 
     if ((int)ModulePara[0x1B] != 0)
     {
-        ui->comboBox_5->setCurrentText(QString::number(ModulePara[0x1C] * 100 / ModulePara[0x1B]));
+        ui->comboBox_5->setCurrentText(QString::number((uchar)ModulePara[0x1C] * 100 / (uchar)ModulePara[0x1B]));
     }
-    ui->comboBox_4->setCurrentText(QString::number((unsigned char)ModulePara[0x1D]));
+    ui->comboBox_4->setCurrentText(QString::number((uchar)ModulePara[0x1D]));
 
 
-    ui->comboBox_7->setCurrentIndex(ModulePara[0x29]);
-    ui->spinBox_5->setValue(ModulePara[0x36]);
+    ui->comboBox_7->setCurrentIndex((uchar)ModulePara[0x29]);
+    ui->spinBox_5->setValue((uchar)ModulePara[0x36]);
 
 
-    ui->spinBox->setValue(ModulePara[0x2A]);
-    ui->spinBox_2->setValue(ModulePara[0x2B]);
-    ui->spinBox_3->setValue(ModulePara[0x2C]);
-    ui->spinBox_4->setValue(ModulePara[0x2D]);
+    ui->spinBox->setValue((uchar)ModulePara[0x2A]);
+    ui->spinBox_2->setValue((uchar)ModulePara[0x2B]);
+    ui->spinBox_3->setValue((uchar)ModulePara[0x2C]);
+    ui->spinBox_4->setValue((uchar)ModulePara[0x2D]);
 
     switch (ModulePara[0x71])
     {
@@ -197,12 +215,16 @@ void AdvancedSetting::LoadingPara()
     }
 
     ShowPara = false;
+
+
 }
 void AdvancedSetting::initList()
 {
     DclkGclkList.clear();
-    //qDebug() << "0x71:" <<(uchar)ModulePara[0x71];
-    switch (ModulePara[0x71])
+    qDebug() << "0x71:" <<(uchar)ModulePara[0x71];
+
+
+    switch ((uchar)ModulePara[0x71])
     {
     case 0:     //150MHz
         DclkGclkList.append("37.5");
@@ -354,6 +376,56 @@ void AdvancedSetting::initList()
         DclkGclkList.append("1.69");
         DclkGclkList.append("1.61");
         break;
+    default:    //150M
+        DclkGclkList.append("37.5");
+        DclkGclkList.append("30.0");
+        DclkGclkList.append("25.0");
+        DclkGclkList.append("21.4");
+        DclkGclkList.append("18.8");
+        DclkGclkList.append("16.7");
+        DclkGclkList.append("15.0");
+        DclkGclkList.append("13.6");
+        DclkGclkList.append("12.5");
+        DclkGclkList.append("11.5");
+        DclkGclkList.append("10.7");
+        DclkGclkList.append("10.0");
+        DclkGclkList.append("9.4");
+        DclkGclkList.append("8.8");
+        DclkGclkList.append("8.3");
+        DclkGclkList.append("7.9");
+        DclkGclkList.append("7.5");
+        DclkGclkList.append("7.1");
+        DclkGclkList.append("6.8");
+        DclkGclkList.append("6.5");
+        DclkGclkList.append("6.3");
+        DclkGclkList.append("6.0");
+        DclkGclkList.append("5.8");
+        DclkGclkList.append("5.6");
+        DclkGclkList.append("5.4");
+        DclkGclkList.append("5.2");
+        DclkGclkList.append("5.0");
+        DclkGclkList.append("4.8");
+        DclkGclkList.append("4.7");
+        DclkGclkList.append("4.5");
+        DclkGclkList.append("4.4");
+        DclkGclkList.append("4.3");
+        DclkGclkList.append("4.2");
+        DclkGclkList.append("4.1");
+        DclkGclkList.append("3.9");
+        DclkGclkList.append("3.8");
+        DclkGclkList.append("3.7");
+        DclkGclkList.append("3.6");
+        DclkGclkList.append("3.5");
+        DclkGclkList.append("3.3");
+        DclkGclkList.append("3.2");
+        DclkGclkList.append("3.1");
+        DclkGclkList.append("3.0");
+        DclkGclkList.append("2.9");
+        DclkGclkList.append("2.8");
+        DclkGclkList.append("2.6");
+        DclkGclkList.append("2.5");
+        DclkGclkList.append("2.4");
+        break;
     }
 
 
@@ -363,7 +435,7 @@ int AdvancedSetting::ShowWorkFrequency(int address)
 {
     int index = 0;
 
-    switch (ModulePara[address])
+    switch ((uchar)ModulePara[address])
     {
     case 4:
         index = 0;
@@ -520,12 +592,12 @@ int AdvancedSetting::ShowWorkFrequency(int address)
 
 void AdvancedSetting::Showic()
 {
-    unsigned char index = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    unsigned char index = (uchar)ModulePara[0x13] + (uchar)ModulePara[0x14] * 256;
 
-    switch (index)
+    switch ((uchar)index)
     {
     case CONVENTSIONALCHIP:
-        ui->lineEdit_3->setText(QString::fromLocal8Bit("常规芯片"));
+        ui->lineEdit_3->setText(tr("常规芯片"));
         break;
     case ICN_2038S:
         ui->lineEdit_3->setText("ICN-2038S");
@@ -638,6 +710,15 @@ void AdvancedSetting::Showic()
     case DP_3246:
         ui->lineEdit_3->setText("DP-3246");
         break;
+    case ICND_2138:
+        ui->lineEdit_3->setText("ICND-2138");
+        break;
+    case XM11202G:
+        ui->lineEdit_3->setText("XM-11202G");
+        break;
+    case XM10480G:
+        ui->lineEdit_3->setText("XM-10480G");
+        break;
     default:
         break;
 
@@ -646,33 +727,33 @@ void AdvancedSetting::Showic()
 
 void AdvancedSetting::showMOS()
 {
-    unsigned char index = ModulePara[0x12];
+    uchar index = (uchar)ModulePara[0x12];
 
-    switch (index)
+    switch ((uchar)index)
     {
     case 0x00:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("直通译码"));
+        ui->lineEdit_5->setText(tr("直通译码"));
         break;
     case 0x01:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("138译码"));
+        ui->lineEdit_5->setText(tr("138译码"));
         break;
     case 0x02:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("5957译码"));
+        ui->lineEdit_5->setText(tr("5957译码"));
         break;
     case 0x03:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("5366译码"));
+        ui->lineEdit_5->setText(tr("5366译码"));
         break;
     case 0x04:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("2018/2019译码"));
+        ui->lineEdit_5->setText(tr("2018/2019译码"));
         break;
     case 0x05:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("C82018译码"));
+        ui->lineEdit_5->setText(tr("C82018译码"));
         break;
     case 0x06:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("CFD2138译码"));
+        ui->lineEdit_5->setText(tr("CFD2138译码"));
         break;
     case 0x07:
-        ui->lineEdit_5->setText(QString::fromLocal8Bit("RUL5158译码"));
+        ui->lineEdit_5->setText(tr("RUL5158译码"));
     default:
         break;
     }
@@ -681,7 +762,7 @@ void AdvancedSetting::on_SmartSettingBtn_clicked()
 {
 //        SmartSetting *smartsetting = new SmartSetting();
 //        smartsetting->show();
-    SmartSetting *smartsetting = new SmartSetting();
+    SmartSetting *smartsetting = new SmartSetting(this);
 
     QObject::connect(smartsetting, SIGNAL(SendSignal()),this,SLOT(LoadingPara()));
 
@@ -697,7 +778,7 @@ void AdvancedSetting::on_TXDcomboBox_currentIndexChanged(int index)
         return;
     }
 
-    unsigned char value = 0;
+    uchar value = 0;
     switch (index)
     {
     case 0:
@@ -860,13 +941,13 @@ void AdvancedSetting::on_TXDcomboBox_currentIndexChanged(int index)
         ui->comboBox_3->addItem(QString::number(i));
     }
 
-    ui->comboBox_2->setCurrentText(QString::number((unsigned char)ModulePara[0x19] * 100 / (unsigned char)ModulePara[0x18]));
+    ui->comboBox_2->setCurrentText(QString::number((uchar)ModulePara[0x19] * 100 / (uchar)ModulePara[0x18]));
     ui->comboBox_3->setCurrentText(QString::number(value/2));
 
     if (!ShowPara)
     {
         ui->comboBox_2->setCurrentIndex(value/2);
-        ModulePara[0x19] = qRound((unsigned char)ModulePara[0x18] * ui->comboBox_2->currentText().toInt() / 100.0);
+        ModulePara[0x19] = qRound((uchar)ModulePara[0x18] * ui->comboBox_2->currentText().toInt() / 100.0);
     }
 
     int VR = VisionRefresh();
@@ -879,7 +960,7 @@ void AdvancedSetting::on_comboBox_2_currentIndexChanged(const QString &arg1)
     {
         return;
     }
-    ModulePara[0x19] = qRound((unsigned char)ModulePara[0x18] * arg1.toUInt() / 100.0);
+    ModulePara[0x19] = qRound((uchar)ModulePara[0x18] * arg1.toUInt() / 100.0);
     qDebug() << "SetModulePara[0x19]:" << (uchar)ModulePara[0x19];
 }
 void AdvancedSetting::on_comboBox_3_currentIndexChanged(int index)
@@ -899,7 +980,7 @@ void AdvancedSetting::on_comboBox_6_currentIndexChanged(int index)
     {
         return;
     }
-    unsigned char value = 0;
+    uchar value = 0;
     switch (index)
     {
     case 0:
@@ -1061,14 +1142,17 @@ void AdvancedSetting::on_comboBox_6_currentIndexChanged(int index)
         ui->comboBox_5->addItem(QString::number(i * 100 / value));
         ui->comboBox_4->addItem(QString::number(i));
     }
-    ui->comboBox_5->setCurrentText(QString::number((unsigned char)ModulePara[0x1C] * 100 / (unsigned char)ModulePara[0x1B]));
+    ui->comboBox_5->setCurrentText(QString::number((uchar)ModulePara[0x1C] * 100 / (uchar)ModulePara[0x1B]));
     ui->comboBox_4->setCurrentText(QString::number(value/2));
 
     if (!ShowPara)
     {
         ui->comboBox_5->setCurrentIndex(value/2);
-        ModulePara[0x1C] = qRound((unsigned char)ModulePara[0x1B] * ui->comboBox_5->currentText().toInt() / 100.0);
+        ModulePara[0x1C] = qRound((uchar)ModulePara[0x1B] * ui->comboBox_5->currentText().toInt() / 100.0);
     }
+
+    int VR = VisionRefresh();
+    ui->lineEdit_8->setText(QString::number(VR));
 
 }
 void AdvancedSetting::on_comboBox_5_currentIndexChanged(const QString &arg1)
@@ -1077,7 +1161,7 @@ void AdvancedSetting::on_comboBox_5_currentIndexChanged(const QString &arg1)
     {
         return;
     }
-    ModulePara[0x1C] = qRound((unsigned char)ModulePara[0x1B] * arg1.toUInt() / 100.0);
+    ModulePara[0x1C] = qRound((uchar)ModulePara[0x1B] * arg1.toUInt() / 100.0);
 }
 void AdvancedSetting::on_comboBox_4_currentIndexChanged(int index)
 {
@@ -1094,28 +1178,136 @@ void AdvancedSetting::on_comboBox_4_currentIndexChanged(int index)
 
 void AdvancedSetting::on_comboBox_7_currentIndexChanged(int index)
 {
-    ModulePara[0x29] = index;
+    ModulePara[0x29] = (uchar)index;
+    int VR = VisionRefresh();
+    ui->lineEdit_8->setText(QString::number(VR));
+
+    int index1 = (unsigned char)ModulePara[0x13]/* + (unsigned char)ModulePara[0x14] * 256*/;
+
+    qDebug() << "index1:" << index1;
+    switch (index1)
+    {
+    case CONVENTSIONALCHIP:
+        break;
+    case ICN_2038S:
+        break;
+    case MBI_5038:
+        break;
+    case SUM_2017T:
+        break;
+    case MBI_5124:
+        break;
+    case SUM_2017:
+        break;
+        //自解码芯片
+    case SUM_2030:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SUM_2030T:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SUM_2032:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SUM_2131:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SUM_2033:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case MBI_5252:
+        break;
+    case MBI_5041B:
+        break;
+    case MBI_5041Q:
+        break;
+    case MBI_5042_5041:
+        break;
+    case MBI_5042B:
+        break;
+    case MBI_5043:
+        break;
+    case MBI_5151:
+        break;
+    case MBI_5047:
+        break;
+    case MBI_5152:
+        break;
+    case MBI_5153:
+        break;
+    case MBI_5155:
+        break;
+    case SUM_2035:
+          WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SM_16259:
+          WriteFrequencyDoubling(1, 2, 13);
+        break;
+    case MBI_5353:
+        //WriteFrequencyDoubling5353();
+        break;
+    case SUM_6086:
+        WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case LS_9935:
+        break;
+    case ICN_2055_2069:
+        break;
+    case CFD_335A:
+        WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case SUM_2035NEW:
+        break;
+    case ICN_2153:
+        break;
+    case FM_6363:
+        break;
+    case FM_6565:
+        break;
+    case LS_9935B:
+        break;
+    case CFD_435A:
+        WriteFrequencyDoubling(1, 2, 11);
+        break;
+    case CFD_555A:
+        WriteFrequencyDoubling(1, 2, 12);
+        break;
+    case CFD_455A:
+        WriteFrequencyDoubling(1, 2, 12);
+        break;
+    case DP_3246:
+        break;
+    case ICND_2138:
+        break;
+    case XM11202G:
+        break;
+    case XM10480G:
+        break;
+    default:
+        break;
+
+    }
 }
 
 void AdvancedSetting::on_spinBox_valueChanged(int arg1)
 {
-    ModulePara[0x2A] = arg1;
+    ModulePara[0x2A] = (uchar)arg1;
 }
 
 void AdvancedSetting::on_spinBox_2_valueChanged(int arg1)
 {
-    ModulePara[0x2B] = arg1;
+    ModulePara[0x2B] = (uchar)arg1;
 }
 
 void AdvancedSetting::on_spinBox_3_valueChanged(int arg1)
 {
-    ModulePara[0x2C] = arg1;
+    ModulePara[0x2C] = (uchar)arg1;
 }
 
 
 void AdvancedSetting::on_spinBox_4_valueChanged(int arg1)
 {
-    ModulePara[0x2D] = arg1;
+    ModulePara[0x2D] = (uchar)arg1;
 
     int VR = VisionRefresh();
       ui->lineEdit_8->setText(QString::number(VR));
@@ -1125,7 +1317,7 @@ void AdvancedSetting::on_spinBox_4_valueChanged(int arg1)
 
 void AdvancedSetting::on_spinBox_5_valueChanged(int arg1)
 {
-    ModulePara[0x36] = arg1;
+    ModulePara[0x36] = (uchar)arg1;
 }
 
 
@@ -1142,10 +1334,10 @@ void AdvancedSetting::on_pushButton_clicked()
 
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 
 
@@ -1163,14 +1355,17 @@ void AdvancedSetting::on_pushButton_3_clicked()
 {
     QString fileName;
     fileName = QFileDialog::getOpenFileName(this,tr("Open File"), "", tr("bin Files (*.bin)"));
+
     if (!fileName.isNull())
     {
         //fileName即是选择的文件名
+
     }
     else
     {
         return;
     }
+
     QByteArray file = UniversalInterface::Readbin(fileName);
 
     if(file.length() == 1024 * 3)
@@ -1178,17 +1373,20 @@ void AdvancedSetting::on_pushButton_3_clicked()
 
         for (int i=0;i<1024;i++)
         {
-            ModulePara[i] = file[i];
-            DataPara[i] = file[i + 1024];
-            ICPara[i] = file[i + 2048];
+            ModulePara[i] = (uchar)file[i];
+            DataPara[i] = (uchar)file[i + 1024];
+            ICPara[i] = (uchar)file[i + 2048];
 
         }
         LoadingPara();
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("导入文件"),QString::fromLocal8Bit("文件导入成功"));
+
+        int VR = VisionRefresh();
+        ui->lineEdit_8->setText(QString::number(VR));
+        UniversalInterface::MessageBoxShow(tr("导入文件"),tr("文件导入成功"));
     }
     else
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("导入文件"),QString::fromLocal8Bit("文件长度不符"));
+        UniversalInterface::MessageBoxShow(tr("导入文件"),tr("文件长度不符"));
     }
 
 }
@@ -1204,13 +1402,13 @@ void AdvancedSetting::on_pushButton_4_clicked()
         file.resize(1024*3);
         for (int i=0;i<1024;i++)
         {
-            file[i] = ModulePara[i];
-            file[i + 1024] = DataPara[i];
-            file[i + 2048] = ICPara[i];
+            file[i] = (uchar)ModulePara[i];
+            file[i + 1024] = (uchar)DataPara[i];
+            file[i + 2048] = (uchar)ICPara[i];
         }
         //fileName即是选择的文件名
         UniversalInterface::Writebin(fileName,file);
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("导出文件"),QString::fromLocal8Bit("文件导出成功"));
+        UniversalInterface::MessageBoxShow(tr("导出文件"),tr("文件导出成功"));
     }
     else
     {
@@ -1232,37 +1430,44 @@ int AdvancedSetting::VisionRefresh()
 
     int FrequencyDoubling = 0;
 
-    int GclkValue = ModulePara[0x1B];
-    int TXDValue = ModulePara[0x18];
-
+    uchar GclkValue = (uchar)ModulePara[0x1B];
+    uchar TXDValue = (uchar)ModulePara[0x18];
 
     //倍频
     if (ui->comboBox_7->currentText().toUInt() != 0)
     {
         FrequencyDoubling = 1024 / ui->comboBox_7->currentText().toUInt();
     }
+    else
+    {
+        FrequencyDoubling = 1024;
+    }
 
     //子场个数
     //int SubField = ICPara[5];
     //扫描数
-    int Scannum = ModulePara[0x25];
-    if(0==Scannum){
-        return VR;
-    }
+    uchar Scannum = (uchar)ModulePara[0x25];
+
     //扫描方向芯片数
     //int Chipnum =
 
     //低灰补偿
-    int Lowgrayadd = ICPara[0x83];
+    uchar Lowgrayadd = (uchar)ICPara[0x83];
     //首行补偿
-    int Firstadd = ICPara[0x82];
+    uchar Firstadd = (uchar)ICPara[0x82];
+
+
     //换行延时
 
-    int NewlineDelay = ModulePara[0x2D];
+    uchar NewlineDelay = (uchar)ModulePara[0x2D];
 
+    if (GclkValue == 0 || ReadFieldFrequency == 0 || Scannum == 0)
+    {
+        return 0;
+    }
 
     //视觉刷新率计算
-    int icNumber = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    int icNumber = (uchar)ModulePara[0x13] /*+ (uchar)ModulePara[0x14] * 256*/;
     if (icNumber < 0x81)
     {
         //非自解码
@@ -1293,7 +1498,7 @@ int AdvancedSetting::VisionRefresh()
         {
             if ((ui->lineEdit_3->text() == "SUM-2033") || (ui->lineEdit_3->text() == "SUM-2035") || (ui->lineEdit_3->text() == "SUM-6086") || (ui->lineEdit_3->text() == "CFD-335A") || (ui->lineEdit_3->text() == "CFD-435A"))
             {
-                if ((ICPara[0x11F] & 0x04) == 0x04)
+                if ((ICPara[0x10C] & 0x04) == 0x04)
                 {
                     VR = (int)((TXDWorkClk * 1000000 / GclkValue / ReadFieldFrequency - Firstadd - ((TXDValue / GclkValue) * 48)) / (Scannum * (FrequencyDoubling / 2 + Lowgrayadd + NewlineDelay)));
                 }
@@ -1340,7 +1545,6 @@ int AdvancedSetting::VisionRefresh()
 
     }
 
-
     //非自解码
     if (icNumber < 0x81)
     {
@@ -1352,7 +1556,7 @@ int AdvancedSetting::VisionRefresh()
         double chu = 0;
         if ((ui->lineEdit_3->text() == "SUM-2035") || (ui->lineEdit_3->text() == "SUM-6086") || (ui->lineEdit_3->text() == "SUM-2033") || (ui->lineEdit_3->text() == "CFD-335A") || (ui->lineEdit_3->text() == "CFD-435A"))
         {
-            if ((ICPara[0x100] & 0x08) == 0x08)
+            if ((ICPara[0x10C] & 0x04) == 0x04)
             {
                 chu = 2;
             }
@@ -1404,10 +1608,7 @@ int AdvancedSetting::VisionRefresh()
                 break;
             case 2:
             {
-                //qDebug() << "----------------";
-
                 beipin = 256 / chu;
-                //qDebug() << "++++++++++++++";
             }
                 break;
             case 3:
@@ -1439,7 +1640,6 @@ int AdvancedSetting::VisionRefresh()
         }
         //亮度效率
         double Efficiency = 0;
-
 
         Efficiency = (VR * Scannum * (beipin)) / (TXDWorkClk * 1000000 / GclkValue * 1.0 / ReadFieldFrequency) * 100.0;
 
@@ -1484,11 +1684,11 @@ void AdvancedSetting::on_checkBox_clicked(bool checked)
       this->setCursor(Qt::WaitCursor);
     if (checked)
     {
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x20;
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] | 0x20;
     }
     else
     {
-        ModulePara[0x5C] = ModulePara[0x5C] & 0xDF;
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] & 0xDF;
     }
 
 
@@ -1497,10 +1697,10 @@ void AdvancedSetting::on_checkBox_clicked(bool checked)
 
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
      this->setCursor(Qt::ArrowCursor);
 }
@@ -1514,11 +1714,11 @@ void AdvancedSetting::on_checkBox_2_clicked(bool checked)
     this->setCursor(Qt::WaitCursor);
     if (checked)
     {
-        ModulePara[0x66] = ModulePara[0x66] | 0x80;
+        ModulePara[0x66] = (uchar)ModulePara[0x66] | 0x80;
     }
     else
     {
-        ModulePara[0x66] = ModulePara[0x66] & 0x7F;
+        ModulePara[0x66] = (uchar)ModulePara[0x66] & 0x7F;
     }
 
     //发送参数
@@ -1526,10 +1726,10 @@ void AdvancedSetting::on_checkBox_2_clicked(bool checked)
 
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
      this->setCursor(Qt::ArrowCursor);
 }
@@ -1537,13 +1737,13 @@ void AdvancedSetting::on_checkBox_2_clicked(bool checked)
 
 void AdvancedSetting::on_rgbChangeBtn_clicked()
 {
-    RGBchange *rgbchange = new RGBchange();
+    RGBchange *rgbchange = new RGBchange(this);
     rgbchange->show();
 }
 
 void AdvancedSetting::on_dataGroupBtn_clicked()
 {
-    DataGroup *datagroup = new DataGroup();
+    DataGroup *datagroup = new DataGroup(this);
     datagroup->show();
 }
 
@@ -1560,27 +1760,27 @@ void AdvancedSetting::CreateAction()
     // 创建QMenu
     QMenu *menu = new QMenu();
     //创建QAction
-    QAction *ICconfig = new QAction(QString::fromLocal8Bit("驱动芯片设置"),AdvancedSetting::ui->toolButton);
+    QAction *ICconfig = new QAction(tr("驱动芯片设置"),AdvancedSetting::ui->toolButton);
     menu->addAction(ICconfig);
     connect(ICconfig,SIGNAL(triggered()),this,SLOT(ICconfigShow()));
 
-    QAction *CurrentConfig = new QAction(QString::fromLocal8Bit("电流增益设置"),AdvancedSetting::ui->toolButton);
+    QAction *CurrentConfig = new QAction(tr("电流增益设置"),AdvancedSetting::ui->toolButton);
     menu->addAction(CurrentConfig);
     connect(CurrentConfig,SIGNAL(triggered()),this,SLOT(CurrentConfigShow()));
 
-    QAction *MOSConfig = new QAction(QString::fromLocal8Bit("行管设置"),AdvancedSetting::ui->toolButton);
+    QAction *MOSConfig = new QAction(tr("行管设置"),AdvancedSetting::ui->toolButton);
     menu->addAction(MOSConfig);
     connect(MOSConfig,SIGNAL(triggered()),this,SLOT(MOSConfigShow()));
 
-    QAction *FLASHConfig = new QAction(QString::fromLocal8Bit("FLASH设置"),AdvancedSetting::ui->toolButton);
+    QAction *FLASHConfig = new QAction(tr("FLASH设置"),AdvancedSetting::ui->toolButton);
     menu->addAction(FLASHConfig);
     connect(FLASHConfig,SIGNAL(triggered()),this,SLOT(FLASHConfig()));
 
-    QAction *GrayFineProcessing = new QAction(QString::fromLocal8Bit("灰度精细处理"),AdvancedSetting::ui->toolButton);
+    QAction *GrayFineProcessing = new QAction(tr("灰度精细处理"),AdvancedSetting::ui->toolButton);
     menu->addAction(GrayFineProcessing);
     connect(GrayFineProcessing,SIGNAL(triggered()),this,SLOT(GrayFineProcessingShow()));
 
-    QAction *Scan = new QAction(QString::fromLocal8Bit("扫描表设置"),AdvancedSetting::ui->toolButton);
+    QAction *Scan = new QAction(tr("扫描表设置"),AdvancedSetting::ui->toolButton);
     menu->addAction(Scan);
     connect(Scan,SIGNAL(triggered()),this,SLOT(ScanShow()));
 
@@ -1595,238 +1795,255 @@ void AdvancedSetting::on_toolButton_clicked()
 }
 void AdvancedSetting::ICconfigShow()
 {
-    //qDebug() << QStringLiteral("驱动芯片设置");
 
-    uint16_t index = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    uint16_t index = (unsigned char)ModulePara[0x13]/* + (unsigned char)ModulePara[0x14] * 256*/;
 
     switch (index)
     {
     case CONVENTSIONALCHIP:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case ICN_2038S:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5038:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2017T:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5124:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2017:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2030:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2030T:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2032:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2131:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2033:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5252:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5041B:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5041Q:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5042_5041:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5042B:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5043:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5151:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5047:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5152:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5153:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5155:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2035:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SM_16259:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case MBI_5353:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_6086:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case LS_9935:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case ICN_2055_2069:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case CFD_335A:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case SUM_2035NEW:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case ICN_2153:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case FM_6363:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case FM_6565:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case LS_9935B:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case CFD_435A:
     {
-        ICCFD435ASetting *iccfd435a = new ICCFD435ASetting();
+        ICCFD435ASetting *iccfd435a = new ICCFD435ASetting(this);
         iccfd435a->show();
         break;
     }
     case CFD_555A:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
         break;
     }
     case CFD_455A:
     {
-        ICCFD455ASetting *iccfd455a = new ICCFD455ASetting();
+        ICCFD455ASetting *iccfd455a = new ICCFD455ASetting(this);
         iccfd455a->show();
         break;
     }
     case DP_3246:
     {
-        ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
         icadvanced->show();
+        break;
+    }
+    case ICND_2138:
+    {
+        ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
+        icadvanced->show();
+        break;
+    }
+    case XM11202G:
+    {
+        ICXM11202GSetting *icxm11202 = new ICXM11202GSetting(this);
+        icxm11202->show();
+        break;
+    }
+    case XM10480G:
+    {
+        ICXM10480GSetting *icxm10480g = new ICXM10480GSetting(this);
+        icxm10480g->show();
         break;
     }
     default:
@@ -1839,13 +2056,12 @@ void AdvancedSetting::ICconfigShow()
 }
 void AdvancedSetting::CurrentConfigShow()
 {
-    CurrentGain *currentgain = new CurrentGain();
+    CurrentGain *currentgain = new CurrentGain(this);
     currentgain->show();
 }
 void AdvancedSetting::MOSConfigShow()
 {
-    //qDebug() << QStringLiteral("行管设置");
-    switch (ModulePara[0x12])
+    switch ((uchar)ModulePara[0x12])
     {
     case 0:
         break;
@@ -1853,23 +2069,31 @@ void AdvancedSetting::MOSConfigShow()
         break;
     case 2:
     {
-        MOS5957config *mos5957 = new MOS5957config();
+        MOS5957config *mos5957 = new MOS5957config(this);
         mos5957->show();
         break;
     }
     case 3:
     {
-        MOS5366config *mos5366 = new MOS5366config();
+        MOS5366config *mos5366 = new MOS5366config(this);
         mos5366->show();
         break;
     }
     case 4:
+    {
+        MOSICND2018config *mosicnd2018 = new MOSICND2018config(this);
+        mosicnd2018->show();
         break;
+    }
     case 5:
+    {
+        MOSC82018config *mosc82018 = new MOSC82018config(this);
+        mosc82018->show();
         break;
+    }
     case 6:
     {
-        MOSCFD2138 *moscfd2138 = new MOSCFD2138();
+        MOSCFD2138config *moscfd2138 = new MOSCFD2138config(this);
         moscfd2138->show();
         break;
     }
@@ -1879,17 +2103,17 @@ void AdvancedSetting::MOSConfigShow()
 }
 void AdvancedSetting::FLASHConfig()
 {
-    FLASHsetting *flashsetting = new FLASHsetting();
+    FLASHsetting *flashsetting = new FLASHsetting(this);
     flashsetting->show();
 }
 void AdvancedSetting::GrayFineProcessingShow()
 {
-    GrayFineProcessing *grayfinepro = new GrayFineProcessing();
+    GrayFineProcessing *grayfinepro = new GrayFineProcessing(this);
     grayfinepro->show();
 }
 void AdvancedSetting::ScanShow()
 {
-    Scanparamater *scanpara = new Scanparamater();
+    Scanparamater *scanpara = new Scanparamater(this);
     scanpara->show();
 }
 
@@ -1897,7 +2121,7 @@ void AdvancedSetting::ScanShow()
 
 void AdvancedSetting::on_OtherpushButton_clicked()
 {
-    AdvancedOtherPara *advancedother = new AdvancedOtherPara();
+    AdvancedOtherPara *advancedother = new AdvancedOtherPara(this);
     advancedother->show();
 
 //    QString filename = UniversalInterface::GetMOSFilename(0x02);
@@ -1916,16 +2140,78 @@ void AdvancedSetting::on_ReadpushButton_clicked()
     if (result)
     {
           LoadingPara();
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("回读"),QString::fromLocal8Bit("回读成功"));
+        UniversalInterface::MessageBoxShow(tr("回读"),tr("回读成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("回读"),QString::fromLocal8Bit("回读失败"));
+         UniversalInterface::MessageBoxShow(tr("回读"),tr("回读失败"));
     }
 
 }
 
 void AdvancedSetting::on_pushButton_2_clicked()
 {
-    AdvancedCustom *custom = new AdvancedCustom();
+
+
+    AdvancedCustom *custom = new AdvancedCustom(this);
+
+    //UniversalInterface::showRaise(custom);
+     //Core::ICore::showCenter(custom);
     custom->show();
+}
+
+void AdvancedSetting::on_SavepushButton_clicked()
+{
+    LAPI::EResult ret = LAPI::WriteSaveRCParam(0xFF, 0xFF, true);
+    if (ret == LAPI::EResult::ER_INTECTRL_Success)
+    {
+        UniversalInterface::MessageBoxShow(tr("保存"),tr("保存成功"));
+    }
+    else
+    {
+        UniversalInterface::MessageBoxShow(tr("保存"),tr("保存成功"));
+    }
+}
+
+
+
+void AdvancedSetting::on_ButtonColorGamdat_clicked()
+{
+    ColorGamut *colorgamut = new ColorGamut(this);
+    colorgamut->show();
+}
+void AdvancedSetting::WriteFrequencyDoubling(int Regnum, int ByteCount, int StartByte)
+{
+    int i = 0;
+    QByteArray Regold;
+    Regold.resize(6);
+    QByteArray Regnew;
+    Regnew.resize(6);
+    int REGold[3];
+    int REGnew[3];
+
+    for (i = 0; i < Regold.length(); i++)
+    {
+        Regold[i] = (uchar)ICPara[0x100 + i + (Regnum - 1) * 6];
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        REGold[i] = (uchar)Regold[i * 2] + Regold[i * 2 + 1] * 256;
+    }
+
+    REGnew[0] = (REGold[0] & ~((int)(pow(2, ByteCount) - 1) << StartByte)) | (ModulePara[0x29] << StartByte);
+    REGnew[1] = (REGold[1] & ~((int)(pow(2, ByteCount) - 1) << StartByte)) | (ModulePara[0x29] << StartByte);
+    REGnew[2] = (REGold[2] & ~((int)(pow(2, ByteCount) - 1) << StartByte)) | (ModulePara[0x29] << StartByte);
+
+    for (i = 0; i < Regnew.length(); i += 2)
+    {
+        Regnew[i] = (uchar)(REGnew[i / 2] % 256);
+        Regnew[i + 1] = (uchar)(REGnew[i / 2] / 256);
+    }
+
+    for (i = 0; i < Regnew.length(); i++)
+    {
+        ICPara[0x100 + i + (Regnum - 1) * 6] = (uchar)Regnew[i];
+    }
+
 }

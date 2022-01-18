@@ -36,8 +36,7 @@ namespace LBL
 				m_detectInfo.senderCardClass = ESenderCardClass::ESC_2nd;
 			}
 			~SenderCardItem_2ndPrivate()
-			{
-				qDebug("~SenderCardItem_2ndPrivate()\n");
+            {
 			}
 
 		public:

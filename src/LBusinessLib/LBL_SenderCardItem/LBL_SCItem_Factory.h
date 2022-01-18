@@ -25,8 +25,7 @@ namespace LBL
 		{
 		public:
 			~SenderCardItemFactory()
-			{
-				qDebug("~SenderCardItemFactory()\n");
+            {
 			}
 			//使用静态函数可以不用声明对象便可直接创建
 			static AbstractSenderCardItem_t* creatSenderItem(const SDetectItemInfo* info , QObject * parent = 0)

@@ -9,7 +9,6 @@ LBL_NetEngine_COMTransThread::LBL_NetEngine_COMTransThread(LBL_NetEngine * pThre
 
 LBL_NetEngine_COMTransThread::~LBL_NetEngine_COMTransThread()
 {
-	qDebug() << __FUNCTION__;
 }
 
 void LBL_NetEngine_COMTransThread::closeSocket(QObject * objSocket)
@@ -31,7 +30,7 @@ void LBL_NetEngine_COMTransThread::closeSocket(QObject * objSocket)
 		pSerialPort->close();
 		emit sig_SocketClosed(pSerialPort);
 		emit sig_Message(pSerialPort, "Info>" + QString(tr("Client Closed.")));
-		qDebug() << tr("(%1)..Closed.").arg((quint64)pSerialPort);
+        qDebug() << tr("Serial Port (%1)..Closed.").arg((quint64)pSerialPort);
 		push_to_rabbish_can(pSerialPort);
 	}
 }
@@ -79,13 +78,14 @@ void LBL_NetEngine_COMTransThread::slot_EstablishCOMConnection(LBL_NetEngine_Tra
 
 void LBL_NetEngine_COMTransThread::slot_SendData(QObject * objSocket, LBLEnginePackage package)
 {
-	m_mutex_protect.lock();
+    m_mutex_protect.lock();
 	if (m_clientList.contains(objSocket) == false)
 	{
 		m_mutex_protect.unlock();
 		return;
 	}
 	m_mutex_protect.unlock();
+    LBL_NetEngine_TransThread::slot_SendData(objSocket,package);
 	QSerialPort * pSocket = qobject_cast<QSerialPort*>(objSocket);
 	if (pSocket)
 	{
@@ -100,7 +100,7 @@ void LBL_NetEngine_COMTransThread::slot_SendData(QObject * objSocket, LBLEngineP
 		{
 			qint64 bytesWritten = pSocket->write(package.data().constData(),
 				qMin(package.data().size(), m_nPayLoad));
-			qDebug() << tr("Serial Port Send. Name:") << pSocket->portName() << tr(" Length:") << bytesWritten;
+            //qDebug() << tr("Serial Port Send. Name:") << pSocket->portName() << tr(" Length:") << bytesWritten;
 			if (bytesWritten < package.data().size())
 			{
 				list_sock_data.push_back(package);

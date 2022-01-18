@@ -95,6 +95,7 @@ public:
 		EOR_Fail_NoReason = 0x0002, //失败-无具体原因
 		EOR_Fail_NoCOM = 0x0003, //失败-找不到对应串口
 		EOR_Fail_NoRet = 0x0004, //失败-无返回
+        EOR_Success_UpgradeImmediately = 0x0011, //成功-立即升级
 		EOR_Fail_Busy = 0x8001, //失败-忙碌
 		EOR_Fail_Exclusive = 0x8002, //失败-被占用
 		EOR_Fail_NoCMD=0xF001, //失败-命令码不支持

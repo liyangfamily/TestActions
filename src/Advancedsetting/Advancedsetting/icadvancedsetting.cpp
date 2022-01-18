@@ -4,19 +4,25 @@
 #include <QDebug>
 
 ICAdvancedSetting::ICAdvancedSetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::ICAdvancedSetting)
 {
     ui->setupUi(this);
 
-
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
 
     LoadForm();
     Showic();
 
 
 }
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 ICAdvancedSetting::~ICAdvancedSetting()
 {
     delete ui;
@@ -92,12 +98,12 @@ void ICAdvancedSetting::SetspinBox()
 
 void ICAdvancedSetting::Showic()
 {
-    unsigned char index = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    uchar index = (uchar)ModulePara[0x13]/* + (uchar)ModulePara[0x14] * 256*/;
 
     switch (index)
     {
     case CONVENTSIONALCHIP:
-        ui->IClineEdit->setText(QString::fromLocal8Bit("常规芯片"));
+        ui->IClineEdit->setText(tr("常规芯片"));
         ShowCount(0);
         break;
     case ICN_2038S:
@@ -285,9 +291,9 @@ void ICAdvancedSetting::on_pushButton_clicked()
     this->setCursor(Qt::ArrowCursor);
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 }

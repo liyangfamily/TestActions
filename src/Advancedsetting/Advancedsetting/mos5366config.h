@@ -1,13 +1,13 @@
 ﻿#ifndef MOS5366CONFIG_H
 #define MOS5366CONFIG_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class MOS5366config;
 }
 
-class MOS5366config : public QWidget
+class MOS5366config : public QDialog
 {
     Q_OBJECT
 

@@ -6,17 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>263</width>
+    <width>297</width>
     <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -30,213 +27,179 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
+    <widget class="QGroupBox" name="groupBoxBrightness">
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>261</width>
-        <height>466</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>16</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="groupBoxBrightness">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="title">
-          <string>System Version</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
-          <item row="1" column="0">
-           <widget class="QLabel" name="labelAndroid">
-            <property name="text">
-             <string>Android:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="labelSCFPGA">
-            <property name="text">
-             <string>SenderCard FPGA:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="labelMCU">
-            <property name="text">
-             <string>MCU:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="labelMCUVer">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="labelAndroidVer">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="labelHDMIVer">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="labelSCFPGAVer">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="labelHDMI">
-            <property name="text">
-             <string>HDMI:</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Upgrade</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1,1">
-          <item row="0" column="0">
-           <widget class="QLabel" name="labelUpgradeType">
-            <property name="text">
-             <string>Type:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="labelFilePath">
-            <property name="text">
-             <string>FilePath:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="labelFilePathInfo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="btnClearFilePath">
-            <property name="text">
-             <string>Clear</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="btnSelectFile">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>File</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="btnUpgrade">
-            <property name="text">
-             <string>Upgrade</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QComboBox" name="comboBoxUpgradeType"/>
-          </item>
-          <item row="3" column="0" colspan="3">
-           <widget class="HasErrorProgressBar" name="progressBarUpgrade">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>34</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="value">
-             <number>0</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="invertedAppearance">
-             <bool>false</bool>
-            </property>
-            <property name="textDirection">
-             <enum>QProgressBar::TopToBottom</enum>
-            </property>
-            <property name="format">
-             <string notr="true">%p%</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>198</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
+     <property name="title">
+      <string>System Version</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelAndroid">
+        <property name="text">
+         <string>Android:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelSCFPGA">
+        <property name="text">
+         <string>SenderCard FPGA:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelMCU">
+        <property name="text">
+         <string>MCU:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelMCUVer">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelAndroidVer">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="labelHDMIVer">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelSCFPGAVer">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelHDMI">
+        <property name="text">
+         <string>HDMI:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Upgrade</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1,1">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelUpgradeType">
+        <property name="text">
+         <string>Type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelFilePath">
+        <property name="text">
+         <string>FilePath:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="btnClearFilePath">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="btnSelectFile">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>File</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="btnUpgrade">
+        <property name="text">
+         <string>Upgrade</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QComboBox" name="comboBoxUpgradeType"/>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="HasErrorProgressBar" name="progressBarUpgrade">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>34</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::TopToBottom</enum>
+        </property>
+        <property name="format">
+         <string notr="true">%p%</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLabel" name="labelFilePathInfo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>203</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -247,15 +210,6 @@
    <header location="global">CustomWidget/mcelevatedclass.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>comboBoxUpgradeType</tabstop>
-  <tabstop>btnClearFilePath</tabstop>
-  <tabstop>btnSelectFile</tabstop>
-  <tabstop>btnUpgrade</tabstop>
- </tabstops>
- <resources>
-  <include location="MaxConfig3.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

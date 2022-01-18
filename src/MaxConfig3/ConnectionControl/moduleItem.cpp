@@ -3,6 +3,7 @@
 
 #include "connectionScene.h"
 #include "Utils/graphicstheme.h"
+#include "Core/icore.h"
 
 #include <qmath.h>
 #include <QGraphicsScene>
@@ -14,6 +15,7 @@
 #include <QAction>
 #include <QIcon>
 #include <QFileInfo>
+#include <QString>
 
 using namespace Utils::GraphicsTheme;
 // 自定义 Item
@@ -27,7 +29,8 @@ ModuleItem::ModuleItem(QGraphicsItem *parent)
 	setPen(p);
 
 	// 可选择、可移动
-	setFlags(QGraphicsItem::ItemIsSelectable |/* QGraphicsItem::ItemIsMovable | */QGraphicsItem::ItemSendsGeometryChanges);
+    setFlags(QGraphicsItem::ItemIsSelectable |/* QGraphicsItem::ItemIsMovable | */QGraphicsItem::ItemSendsGeometryChanges
+             |QGraphicsItem::ItemIsFocusable);
 }
 
 ModuleItem::~ModuleItem()
@@ -45,8 +48,8 @@ void ModuleItem::setRect(QRectF rect)
 		<< QPointF(relativeArea.topLeft());
 	setPolygon(myPolygon);
 
-	m_centerPoint = m_absoluteRect.center();
-	setPos(m_centerPoint);
+    m_centerPoint = m_absoluteRect.topLeft();
+    setPos(m_centerPoint);
 
 	m_correctHelper.setPaintRect(rect.toRect());
 }
@@ -79,7 +82,17 @@ void ModuleItem::setModuleIndex(int index)
 
 int ModuleItem::moduleIndex() const
 {
-	return m_moduleIndex;
+    return m_moduleIndex;
+}
+
+void ModuleItem::setCorrectIndex(int index)
+{
+    m_correctIndex = index;
+}
+
+int ModuleItem::correctIndex() const
+{
+    return m_correctIndex;
 }
 
 void ModuleItem::setOrder(Order o)
@@ -131,25 +144,40 @@ void ModuleItem::removeArrows()
 	}
 }
 
+#include <QMessageBox>
+void ModuleItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(ConnectionDiagramScene::instance()->isSceneMode(ConnectionDiagramScene::ModuleParam)){
+        //QMessageBox::information(Core::ICore::mainWindow(),"Test","This is Test Dialog.");
+    }
+    if(!m_test.isEmpty()){
+        if(m_test.contains(event->pos())){
+            //m_center = true;
+            this->update();
+        }
+    }
+    QGraphicsItem::mouseDoubleClickEvent(event);
+}
+
 void ModuleItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton) {
 		if (event->modifiers() == Qt::ShiftModifier) {
-			qDebug() << "Custom item left clicked with shift key.";
+            //qDebug() << "Custom item left clicked with shift key.";
 			// 选中 item
 			setSelected(true);
 		}
 		else if (event->modifiers() == Qt::AltModifier) {
-			qDebug() << "Custom item left clicked with alt key.";
+            //qDebug() << "Custom item left clicked with alt key.";
 		}
 		else {
-			qDebug() << "Custom item left clicked.";
+            //qDebug() << "Custom item left clicked.";
 			event->accept();
 			//QGraphicsItem::mousePressEvent(event);
 		}
 	}
 	else if (event->button() == Qt::RightButton) {
-		qDebug() << "Custom item right clicked.";
+        //qDebug() << "Custom item right clicked.";
 		if (!scene()->selectedItems().contains(this)) {
 			scene()->clearSelection();
 			setSelected(true);
@@ -165,9 +193,9 @@ void ModuleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		QPointF pos = event->scenePos();
 	}
 	else if (event->modifiers() != Qt::AltModifier) {
-		qDebug() << "Custom item moved.";
+        //qDebug() << "Custom item moved.";
 		QGraphicsItem::mouseMoveEvent(event);
-		qDebug() << "moved" << pos();
+        //qDebug() << "moved" << pos();
 	}
 }
 
@@ -207,13 +235,23 @@ QVariant ModuleItem::itemChange(GraphicsItemChange change, const QVariant & valu
 QRectF ModuleItem::relativeRect()
 {
 	QRectF relativeArea = QRectF(0, 0, m_absoluteRect.width(), m_absoluteRect.height());
-	relativeArea.moveTo(-relativeArea.width() / 2, -relativeArea.height() / 2);
+    //relativeArea.moveTo(-relativeArea.width() / 2, -relativeArea.height() / 2);
 	return relativeArea;
 }
 
 int ModuleItem::type() const
 {
-	return Type;
+    return Type;
+}
+
+void ModuleItem::focusOutEvent(QFocusEvent *event)
+{
+    if(m_center){
+        m_center = false;
+        this->update();
+    }
+    qDebug()<<"111111111111";
+    QGraphicsItem::focusOutEvent(event);
 }
 
 void ModuleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget /*= 0*/)
@@ -273,31 +311,48 @@ void ModuleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 		painter->drawRect(rect);
 	}
 	else if (m_moduleOrder == Order::O_InQueen) {
-		painter->drawEllipse(rect.adjusted(8, 8, -8, -8));
+        m_test = rect.adjusted(8, 8, -8, -8);
+        painter->save();
+        if(m_center){
+            painter->setBrush(Qt::white);
+        }
+        painter->drawEllipse(rect.adjusted(8, 8, -8, -8));
+        painter->restore();
 	}
     QPointF textStartPos=rectItem.topLeft();
 	//draw Port and Module Index
+    painter->translate(20, 20);
+    painter->setPen(g_ModuleTheme.itemColor(ModultItemTheme::TextColor));
 	if (m_moduleOrder != Order::O_Null) {
 		QFontMetrics fm(g_ModuleTheme.ItemFont);
-		QString text = QString(" %1-%2").arg(m_port + 1).arg(m_moduleIndex);
-		int pixelsWide = fm.width(text);
-		int pixelsHigh = fm.height();
-        QRectF rect1(textStartPos, QSize(pixelsWide, pixelsHigh));
-		painter->setPen(g_ModuleTheme.itemColor(ModultItemTheme::TextColor));
-		painter->drawText(rect1, Qt::AlignCenter, text);
-        textStartPos+=QPointF(0,pixelsHigh);
+        QString text = QString(" %1-%2").arg(m_port + 1).arg(m_moduleIndex+1);
+        if(ConnectionDiagramScene::instance()->sceneMode()==ConnectionDiagramScene::Correct){
+            text = QString(" %1").arg(m_correctIndex);
+        }
+        int width = rectItem.width() - 40; // 显示文本的宽度，为窗口的宽度减去 40 像素
+        int flags = Qt::TextWrapAnywhere | Qt::AlignLeft; // 自动换行
+        // 计算文本在指定宽度下的包围矩形
+        QFontMetrics metrics = painter->fontMetrics();
+        QRect textBoundingRect = metrics.boundingRect(QRect(0, 0, width, 1), flags, text);
+        //painter->drawRect(textBoundingRect);
+        painter->drawText(textBoundingRect, flags, text);
+        textStartPos+=QPointF(0,textBoundingRect.height());
 	}
     //draw Correct File Info
     if(m_correctHelper.isLoaded()){
         QFontMetrics fm(g_ModuleTheme.ItemFont);
         QString filePath=m_correctHelper.correctFileInfo().second;
         QFileInfo fileInfo(filePath);
-        QString text = QString(" %1:%2").arg(QApplication::tr("Correct File")).arg(fileInfo.fileName());
-        int pixelsWide = fm.width(text);
-        int pixelsHigh = fm.height();
-        QRectF rect1(textStartPos, QSize(pixelsWide, pixelsHigh));
-        painter->setPen(g_ModuleTheme.itemColor(ModultItemTheme::TextColor));
-        painter->drawText(rect1, Qt::AlignCenter, text);
-        textStartPos+=QPointF(0,pixelsHigh);
+        QString text = QString("%1:%2").arg(QApplication::tr("Correct File")).arg(fileInfo.fileName());
+        int width = rectItem.width() - 40; // 显示文本的宽度，为窗口的宽度减去 40 像素
+        int flags = Qt::TextWrapAnywhere | Qt::AlignLeft; // 自动换行
+        // 计算文本在指定宽度下的包围矩形
+        QFontMetrics metrics = painter->fontMetrics();
+        QRect textBoundingRect = metrics.boundingRect(QRect(0, 0, width, 1), flags, text);
+        painter->translate(0, textStartPos.y());
+        //painter->drawRect(textBoundingRect);
+        painter->drawText(textBoundingRect, flags, text);
+        textStartPos+=QPointF(0,textBoundingRect.height());
+
     }
 }

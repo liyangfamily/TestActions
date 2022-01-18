@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>275</width>
-    <height>830</height>
+    <height>954</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,25 +40,10 @@
         <x>0</x>
         <y>0</y>
         <width>273</width>
-        <height>828</height>
+        <height>952</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>16</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
        <item>
         <widget class="QGroupBox" name="groupBoxTestSet">
          <property name="styleSheet">
@@ -80,6 +65,13 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item row="5" column="0">
+           <widget class="QRadioButton" name="btnTestGradientRed">
+            <property name="text">
+             <string>Gradient Red</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QRadioButton" name="btnTestWhite">
             <property name="sizePolicy">
@@ -90,6 +82,53 @@
             </property>
             <property name="text">
              <string>White</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="btnTestNormal">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Normal</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QRadioButton" name="btnTestRightSlash">
+            <property name="text">
+             <string>Right Slash</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QRadioButton" name="btnTestGradientGreen">
+            <property name="text">
+             <string>Gradient Green</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="btnTestLeftSlash">
+            <property name="text">
+             <string>Left Slash</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="btnTestBlack">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Black</string>
             </property>
            </widget>
           </item>
@@ -106,16 +145,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="btnTestNormal">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="4" column="1">
+           <widget class="QRadioButton" name="btnTestVerticalSlash">
             <property name="text">
-             <string>Normal</string>
+             <string>Vertical Slash</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QRadioButton" name="btnTestHorizontalSlash">
+            <property name="text">
+             <string>Horizontal Slash</string>
             </property>
            </widget>
           </item>
@@ -145,16 +185,17 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QRadioButton" name="btnTestBlack">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="6" column="0">
+           <widget class="QRadioButton" name="btnTestGradientBlue">
             <property name="text">
-             <string>Black</string>
+             <string>Gradient Blue</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QRadioButton" name="btnTestGradientWhite">
+            <property name="text">
+             <string>Gradient White</string>
             </property>
            </widget>
           </item>
@@ -182,30 +223,10 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item row="1" column="0">
-           <widget class="MCCusSwitchButton" name="btnSwitch3_0Sys">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="5" column="0">
+           <widget class="MCCusSwitchButton" name="btnSwitchCorrect">
             <property name="text">
-             <string>3.0 System</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="MCCusSwitchButton" name="btnSwitchErrorBitRateClean">
-            <property name="text">
-             <string>ErrorBitRateClean</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="MCCusSwitchButton" name="btnSwitchSCS">
-            <property name="text">
-             <string>SCS</string>
+             <string>Correct</string>
             </property>
            </widget>
           </item>
@@ -213,20 +234,6 @@
            <widget class="MCCusSwitchButton" name="btnSwitchBypass">
             <property name="text">
              <string>Bypass</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="MCCusSwitchButton" name="btnSwitch24BitGamma">
-            <property name="text">
-             <string>24Bit Gamma</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="MCCusSwitchButton" name="btnSwitchCorrect">
-            <property name="text">
-             <string>Correct</string>
             </property>
            </widget>
           </item>
@@ -243,7 +250,34 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="8" column="0">
+           <widget class="MCCusSwitchButton" name="btn10bitSource">
+            <property name="text">
+             <string>10Bit Source</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="MCCusSwitchButton" name="btnSwitchErrorBitRateClean">
+            <property name="text">
+             <string>ErrorBitRateClean</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="MCCusSwitchButton" name="btnSwitch3_0Sys">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>3.0 System</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
            <widget class="MCCusSwitchButton" name="btnSwitchLockScreen">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -255,6 +289,46 @@
              <string>Lock screen</string>
             </property>
            </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="MCCusSwitchButton" name="btnSwitchSCS">
+            <property name="text">
+             <string>SCS</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="MCCusSwitchButton" name="btnSwitch24BitGamma">
+            <property name="text">
+             <string>24Bit Gamma</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="MCCusSwitchButton" name="btnLowDelay">
+            <property name="text">
+             <string>Low delay</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>FPGA Video Settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,1">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelNT68400Resolutions">
+            <property name="text">
+             <string>Resolutions</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBoxNT68400Resolutions"/>
           </item>
          </layout>
         </widget>
@@ -277,18 +351,12 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBoxZoomHeight"/>
-          </item>
           <item row="0" column="0">
            <widget class="MCCusSwitchButton" name="btnSwitchZoomMode">
             <property name="text">
              <string>ZoomMode</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBoxZoomWidht"/>
           </item>
           <item row="0" column="1">
            <widget class="QPushButton" name="btnZoomSizeSend">
@@ -297,12 +365,18 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="spinBoxZoomWidht"/>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Zoom Height:</string>
             </property>
            </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="spinBoxZoomHeight"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label">
@@ -429,6 +503,50 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Cutout</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0" rowspan="2">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Width:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="CutoutWidthspinBox">
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="2">
+           <widget class="QSpinBox" name="CutoutHeightspinBox">
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Height:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="CutoutSetpushButton">
+            <property name="text">
+             <string>Set</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -455,7 +573,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>scrollArea</tabstop>
   <tabstop>btnTestNormal</tabstop>
   <tabstop>btnTestRed</tabstop>
   <tabstop>btnTestGreen</tabstop>
@@ -463,13 +580,9 @@
   <tabstop>btnTestWhite</tabstop>
   <tabstop>btnTestBlack</tabstop>
   <tabstop>btnSwitchBypass</tabstop>
-  <tabstop>btnSwitch3_0Sys</tabstop>
   <tabstop>btnSwitchBlackScreen</tabstop>
-  <tabstop>btnSwitchLockScreen</tabstop>
   <tabstop>btnSwitchErrorBitRateClean</tabstop>
   <tabstop>btnSwitchCorrect</tabstop>
-  <tabstop>btnSwitchSCS</tabstop>
-  <tabstop>btnSwitch24BitGamma</tabstop>
   <tabstop>btnSwitchZoomMode</tabstop>
   <tabstop>btnZoomSizeSend</tabstop>
   <tabstop>spinBoxZoomWidht</tabstop>

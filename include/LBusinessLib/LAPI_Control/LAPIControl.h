@@ -81,6 +81,16 @@ extern "C" {
         /*********************************************************************************************************
         **发送卡相关
         *********************************************************************************************************/
+        /* Comments:发送卡属性
+        * Param in:
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT int LAPI_Stdcall MaxPortCount();
+        ILAPI_CONTROL_EXPORT bool LAPI_Stdcall HasMS9570();
+        ILAPI_CONTROL_EXPORT bool LAPI_Stdcall HasNT68400();
+        ILAPI_CONTROL_EXPORT bool LAPI_Stdcall HasAndroid();
+
         /*
         * Comments:设置、获取亮度
         * Param in:int
@@ -133,7 +143,7 @@ extern "C" {
         * SenderCard：2ndPlus、2ndGZ、PCON600
         */
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteConnection(LBLConnection* value, bool sync = true, int msec = 5000);
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadConnection(bool sync = true, int msec = 400);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadConnection(bool sync = true, int msec = 1000);
         ILAPI_CONTROL_EXPORT LBLConnection* LAPI_Stdcall GetConnection();
 
         /*
@@ -215,6 +225,29 @@ extern "C" {
         ILAPI_CONTROL_EXPORT EResult WriteSCProtocolType(quint8 value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSCProtocolType(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSCProtocolType();
+
+        /*
+        * Comments:发送卡调节NT68400分辨率，需同步读取
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult WriteSCNT68400Resolution(quint8 value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSCNT68400Resolution(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSCNT68400Resolution();
+
+        /* Comments:发送卡10Bit源开关，需同步读取
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult WriteSC10BitSource(quint8 value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSC10BitSource(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSC10BitSource();
+
+        /* Comments:发送卡低延时模式，需同步读取
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult WriteSCLowDelay(quint8 value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSCLowDelay(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSCLowDelay();
+
         /*********************************************************************************************************
         **接收卡相关
         *********************************************************************************************************/
@@ -251,6 +284,18 @@ extern "C" {
         ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall GetDecodingICParam();
 
         /*
+          发送凌阳华芯芯片参数2K
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteXMICParam(quint8 port, quint8 module, QByteArray value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadXMICParam(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+
+
+        /*
+          发送描点表
+    */
+           ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall writeLinearTableFile(quint8 port, quint8 module, QByteArray value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+
+        /*
         * Comments:写接收卡校正数据擦除
         * SenderCard：2ndPlus、2ndGZ、PCON600
         */
@@ -270,6 +315,30 @@ extern "C" {
         */
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteCalibrationDataReload(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
 
+
+        /*
+        * Comments:写接收卡校正数据擦除
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteLowGrayCalibrationDataErase(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        /*
+        * Comments:写接收卡校正数据
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteLowGrayCalibrationDataSave(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+
+        /*
+        * Comments:写接收卡校正数据重加载
+        * SenderCard：2ndPlus、2ndGZ、PCON600
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteLowGrayCalibrationDataReload(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+
+
+
+        /*
+          去坏点
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall clearDeadPoint(quint8 port, quint8 module, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
         /*
        * Comments:读接收卡状态信息，lengthflag不用填
        * SenderCard：2ndPlus、2ndGZ、PCON600
@@ -310,9 +379,9 @@ extern "C" {
         * Param out:
         * @Return Result
         */
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIImageRatio(const quint8 value, bool sync = false, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIImageRatio(const UI::EImageRatio value, bool sync = false, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDMIImageRatio(bool sync = false, int msec = LBL_Defalut_SyncTimeout);
-        ILAPI_CONTROL_EXPORT quint8  LAPI_Stdcall GetHDMIImageRatio();
+        ILAPI_CONTROL_EXPORT UI::EImageRatio  LAPI_Stdcall GetHDMIImageRatio();
 
         /*
         * Comments:设置、获取HDMI芯片视频源
@@ -320,13 +389,13 @@ extern "C" {
         * Param out:
         * @Return Result
         */
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIInputSource(const quint8 value, bool sync = false, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIInputSource(const UI::EInputSource value, bool sync = false, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDMIInputSource(bool sync = false, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT UI::EInputSource  LAPI_Stdcall GetHDMIInputSource();
 
         /*
         * Comments:设置、获取HDMI芯片对比度
-        * Param in:quint8
+        * Param in:quint8~
         * Param out:
         * @Return Result
         */
@@ -388,9 +457,9 @@ extern "C" {
         * Param out:
         * @Return Result
         */
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall writeHDMIMultiScreenMode(const UI::EMultiScreenMode value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall readHDMIMultiScreenMode(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
-        ILAPI_CONTROL_EXPORT UI::EMultiScreenMode  LAPI_Stdcall  getHDMIMultiScreenMode();
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIMultiScreenMode(const UI::EMultiScreenMode value, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDMIMultiScreenMode(bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT UI::EMultiScreenMode  LAPI_Stdcall  GetHDMIMultiScreenMode();
 
         /*
         * Comments:获取HDMI多屏输入源，需同步获取
@@ -432,15 +501,56 @@ extern "C" {
         ILAPI_CONTROL_EXPORT QPoint LAPI_Stdcall GetHDIMIWindowPos();
 
         /*
-        * Comments:HDMI WindowStatus
+        * Comments:设置PIP 窗口打开关闭状态
         * Param in:
         * Param out:
         * @Return Result
         */
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIWindowStatus(quint8 status, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIWindowStatus(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
-        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIWindowStatus();
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIWindowShowStatus(quint8 status, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIWindowShowStatus(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIWindowShowStatus();
 
+        /*
+        * Comments:设置PIP所有信息
+        * Param in:
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadAllHDMIAdvanceData_PIP(quint8 param, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+
+        //----------------------------DP_TX(显示输入设置)-----------------------------------------------------
+        /*
+        * Comments:显示输出源—
+        * Param in:  参数-0: Android; 1:PC（不存在）; 2:HDMI1;3:HDMI2;4:HDMI3;5:DP; 6:同屏"
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDMIOutputSource(UI::EOutputSource hdmi1, UI::EOutputSource hdmi2, UI::EOutputSource dp, \
+                                                             UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDMIOutputSource(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QList<quint8> LAPI_Stdcall GetHDMIOutputSource();
+
+        /*
+        * Comments:显示输出源——pcon600 FIXEDME:need to delete
+        * Param in:  参数-0: Android; 1:PC（不存在）; 2:HDMI1;3:HDMI2;4:HDMI3;5:DP; 6:同屏"
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteDP_TX_Pcon600(quint8 hdmi1, quint8 hdmi2, quint8 dp, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadDP_TX_Pcon600(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT bool LAPI_Stdcall GetDP_TX_Pcon600(quint8 &hdmi1, quint8 &hdmi2, quint8 &dp);
+
+        /*
+        * Comments:显示输出源——2ndPlus FIXEDME:need to delete
+        * Param in:  参数-0: Android; 1:PC; 2:HDMI1;3:HDMI2;4:HDMI3;5:同屏
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteDP_TX_2ndPlus(quint8 param, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadDP_TX_2ndPlus(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetDP_TX_2ndPlus();
+
+        //----------------------------Audio-----------------------------------------------------------------
         /*
         * Comments:HDMI AudioSrc
         * Param in:
@@ -451,6 +561,41 @@ extern "C" {
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIAudioSrc(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIAudioSrc();
 
+        /*
+        * Comments:HDMI AudioVolume
+        * Param in:
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIAudioVolume(quint8 param, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIAudioVolume(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIAudioVolume();
+
+        //----------------------------Advance Setting-----------------------------------------------------------------
+        /*
+        * Comments:HDMI Sharpness
+        * Param in:
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMISharpness(quint8 param, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMISharpness(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMISharpness();
+
+        /*
+        * Comments:HDMI DisplayArea
+        * Param in:
+        * Param out:
+        * @Return Result
+        */
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIDisplayArea(QSize value, UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIDisplayArea(UI::EHDMIChannel channel, bool sync = true, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT QSize LAPI_Stdcall GetHDIMIDisplayArea();
+
+        ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall GetEDIDData();
+        ILAPI_CONTROL_EXPORT quint16 LAPI_Stdcall writeHDMIEDID(int dataGroupIndex, quint8* pDataBuff, int dataLen);
+
+        ILAPI_CONTROL_EXPORT quint16 writeFacTest_UpdateEDID(quint8 dataGroupIndex, quint8* pDataBuff, quint8 dataLen, bool sync, int msec);
 
         /*********************************************************************************************************
         **文件传输相关
@@ -476,8 +621,8 @@ extern "C" {
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QString fileName,bool sync = false, int msec = LBL_Defalut_SyncTimeout);
         ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QString fileName, quint8 portIndex, quint16 moduleIndex, bool sync = false, int msec = LBL_Defalut_SyncTimeout);
 
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, bool sync, int msec);
-        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, quint8 portIndex, quint16 moduleIndex, bool sync, int msec);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, bool sync, int msec = LBL_Defalut_SyncTimeout);
+        ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, quint8 portIndex, quint16 moduleIndex, bool sync, int msec = LBL_Defalut_SyncTimeout);
 
         /*********************************************************************************************************
         **Android设备

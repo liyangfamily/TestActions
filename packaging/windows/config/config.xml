@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+  <Name>MaxConfig3</Name>
+  <Version>3.1.1</Version>
+  <Title>MaxConfig3 @ProductVersion@</Title>
+  <Publisher>QS Tech</Publisher>
+  <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+  <WizardShowPageList>false</WizardShowPageList>
+  <InstallerWindowIcon>MaxConfig16.ico</InstallerWindowIcon>
+  <InstallerApplicationIcon>MaxConfig64</InstallerApplicationIcon>
+  <Logo>MaxConfig64.png</Logo>
+  <WizardStyle>Classic</WizardStyle>
+  <TitleColor>#038DFF</TitleColor>
+  <WizardDefaultWidth>600</WizardDefaultWidth>
+  <WizardDefaultHeight>400</WizardDefaultHeight>
+  <RunProgram>@TargetDir@/MaxConfig.exe</RunProgram>
+  <StartMenuDir>MaxConfig 3</StartMenuDir>
+  <TargetDir>@ApplicationsDirUser@/MaxConfig3</TargetDir>
+  <RemoteRepositories>
+    <Repository>
+      <Url>https://raw.githubusercontent.com/liyangfamily/TestIFW/master/repository</Url>
+      <Enabled>1</Enabled>
+      <DisplayName>MaxConfig3 Upgrade repository</DisplayName>
+    </Repository>
+  </RemoteRepositories>
+</Installer>

@@ -6,6 +6,7 @@
 #include <QRectF>
 #include <QByteArray>
 #include <QList>
+#include <LBL_Core/LBLFileTransferChecker.h>
 namespace LBL
 {
 	namespace RC
@@ -124,7 +125,17 @@ namespace LBL
 			unsigned short reciveCardPixel_Width;
             unsigned short reciveCardPixel_Height;
             unsigned char protocolType;
-            unsigned char reserve3[214];
+            unsigned char reserve3[4];
+            unsigned char mcuVersion_Year1;
+            unsigned char mcuVersion_Year2;
+            unsigned char mcuVersion_Month1;
+            unsigned char mcuVersion_Month2;
+            unsigned char mcuVersion_Day1;
+            unsigned char mcuVersion_Day2;
+            unsigned char mcuVersion;
+            unsigned char mcuVersion_SmallA;
+            unsigned char mcuVersion_SmallB;
+            unsigned char reserve4[201];
 
 			tagRCStatusInfo() {
 				SetToDefalut();
@@ -146,9 +157,9 @@ namespace LBL
 			}
 			double GetPackageLoseRate()const {
 				if (0 == totalPackages) {
-					return -1.0;
+                    return 0;
 				}
-				int lossPack = totalPackages - recivedPackages;
+                unsigned int lossPack = totalPackages - recivedPackages;
 				if (lossPack < 0) {
 					return -1.0;
 				}
@@ -158,7 +169,7 @@ namespace LBL
 				if (0 == totalPackages) {
 					return 0;
 				}
-				int errorPack = totalPackages - correctPackages;
+                unsigned int errorPack = totalPackages - correctPackages;
 				if (errorPack < 0) {
 					return -1.0;
 				}
@@ -170,6 +181,9 @@ namespace LBL
 			quint8 GetModuleIndex()const {
 				return moduleInex;
 			}
+            QString GetPCBCategory() const{
+                return LBLFileTransferChecker::pcbCategory(QByteArray((const char*)(&hardwareVersion1),8));
+            }
             QString GetHardwareVendor()const {
                 return QString("%1-%2-%3-%4").arg(hardwareVersion1,4,16,QLatin1Char('0'))
                         .arg(hardwareVersion2,4,16,QLatin1Char('0'))
@@ -207,6 +221,16 @@ namespace LBL
                     return QString("-");
                 }
             }
+
+            QString GetMCUVersion()const {
+                QString strVersion;
+                strVersion.sprintf(("20%c%c-%c%c-%c%c %c %c.%c"), mcuVersion_Year1, mcuVersion_Year2,
+                    mcuVersion_Month1, mcuVersion_Month2,
+                    mcuVersion_Day1, mcuVersion_Day2,
+                    mcuVersion, mcuVersion_SmallA, mcuVersion_SmallB);
+                return strVersion;
+            }
+
 		}SRCStatusInfo;
 
 		/*接收卡模组监控信息结构体*/
@@ -246,6 +270,7 @@ namespace LBL
 		}SRCModuleMonitorInfoStruct;
 
 		/*给外部使用的模组监控信息带有端口号和模组号等信息*/
+        const int maxRCCount=128;
 		typedef struct tagRCMonitorInfo
 		{
 			int		port;		//端口号
@@ -259,7 +284,7 @@ namespace LBL
 		{
 			unsigned char portNum;
 			unsigned char senderCardIndex;
-			SRCModuleMonitorInfoStruct moduleMonitorList[32];
+            SRCModuleMonitorInfoStruct moduleMonitorList[maxRCCount];
 			unsigned char checkSum;
 
 			tagMonitorPortInfo() {
@@ -267,7 +292,7 @@ namespace LBL
 			}
 
 			void SetToDefalut() {
-				Q_ASSERT(sizeof(tagMonitorPortInfo) == 259);
+                Q_ASSERT(sizeof(tagMonitorPortInfo) == maxRCCount*8+3);
 				memset(this, 0, sizeof(tagMonitorPortInfo));
 			}
 			void SetData(QByteArray& data) {
@@ -280,7 +305,7 @@ namespace LBL
 					return QList<SRCMonitorInfo>();
 				}
 				QList<SRCMonitorInfo> tempList;
-				for (int i = 0; i < 32; ++i)
+                for (int i = 0; i < maxRCCount; ++i)
 				{
 					if (!moduleMonitorList[i].IsEmpty()) {
 						SRCMonitorInfo temp;

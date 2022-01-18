@@ -23,8 +23,7 @@ namespace LBL
 		}
 
 		LBLSenderCardCentralCtrl::~LBLSenderCardCentralCtrl()
-		{
-			qDebug() << __FUNCTION__;
+        {
 		}
 
 		quint16 LBLSenderCardCentralCtrl::writeFPGARegister(quint32 addr, QByteArray value, bool sync, int msec)
@@ -775,8 +774,97 @@ namespace LBL
 		quint8 LBLSenderCardCentralCtrl::getProtocolType()
 		{
 			Q_D(LBLSenderCardAbstract);
-			return LBLUIHelper::bitGet(d->m_gzData.reciverCtrl.protocolType, 0);
-		}
+            return LBLUIHelper::bitGet(d->m_gzData.reciverCtrl.protocolType, 0);
+        }
+
+        quint16 LBLSenderCardCentralCtrl::writeNT68400Resolution(quint8 value, bool sync, int msec)
+        {
+            Q_D(LBLSenderCardAbstract);
+            quint8 writeValue = value;
+            QByteArray tempData;
+            tempData.append(writeValue);
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_NT68400Resolution;
+            quint16 ret = writeFPGARegister(addr, tempData, sync, msec);
+            if (ret == LAPI::EResult::ER_Success) {
+                d->m_gzData.normalSetting.NT68400SignalResolution = writeValue;
+            }
+            return ret;
+        }
+
+        QByteArray LBLSenderCardCentralCtrl::readNT68400Resolution(bool sync, int msec)
+        {
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_NT68400Resolution;
+            quint16 len = 1;
+            return readFPGARegister(addr, len, sync, msec);
+        }
+
+        quint8 LBLSenderCardCentralCtrl::getNT68400Resolution()
+        {
+            Q_D(LBLSenderCardAbstract);
+            return d->m_gzData.normalSetting.NT68400SignalResolution;
+        }
+
+        quint16 LBLSenderCardCentralCtrl::write10BitSource(quint8 value, bool sync, int msec)
+        {
+            if (read10BitSource(sync, msec).isEmpty()) {
+                return LAPI::EResult::ER_INTECTRL_Fail_NoRet;
+            }
+            Q_D(LBLSenderCardAbstract);
+            quint8 writeValue = d->m_gzData.normalSetting._10BitSource;
+            LBLUIHelper::bitSet(writeValue, 0, LBLUIHelper::bitGet(value, 0));
+            QByteArray tempData;
+            tempData.append(writeValue);
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_10BitSource;
+            quint16 ret = writeFPGARegister(addr, tempData, sync, msec);
+            if (ret == LAPI::EResult::ER_Success) {
+                d->m_gzData.normalSetting._10BitSource = writeValue;
+            }
+            return ret;
+        }
+
+        QByteArray LBLSenderCardCentralCtrl::read10BitSource(bool sync, int msec)
+        {
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_10BitSource;
+            quint16 len = 1;
+            return readFPGARegister(addr, len, sync, msec);
+        }
+
+        quint8 LBLSenderCardCentralCtrl::get10BitSource()
+        {
+            Q_D(LBLSenderCardAbstract);
+            return LBLUIHelper::bitGet(d->m_gzData.normalSetting._10BitSource, 0);
+        }
+
+        quint16 LBLSenderCardCentralCtrl::writeLowDelay(quint8 value, bool sync, int msec)
+        {
+            if (readLowDelay(sync, msec).isEmpty()) {
+                return LAPI::EResult::ER_INTECTRL_Fail_NoRet;
+            }
+            Q_D(LBLSenderCardAbstract);
+            quint8 writeValue = d->m_gzData.normalSetting.scFeatureSwitch;
+            LBLUIHelper::bitSet(writeValue, 0, LBLUIHelper::bitGet(value, 0));
+            QByteArray tempData;
+            tempData.append(writeValue);
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_SenderCardFeatureSwitch;
+            quint16 ret = writeFPGARegister(addr, tempData, sync, msec);
+            if (ret == LAPI::EResult::ER_Success) {
+                d->m_gzData.normalSetting.scFeatureSwitch = writeValue;
+            }
+            return ret;
+        }
+
+        QByteArray LBLSenderCardCentralCtrl::readLowDelay(bool sync, int msec)
+        {
+            quint32 addr = ENormalSettingRegAddrs::ENSRA_SenderCardFeatureSwitch;
+            quint16 len = 1;
+            return readFPGARegister(addr, len, sync, msec);
+        }
+
+        quint8 LBLSenderCardCentralCtrl::getLowDelay()
+        {
+            Q_D(LBLSenderCardAbstract);
+            return LBLUIHelper::bitGet(d->m_gzData.normalSetting.scFeatureSwitch, 0);
+        }
 
 		bool LBLSenderCardCentralCtrl::init()
 		{
@@ -850,6 +938,16 @@ namespace LBL
                 memcpy(&(d->m_gzData.normalSetting.zoomWidth), d->senderCardReadFPGARegister, len);
 			}
 			break;
+            case ENormalSettingRegAddrs::ENSRA_NT68400Resolution:
+            {
+                memcpy(&(d->m_gzData.normalSetting.NT68400SignalResolution), d->senderCardReadFPGARegister, len);
+            }
+            break;
+            case ENormalSettingRegAddrs::ENSRA_10BitSource:
+            {
+                memcpy(&(d->m_gzData.normalSetting._10BitSource), d->senderCardReadFPGARegister, len);
+            }
+            break;
 			case ESelfTestRegAddrs::ESTRA_TestModeStatus:
 			{
                 memcpy(&(d->m_gzData.selfTest.testModeStatus), d->senderCardReadFPGARegister, len);

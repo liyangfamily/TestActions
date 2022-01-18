@@ -1,13 +1,14 @@
-﻿#ifndef ADVANCEDCUSTOM_H
+#ifndef ADVANCEDCUSTOM_H
 #define ADVANCEDCUSTOM_H
 
-#include <QWidget>
+//#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class AdvancedCustom;
 }
 
-class AdvancedCustom : public QWidget
+class AdvancedCustom : public QDialog
 {
     Q_OBJECT
 

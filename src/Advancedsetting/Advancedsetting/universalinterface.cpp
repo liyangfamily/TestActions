@@ -7,6 +7,7 @@
 #include <LAPIControl>
 #include <fstream>
 #include <iostream>
+#include <QApplication>
 
 
 UniversalInterface::UniversalInterface(QObject *parent)
@@ -90,16 +91,18 @@ void UniversalInterface::MessageBoxShow(QString title,QString str)
 bool UniversalInterface::SendALLPara()
 {
     LAPI::EResult ret1 = LAPI::WriteModuleParam(0xFF,0xFF,ModulePara);
-    LAPI::EResult ret2 = LAPI::WriteDriveICParam(0xFF,0xFF,ICPara);
     LAPI::EResult ret3 = LAPI::WriteDecodingICParam(0xFF,0xFF,DataPara);
+    LAPI::EResult ret2 = LAPI::WriteDriveICParam(0xFF,0xFF,ICPara);
 
 
+     qDebug()<<"+++++++++++++++++++++++:"<<(uchar)ICPara[0x100]<<"----"<<(uchar)ICPara[0x101];
 //    qDebug() << "ret1:" <<ret1<<"---ret2:"<<ret2<<"---ret3:"<<ret3;
     if ((ret1 == LAPI::EResult::ER_INTECTRL_Success) && (ret2 == LAPI::EResult::ER_INTECTRL_Success) && (ret3 == LAPI::EResult::ER_INTECTRL_Success))
     {
         UniversalInterface::Writebin(LBLUIHelper::appParamDataLocation() + "//ModulePara.bin",ModulePara);
         UniversalInterface::Writebin(LBLUIHelper::appParamDataLocation() + "//DataPara.bin",DataPara);
         UniversalInterface::Writebin(LBLUIHelper::appParamDataLocation() + "//ICPara.bin",ICPara);
+        qDebug() << "ADDR:" <<LBLUIHelper::appParamDataLocation();
         return true;
     }
     else
@@ -227,11 +230,6 @@ QString UniversalInterface::GetMOSFilename(uchar ICNumber)
     }
     return "";
 }
-
-
-
-
-
 
 
 

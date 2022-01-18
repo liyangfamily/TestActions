@@ -1,13 +1,13 @@
 ﻿#ifndef MOS5957CONFIG_H
 #define MOS5957CONFIG_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class MOS5957config;
 }
 
-class MOS5957config : public QWidget
+class MOS5957config : public QDialog
 {
     Q_OBJECT
 

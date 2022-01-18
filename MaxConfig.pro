@@ -10,7 +10,8 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += src
+SUBDIRS += src \
+        packaging
 
 TRANSLATIONS += \
     shard/translations/MaxConfig3_zh_CN.ts \

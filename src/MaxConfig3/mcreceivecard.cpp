@@ -4,9 +4,12 @@
 #include <QScrollArea>
 #include "app.h"
 #include "CustomWidget/mccusfileupgradewidget.h"
+#include "CustomWidget/mcprogressdialog.h"
+#include "ConnectionControl/connectionView.h"
+#include "ConnectionControl/connectionScene.h"
+#include "mcgammatable.h"
 
 #include "Core/icore.h"
-
 using namespace Internal::CustomWidget;
 
 MCReceiveCard::MCReceiveCard(QWidget *parent) :
@@ -23,7 +26,9 @@ MCReceiveCard::MCReceiveCard(QWidget *parent) :
     ui->spinBoxRegPort->setRange(0,0xFF);
     ui->spinBoxRegModule->setRange(0,0xFF);
 
-	initRCStatusInfo();
+    initRCStatusInfo();
+
+    m_monitor = new MCMonitor(this);
 }
 
 MCReceiveCard::~MCReceiveCard()
@@ -71,12 +76,13 @@ void MCReceiveCard::initRCStatusInfo()
 	ui->tableWidgetSRCInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	QStringList header;
-    header << tr("PortIndex") << tr("ModuleIndex") << tr("HardWareVer") << tr("SoftwareVer") << tr("ProtocolVer") << tr("PackageLoseRate") << tr("BitErrorRate") << tr("Upgrade");
+    header << tr("PortIndex") << tr("ModuleIndex") << tr("HardWareVer") << tr("SoftwareVer") << tr("MCUVer") \
+           << tr("ProtocolVer") << tr("PackageLoseRate") << tr("BitErrorRate") << tr("Upgrade");
 	ui->tableWidgetSRCInfo->setColumnCount(header.size()); //设置列数
 	ui->tableWidgetSRCInfo->setHorizontalHeaderLabels(header);
 	ui->tableWidgetSRCInfo->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
-    ui->tableWidgetSRCInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-	ui->tableWidgetSRCInfo->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+    ui->tableWidgetSRCInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    //ui->tableWidgetSRCInfo->horizontalHeader()->setSectionResizeMode(ECol_Upgrade, QHeaderView::Stretch);
     //ui->tableWidgetSRCInfo->horizontalHeader()->setFixedHeight(23); //设置表头的高度
 	ui->tableWidgetSRCInfo->horizontalHeader()->setDefaultSectionSize(150); 
 	ui->tableWidgetSRCInfo->verticalHeader()->setVisible(false);
@@ -85,7 +91,7 @@ void MCReceiveCard::initRCStatusInfo()
 void MCReceiveCard::updateRCStatusInfo(QList<LBL::RC::SRCStatusInfo>&rcStatusInfoList)
 {
 	ui->tableWidgetSRCInfo->clearContents();
-	ui->tableWidgetSRCInfo->setRowCount(rcStatusInfoList.size());//总行数
+    ui->tableWidgetSRCInfo->setRowCount(rcStatusInfoList.size());//总行数
 	for (int i = 0; i < rcStatusInfoList.size(); ++i) {
 
 		ui->tableWidgetSRCInfo->setRowHeight(i, 40);
@@ -98,11 +104,19 @@ void MCReceiveCard::updateRCStatusInfo(QList<LBL::RC::SRCStatusInfo>&rcStatusInf
 		ui->tableWidgetSRCInfo->setItem(i, ECol_ModuleIndex, new QTableWidgetItem(QString::number(tempInfo.GetModuleIndex() + 1)));
 		ui->tableWidgetSRCInfo->item(i, ECol_ModuleIndex)->setTextAlignment(Qt::AlignCenter);
 
-		ui->tableWidgetSRCInfo->setItem(i, ECol_HardWareVer, new QTableWidgetItem(tempInfo.GetHardwareVendor()));
+        ui->tableWidgetSRCInfo->setItem(i, ECol_HardWareVer, new QTableWidgetItem(tempInfo.GetPCBCategory()));
 		ui->tableWidgetSRCInfo->item(i, ECol_HardWareVer)->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidgetSRCInfo->item(i, ECol_HardWareVer)->setToolTip(tempInfo.GetHardwareVendor());
 
-        ui->tableWidgetSRCInfo->setItem(i, ECol_SoftWareVer, new QTableWidgetItem(tempInfo.GetSoftwareVersion()));
-		ui->tableWidgetSRCInfo->item(i, ECol_SoftWareVer)->setTextAlignment(Qt::AlignCenter);
+        QString softwareVer = tempInfo.GetSoftwareVersion();
+        ui->tableWidgetSRCInfo->setItem(i, ECol_SoftWareVer, new QTableWidgetItem(softwareVer));
+        ui->tableWidgetSRCInfo->item(i, ECol_SoftWareVer)->setTextAlignment(Qt::AlignCenter);
+        if(softwareVer.contains("G")){
+            ui->tableWidgetSRCInfo->item(i, ECol_SoftWareVer)->setBackgroundColor(QColor("#3D242F"));
+            ui->tableWidgetSRCInfo->item(i, ECol_SoftWareVer)->setTextColor(QColor("#F44A4A"));
+        }
+        ui->tableWidgetSRCInfo->setItem(i, ECol_MCUVer, new QTableWidgetItem(tempInfo.GetMCUVersion()));
+        ui->tableWidgetSRCInfo->item(i, ECol_MCUVer)->setTextAlignment(Qt::AlignCenter);
 
         ui->tableWidgetSRCInfo->setItem(i, ECol_ProtocolType, new QTableWidgetItem(tempInfo.GetPotocolType()));
         ui->tableWidgetSRCInfo->item(i, ECol_ProtocolType)->setTextAlignment(Qt::AlignCenter);
@@ -110,27 +124,32 @@ void MCReceiveCard::updateRCStatusInfo(QList<LBL::RC::SRCStatusInfo>&rcStatusInf
 		ui->tableWidgetSRCInfo->setItem(i, ECol_PackLoseRate, new QTableWidgetItem(QString("%1%2")\
 			.arg(QString::number(tempInfo.GetPackageLoseRate(), 'f', 2))\
 		.arg("PPM")));
-		ui->tableWidgetSRCInfo->item(i, ECol_PackLoseRate)->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidgetSRCInfo->item(i, ECol_PackLoseRate)->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidgetSRCInfo->item(i, ECol_PackLoseRate)->setToolTip(tr("Receive Packages:%1\n"\
+                                                                          "Total Packages:%2")\
+                                                                       .arg(tempInfo.recivedPackages)\
+                                                                       .arg(tempInfo.totalPackages));
 
 		ui->tableWidgetSRCInfo->setItem(i, ECol_BitErrorRate, new QTableWidgetItem(QString("%1%2")\
 			.arg(QString::number(tempInfo.GetBitErrorRate(), 'f', 2))\
 			.arg("PPM")));
 		ui->tableWidgetSRCInfo->item(i, ECol_BitErrorRate)->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidgetSRCInfo->item(i, ECol_BitErrorRate)->setToolTip(tr("Correct Packages:%1\n"\
+                                                                          "Total Packages:%2")\
+                                                                       .arg(tempInfo.correctPackages)\
+                                                                       .arg(tempInfo.totalPackages));
 
 		ui->tableWidgetSRCInfo->setItem(i, ECol_Upgrade, new QTableWidgetItem());
 		ui->tableWidgetSRCInfo->item(i, ECol_Upgrade)->setFlags(ui->tableWidgetSRCInfo->item(i, ECol_Upgrade)->flags()&~Qt::ItemIsSelectable&~Qt::ItemIsEditable);
-		MCCusFileUpgradeWidget *pBtn = new MCCusFileUpgradeWidget(LBLFileTransferPackage::EFT_ReciverFPGA, ui->tableWidgetSRCInfo);
+        MCCusFileUpgradeWidget *pBtn = new MCCusFileUpgradeWidget(LBLFileTransferPackage::EFT_ReciverFPGA, ui->tableWidgetSRCInfo);
 		pBtn->setPortIndex(tempInfo.GetPortIndex());
 		pBtn->setModuleIndex(tempInfo.GetModuleIndex());
-		pBtn->startRefresh();
-		ui->tableWidgetSRCInfo->setCellWidget(i, ECol_Upgrade, pBtn);
+        pBtn->startRefresh();
+        ui->tableWidgetSRCInfo->setCellWidget(i, ECol_Upgrade, pBtn);
 	}
 
-	QTimer::singleShot(5, [=]() {
-		ui->tableWidgetSRCInfo->resizeColumnToContents(ECol_Upgrade);
-		ui->tableWidgetSRCInfo->repaint();
-	});
-	
+    //ui->tableWidgetSRCInfo->resizeColumnsToContents();
+    ui->tableWidgetSRCInfo->resizeColumnToContents(ECol_Upgrade);
 }
 
 quint16 MCReceiveCard::onParseReadRCFPGARegister(const QByteArray &data)
@@ -148,6 +167,7 @@ void MCReceiveCard::slot_ConnectItem()
 
 void MCReceiveCard::slot_EnterNavigatPage()
 {
+    ConnectionFrame::instance()->setCurrentMode(ConnectionDiagramScene::Mode::ModuleParam);
     updateReceiveCard();
 }
 
@@ -157,173 +177,130 @@ void MCReceiveCard::on_btnParamImport_clicked()
 	QString fileName = QFileDialog::getOpenFileName(this,
 		tr("Select File"),
 		App::lastOpenPath,
-        QString("%1;;%2;;%3").arg(tr(Utils::FileFilter::MODULEPARAM_FILTER))
-                             .arg(tr(Utils::FileFilter::DRIVEICPARAM_FILTER)
-                             .arg(tr(Utils::FileFilter::DECODINGICPARAM_FILTER))),
+        QString("%1;;%2;;%3").arg(Utils::FileFilter::MODULEPARAM_FILTER)
+                             .arg(Utils::FileFilter::DRIVEICPARAM_FILTER)
+                             .arg(Utils::FileFilter::DECODINGICPARAM_FILTER),
 		&selectFilter);
 	if (fileName.isEmpty()) {
 		return;
-	}
-	QFileInfo file(fileName);
-	App::lastOpenPath = file.absolutePath();
+    }
+    App::lastOpenPath = fileName;
 	App::writeConfig();
 
-	if (file.size() != 1024) { 
-		return;
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+    QByteArray data = file.readAll();
+    file.close();
+
+    if (selectFilter == Utils::FileFilter::MODULEPARAM_FILTER) {
+        if (file.size() != 1024) {
+            return;
+        }
+        LAPI::EResult ret = LAPI::WriteModuleParam(0xFF, 0xFF, data);
+        Core::ICore::showMessageLAPIResult(ret);
 	}
-    if (selectFilter == tr(Utils::FileFilter::MODULEPARAM_FILTER)) {
-		ui->labelRCModuleFileName->setText(file.fileName());
-		ui->labelRCModuleFileName->setToolTip(file.filePath());
+    else if (selectFilter == Utils::FileFilter::DRIVEICPARAM_FILTER) {
+        if (file.size() != 1024) {
+            return;
+        }
+        LAPI::EResult ret = LAPI::WriteDriveICParam(0xFF, 0xFF, data);
+        Core::ICore::showMessageLAPIResult(ret);
 	}
-    else if (selectFilter == tr(Utils::FileFilter::DRIVEICPARAM_FILTER)) {
-		ui->labelRCDriveICFileName->setText(file.fileName());
-		ui->labelRCDriveICFileName->setToolTip(file.filePath());
-	}
-	else {
-		ui->labelRCDecodingICFileName->setText(file.fileName());
-		ui->labelRCDecodingICFileName->setToolTip(file.filePath());
-	}
+    else if(selectFilter==Utils::FileFilter::DECODINGICPARAM_FILTER){
+        LAPI::EResult ret = LAPI::WriteDecodingICParam(0xFF, 0xFF, data);
+        Core::ICore::showMessageLAPIResult(ret);
+    }
+    else if(selectFilter==Utils::FileFilter::ALLPARAM_FILTER){
+        if (file.size() != 9216) {
+            return;
+        }
+        LAPI::EResult ret = LAPI::WriteRCFPGARegister(0xFF, 0xFF,0, data);
+        Core::ICore::showMessageLAPIResult(ret);
+    }
 	return;
 }
 
-void MCReceiveCard::on_btnModuleExport_clicked()
+void MCReceiveCard::on_btnParamExport_clicked()
 {
-	QByteArray data = LAPI::ReadModuleParam(0, 0);
-	if (data.isEmpty()) {
+    QString selectFilter;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
+        App::lastOpenPath,
+        QString("%1;;%2;;%3").arg(Utils::FileFilter::MODULEPARAM_FILTER)
+                             .arg(Utils::FileFilter::DRIVEICPARAM_FILTER)
+                             .arg(Utils::FileFilter::DECODINGICPARAM_FILTER),
+        &selectFilter);
+    if (fileName.isEmpty()) {
+        return;
+    }
+    App::lastOpenPath = fileName;
+    App::writeConfig();
+
+    QByteArray data;
+    if (selectFilter == Utils::FileFilter::MODULEPARAM_FILTER) {
+        data = LAPI::ReadModuleParam(0, 0);
+    }
+    else if (selectFilter == Utils::FileFilter::DRIVEICPARAM_FILTER) {
+        data = LAPI::ReadDriveICParam(0, 0);
+    }
+    else if(selectFilter == Utils::FileFilter::DECODINGICPARAM_FILTER){
+        data = LAPI::ReadDecodingICParam(0, 0);
+    }
+    else if(selectFilter==Utils::FileFilter::ALLPARAM_FILTER){
+        data = LAPI::ReadRCFPGARegister(0, 0,0,9216);
+    }
+
+    if (data.isEmpty()) {
         QMessageBox::information(NULL, tr("Tip"), \
             tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
-		return;
-	}
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
-		App::lastOpenPath, \
-        QString("%1").arg(tr(Utils::FileFilter::MODULEPARAM_FILTER)));
-	if (fileName.isEmpty()) {
-		return;
-	}
-	QFile file(fileName);
-	if (!file.open(QIODevice::WriteOnly)) {
+        return;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly)) {
         QMessageBox::information(NULL, tr("Tip"), \
             tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
-	}
-	file.write(data);
-	file.close();
-}
-
-void MCReceiveCard::on_btnModuleSend_clicked()
-{
-	QFile file(ui->labelRCModuleFileName->toolTip());
-	if (!file.open(QIODevice::ReadOnly)) {
-		return;
-	}
-	QByteArray data = file.readAll();
+    }
+    file.write(data);
     file.close();
-	LAPI::EResult ret = LAPI::WriteModuleParam(0xFF, 0xFF, data);
-	Core::ICore::showMessageLAPIResult(ret);
-	/*if (LAPI::EResult::ER_Success != ret) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
-	}*/
-}
-
-void MCReceiveCard::on_btnDriveICExport_clicked()
-{
-	QByteArray data = LAPI::ReadDriveICParam(0, 0);
-	if (data.isEmpty()) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
-		return;
-	}
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
-		App::lastOpenPath, \
-        QString("%1").arg(tr(Utils::FileFilter::DRIVEICPARAM_FILTER)));
-	if (fileName.isEmpty()) {
-		return;
-	}
-	QFile file(fileName);
-	if (!file.open(QIODevice::WriteOnly)) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
-	}
-	file.write(data);
-	file.close();
-}
-
-void MCReceiveCard::on_btnDriveICSend_clicked()
-{
-	QFile file(ui->labelRCDriveICFileName->toolTip());
-	if (!file.open(QIODevice::ReadOnly)) {
-		return;
-	}
-	QByteArray data = file.readAll();
-    file.close();
-	LAPI::EResult ret = LAPI::WriteDriveICParam(0xFF, 0xFF, data);
-	Core::ICore::showMessageLAPIResult(ret);
-	/*if (LAPI::EResult::ER_Success != ret) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
-	}*/
-}
-
-void MCReceiveCard::on_btnDecodingICExport_clicked()
-{
-	QByteArray data = LAPI::ReadDecodingICParam(0, 0);
-	if (data.isEmpty()) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Read failed."), QMessageBox::Yes, QMessageBox::Yes);
-		return;
-	}
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
-		App::lastOpenPath, \
-        QString("%1").arg(tr(Utils::FileFilter::DECODINGICPARAM_FILTER)));
-	if (fileName.isEmpty()) {
-		return;
-	}
-	QFile file(fileName);
-	if (!file.open(QIODevice::WriteOnly)) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("File open failed."), QMessageBox::Yes, QMessageBox::Yes);
-	}
-	file.write(data);
-	file.close();
-}
-
-void MCReceiveCard::on_btnDecodingICSend_clicked()
-{
-	QFile file(ui->labelRCDecodingICFileName->toolTip());
-	if (!file.open(QIODevice::ReadOnly)) {
-		return;
-	}
-	QByteArray data = file.readAll();
-    file.close();
-	LAPI::EResult ret = LAPI::WriteDecodingICParam(0xFF, 0xFF, data);
-	Core::ICore::showMessageLAPIResult(ret);
-	/*if (LAPI::EResult::ER_Success != ret) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Failed to send."), QMessageBox::Yes, QMessageBox::Yes);
-	}*/
 }
 
 void MCReceiveCard::on_btnParamSave_clicked()
 {
 	LAPI::EResult ret = LAPI::WriteSaveRCParam(0xFF, 0xFF, true);
-	Core::ICore::showMessageLAPIResult(ret);
+    Core::ICore::showMessageLAPIResult(ret);
+}
+
+void MCReceiveCard::on_btnGamma_clicked()
+{
+    if(!m_gamma){
+        m_gamma = new MCGammaTable(this);
+    }
+    m_gamma->raise();
+    m_gamma->show();
 }
 
 void MCReceiveCard::on_btnRCUpgradeAll_clicked()
 {
-	m_monitor.show();
-	m_monitor.raise();
+    m_monitor->raise();
+    m_monitor->show();
 }
 
 void MCReceiveCard::on_btnRCInfoRefresh_clicked()
 {
-	//QList<LBL::RC::SRCMonitorInfo> tempMonitorList = LAPI::ReadRCMonitorInfo(0xFF, true);
-
+    //ui->btnRCInfoRefresh->setEnabled(false);
+    MCProgressDialog bar(this);
+    bar.setLabelText(tr("Refreshing..."));
+    bar.show();
 	QList<LBL::RC::SRCStatusInfo> tempList= LAPI::ReadRCStatusInfo(true);
 	if (tempList.isEmpty()) {
 		tempList = LAPI::GetRCStatusInfo();
 	}
-	updateRCStatusInfo(tempList);
+    updateRCStatusInfo(tempList);
+    bar.delayReset();
+    //ui->btnRCInfoRefresh->setEnabled(true);
+    Core::ICore::showMessage(tr("Receive card info refresh completion."),1000);
 }
 
 void MCReceiveCard::on_checkBoxRegBroadCast_clicked()
@@ -351,15 +328,11 @@ void MCReceiveCard::on_btnRegWrite_clicked()
 	quint8 module = ui->btnRegBroadCast->isChecked() ? 0xFF : ui->spinBoxRegModule->value();
 	quint32 addr = ui->lineEditRegAddr->text().toUInt(nullptr, 16);
 	quint16 length = ui->spinBoxRegLength->value();
-	QByteArray buffer;
-	buffer.fill(0, length);
-	QByteArray text = LBLUIHelper::hexStrToByteArray(ui->textBrowserReg->toPlainText());
-	buffer.replace(0, length > text.size() ? text.size() : length, text);
-	LAPI::EResult ret = LAPI::WriteRCFPGARegister(port, module, addr, buffer);
-	/*if (LAPI::EResult::ER_Success != LAPI::WriteRCFPGARegister(port, module, addr, buffer)) {
-        QMessageBox::information(NULL, tr("Tip"), \
-            tr("Register write Failed."), QMessageBox::Yes, QMessageBox::Yes);
-	}*/
+    QByteArray buffer;
+    buffer.fill(0, length);
+    QByteArray text = LBLUIHelper::hexStrToByteArray(ui->textBrowserReg->toPlainText().simplified());
+    buffer.replace(0, length > text.size() ? text.size() : length, text);
+    LAPI::EResult ret = LAPI::WriteRCFPGARegister(port, module, addr, buffer);
 	Core::ICore::showMessageLAPIResult(ret);
 }
 

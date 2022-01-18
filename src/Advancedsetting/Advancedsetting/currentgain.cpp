@@ -5,15 +5,22 @@
 #include <math.h>
 
 CurrentGain::CurrentGain(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::CurrentGain)
 {
     ui->setupUi(this);
 
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
 
     LoadForm();
 }
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 CurrentGain::~CurrentGain()
 {
     delete ui;
@@ -35,14 +42,14 @@ void CurrentGain::ShowScrool(bool type)
 
 void CurrentGain::Showic()
 {
-    unsigned char index = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    uchar index1 = (uchar)ModulePara[0x13]/* + (uchar)ModulePara[0x14] * 256*/;
 
 
 
-    switch (index)
+    switch (index1)
     {
     case CONVENTSIONALCHIP:
-        ui->lineEdit->setText(QStringLiteral("常规芯片"));
+        ui->lineEdit->setText(tr("常规芯片"));
         ShowScrool(false);
         break;
     case ICN_2038S:
@@ -367,12 +374,12 @@ void CurrentGain::initMetroTrackBar(int Regnum, int ByteCount, int StartByte)
 
     for (i = 0; i < Regold.length(); i++)
     {
-        Regold[i] = ICPara[0x100 + i + (Regnum - 1) * 6];
+        Regold[i] = (uchar)ICPara[0x100 + i + (Regnum - 1) * 6];
     }
 
     for (i = 0; i < 3; i++)
     {
-        REGold[i] = Regold[i * 2] + Regold[i * 2 + 1] * 256;
+        REGold[i] = (uchar)Regold[i * 2] + (uchar)Regold[i * 2 + 1] * 256;
     }
 
     ui->CurrentGainRSlider->setValue((REGold[0] >> StartByte) & ((int)(pow(2,ByteCount) - 1)));
@@ -395,9 +402,9 @@ void CurrentGain::init5043MetroTrackBar(int ByteCount, int StartByte)
     ui->CurrentGainBSlider->setMaximum((pow(2,ByteCount) - 1));
     MaxValue = pow(2,ByteCount) - 1;
 
-    REGold[0] = ICPara[0x100] + ICPara[0x101] * 256;
-    REGold[1] = ICPara[0x102] + ICPara[0x103] * 256;
-    REGold[2] = ICPara[0x104] + ICPara[0x105] * 256;
+    REGold[0] = (uchar)ICPara[0x100] + (uchar)ICPara[0x101] * 256;
+    REGold[1] = (uchar)ICPara[0x102] + (uchar)ICPara[0x103] * 256;
+    REGold[2] = (uchar)ICPara[0x104] + (uchar)ICPara[0x105] * 256;
 
     ui->CurrentGainRSlider->setValue((REGold[0] >> StartByte) & ((int)(pow(2,ByteCount) - 1)));
     ui->CurrentGainGSlider->setValue((REGold[1] >> StartByte) & ((int)(pow(2,ByteCount) - 1)));
@@ -418,9 +425,9 @@ void CurrentGain::init5353MetroTrackBar(int ByteCount, int StartByte)
     ui->CurrentGainBSlider->setMaximum((pow(2,ByteCount) - 1));
     MaxValue = pow(2,ByteCount) - 1;
 
-    REGold[0] = ICPara[0x106] + ICPara[0x107] * 256;
-    REGold[1] = ICPara[0x108] + ICPara[0x109] * 256;
-    REGold[2] = ICPara[0x10A] + ICPara[0x10B] * 256;
+    REGold[0] = (uchar)ICPara[0x106] + (uchar)ICPara[0x107] * 256;
+    REGold[1] = (uchar)ICPara[0x108] + (uchar)ICPara[0x109] * 256;
+    REGold[2] = (uchar)ICPara[0x10A] + (uchar)ICPara[0x10B] * 256;
 
     ui->CurrentGainRSlider->setValue((REGold[0] >> StartByte) & ((int)(pow(2,ByteCount) - 1)));
     ui->CurrentGainGSlider->setValue((REGold[1] >> StartByte) & ((int)(pow(2,ByteCount) - 1)));
@@ -463,7 +470,7 @@ void CurrentGain::init5353MetroTrackBar(int ByteCount, int StartByte)
 
 QString CurrentGain::getpercent(int value)
 {
-    unsigned char index = (unsigned char)ModulePara[19] + (unsigned char)ModulePara[20] * 256;
+    uchar index = (uchar)ModulePara[19] + (uchar)ModulePara[20] * 256;
 
     QString percent = "";
 
@@ -644,7 +651,7 @@ void CurrentGain::on_SettingBtn_clicked()
         return;
     }
 
-    unsigned char index = (unsigned char)ModulePara[19] + (unsigned char)ModulePara[20] * 256;
+    uchar index = (uchar)ModulePara[19] + (uchar)ModulePara[20] * 256;
 
     QString percent = "";
 
@@ -758,10 +765,10 @@ void CurrentGain::on_SettingBtn_clicked()
 
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 
 }
@@ -780,12 +787,12 @@ void CurrentGain::WriteCurrent(int Regnum,int ByteCount, int StartByte)
 
     for (i = 0; i < Regold.length(); i++)
     {
-        Regold[i] = ICPara[0x100 + i + (Regnum - 1) * 6];
+        Regold[i] = (uchar)ICPara[0x100 + i + (Regnum - 1) * 6];
     }
 
     for (i = 0; i < 3; i++)
     {
-        REGold[i] = Regold[i * 2] + Regold[i * 2 + 1] * 256;
+        REGold[i] = (uchar)Regold[i * 2] + (uchar)Regold[i * 2 + 1] * 256;
     }
 
     REGnew[0] = (REGold[0] & ~((int)(pow(2,ByteCount) - 1) << StartByte)) | (ui->CurrentGainRSlider->value() << StartByte);
@@ -794,12 +801,12 @@ void CurrentGain::WriteCurrent(int Regnum,int ByteCount, int StartByte)
 
     for (i = 0; i < Regnew.length(); i += 2)
     {
-        Regnew[i] = (unsigned char)(REGnew[i / 2] % 256);
-        Regnew[i + 1] = (unsigned char)(REGnew[i / 2] / 256);
+        Regnew[i] = (uchar)(REGnew[i / 2] % 256);
+        Regnew[i + 1] = (uchar)(REGnew[i / 2] / 256);
     }
     for (i = 0; i < Regnew.length(); i++)
     {
-        ICPara[256 + i + (Regnum - 1) * 6] = Regnew[i];
+        ICPara[0x100 + i + (Regnum - 1) * 6] = (uchar)Regnew[i];
     }
 }
 void CurrentGain::Write5353Current(int ByteCount, int StartByte)
@@ -814,9 +821,9 @@ void CurrentGain::Write5353Current(int ByteCount, int StartByte)
     int REGold[3];
     int REGnew[3];
 
-    REGold[0] = ICPara[0x106] + ICPara[0x107] * 256;
-    REGold[1] = ICPara[0x10C] + ICPara[0x10D] * 256;
-    REGold[2] = ICPara[0x112] + ICPara[0x113] * 256;
+    REGold[0] = (uchar)ICPara[0x106] + (uchar)ICPara[0x107] * 256;
+    REGold[1] = (uchar)ICPara[0x10C] + (uchar)ICPara[0x10D] * 256;
+    REGold[2] = (uchar)ICPara[0x112] + (uchar)ICPara[0x113] * 256;
 
     REGnew[0] = (REGold[0] & ~((int)(pow(2,ByteCount) - 1) << StartByte)) | (ui->CurrentGainRSlider->value() << StartByte);
     REGnew[1] = (REGold[1] & ~((int)(pow(2,ByteCount) - 1) << StartByte)) | (ui->CurrentGainGSlider->value() << StartByte);
@@ -824,16 +831,16 @@ void CurrentGain::Write5353Current(int ByteCount, int StartByte)
 
     for (i = 0; i < Regnew.length(); i += 2)
     {
-        Regnew[i] = (unsigned char)(REGnew[i / 2] % 256);
-        Regnew[i + 1] = (unsigned char)(REGnew[i / 2] / 256);
+        Regnew[i] = (uchar)(REGnew[i / 2] % 256);
+        Regnew[i + 1] = (uchar)(REGnew[i / 2] / 256);
     }
 
-    ICPara[0x106] = Regnew[0];
-    ICPara[0x107] = Regnew[1];
-    ICPara[0x10C] = Regnew[2];
-    ICPara[0x10D] = Regnew[3];
-    ICPara[0x112] = Regnew[4];
-    ICPara[0x113] = Regnew[5];
+    ICPara[0x106] = (uchar)Regnew[0];
+    ICPara[0x107] = (uchar)Regnew[1];
+    ICPara[0x10C] = (uchar)Regnew[2];
+    ICPara[0x10D] = (uchar)Regnew[3];
+    ICPara[0x112] = (uchar)Regnew[4];
+    ICPara[0x113] = (uchar)Regnew[5];
 
 }
 
@@ -849,9 +856,9 @@ void CurrentGain::Write5043Current(int ByteCount, int StartByte)
     int REGold[3];
     int REGnew[3];
 
-    REGold[0] = ICPara[0x100] + ICPara[0x101] * 256;
-    REGold[1] = ICPara[0x102] + ICPara[0x103] * 256;
-    REGold[2] = ICPara[0x104] + ICPara[0x105] * 256;
+    REGold[0] = (uchar)ICPara[0x100] + (uchar)ICPara[0x101] * 256;
+    REGold[1] = (uchar)ICPara[0x102] + (uchar)ICPara[0x103] * 256;
+    REGold[2] = (uchar)ICPara[0x104] + (uchar)ICPara[0x105] * 256;
 
     REGnew[0] = (REGold[0] & ~((int)(pow(2,ByteCount) - 1) << StartByte)) | (ui->CurrentGainRSlider->value() << StartByte);
     REGnew[1] = (REGold[1] & ~((int)(pow(2,ByteCount) - 1) << StartByte)) | (ui->CurrentGainGSlider->value() << StartByte);
@@ -859,13 +866,13 @@ void CurrentGain::Write5043Current(int ByteCount, int StartByte)
 
     for (i = 0; i < Regnew.length(); i += 2)
     {
-        Regnew[i] = (unsigned char)(REGnew[i / 2] % 256);
-        Regnew[i + 1] = (unsigned char)(REGnew[i / 2] / 256);
+        Regnew[i] = (uchar)(REGnew[i / 2] % 256);
+        Regnew[i + 1] = (uchar)(REGnew[i / 2] / 256);
     }
 
     for (i = 0; i < Regnew.length(); i++)
     {
-        ICPara[0x100 + i] = Regnew[i];
+        ICPara[0x100 + i] = (uchar)Regnew[i];
     }
 }
 

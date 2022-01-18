@@ -4,15 +4,23 @@
 #include "icadvancedsetting.h"
 
 ICCFD455ASetting::ICCFD455ASetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::ICCFD455ASetting)
 {
     ui->setupUi(this);
 
-    InitForm();
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
 
+    InitForm();
     LoadForm();
 }
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 
 ICCFD455ASetting::~ICCFD455ASetting()
 {
@@ -58,9 +66,7 @@ void ICCFD455ASetting::InitForm()
         ui->PreDriveModeGcomboBox->addItem(QString::number(i+1));
         ui->PreDriveModeBcomboBox->addItem(QString::number(i+1));
 
-        ui->LowGrayTimeRcomboBox->addItem(QString::number(i+1));
-        ui->LowGrayTimeGcomboBox->addItem(QString::number(i+1));
-        ui->LowGrayTimeBcomboBox->addItem(QString::number(i+1));
+
 
         ui->OpenTestPointAdjRcomboBox->addItem(QString::number(i+1));
         ui->OpenTestPointAdjGcomboBox->addItem(QString::number(i+1));
@@ -78,15 +84,30 @@ void ICCFD455ASetting::InitForm()
     }
 
     QStringList items;
-    items<<QString::fromLocal8Bit("短");
-    items<<QString::fromLocal8Bit("长");
+    items<<tr("短");
+    items<<tr("长");
     ui->ColumnBlankTimeRcomboBox->addItems(items);
     ui->ColumnBlankTimeGcomboBox->addItems(items);
     ui->ColumnBlankTimeBcomboBox->addItems(items);
 
+
     items.clear();
-    items<<QString::fromLocal8Bit("模式1");
-    items<<QString::fromLocal8Bit("模式2");
+    items<<tr("时钟下降沿输出");
+    items<<tr("时钟上升沿输出");
+    ui->DataOutputRcomboBox->addItems(items);
+    ui->DataOutputGcomboBox->addItems(items);
+    ui->DataOutputBcomboBox->addItems(items);
+
+    items.clear();
+    items<<tr("慢速");
+    items<<tr("快速");
+    ui->OpeningSpeedRcomboBox->addItems(items);
+    ui->OpeningSpeedGcomboBox->addItems(items);
+    ui->OpeningSpeedBcomboBox->addItems(items);
+
+    items.clear();
+    items<<tr("模式1");
+    items<<tr("模式2");
     ui->WakeupSettingRcomboBox->addItems(items);
     ui->WakeupSettingGcomboBox->addItems(items);
     ui->WakeupSettingBcomboBox->addItems(items);
@@ -111,34 +132,34 @@ void ICCFD455ASetting::InitForm()
 
 
     items.clear();
-    items<<QString::fromLocal8Bit("16384级");
-    items<<QString::fromLocal8Bit("8192级");
+    items<<tr("16384级");
+    items<<tr("8192级");
     ui->PWMGraySettingRcomboBox->addItems(items);
     ui->PWMGraySettingGcomboBox->addItems(items);
     ui->PWMGraySettingBcomboBox->addItems(items);
 
     items.clear();
-    items<<QString::fromLocal8Bit("4行");
-    items<<QString::fromLocal8Bit("2行");
+    items<<tr("4行");
+    items<<tr("2行");
     ui->LowGrayOptimizationModeRcomboBox->addItems(items);
     ui->LowGrayOptimizationModeGcomboBox->addItems(items);
     ui->LowGrayOptimizationModeBcomboBox->addItems(items);
 
-    items.clear();
-    items<<QString::fromLocal8Bit("不使能");
-    items<<QString::fromLocal8Bit("使能");
-    ui->CurrentGrayRcomboBox->addItems(items);
-    ui->CurrentGrayGcomboBox->addItems(items);
-    ui->CurrentGrayBcomboBox->addItems(items);
+//    items.clear();
+//    items<<tr("不使能");
+//    items<<tr("使能");
+//    ui->CurrentGrayRcomboBox->addItems(items);
+//    ui->CurrentGrayGcomboBox->addItems(items);
+//    ui->CurrentGrayBcomboBox->addItems(items);
 
     items.clear();
-    items<<"1/16";
-    items<<"1/8";
-    items<<"1/4";
-    items<<"1/2";
-    ui->CurrentGraySettingRcomboBox->addItems(items);
-    ui->CurrentGraySettingGcomboBox->addItems(items);
-    ui->CurrentGraySettingBcomboBox->addItems(items);
+    items<<"24";
+    items<<"32";
+    items<<"8";
+    items<<"16";
+    ui->OutputPowerTubeRcomboBox->addItems(items);
+    ui->OutputPowerTubeGcomboBox->addItems(items);
+    ui->OutputPowerTubeBcomboBox->addItems(items);
 
 
 
@@ -148,15 +169,15 @@ void ICCFD455ASetting::InitForm()
 
 int ICCFD455ASetting::GetLowGrayscale(unsigned char value)
 {
-    switch (value & 0x60)
+    switch (value & 0xC0)
     {
     case 0x00:
         return 0;
-    case 0x20:
-        return 1;
     case 0x40:
+        return 1;
+    case 0x80:
         return 2;
-    case 0x60:
+    case 0xC0:
         return 3;
     default:
         return 0;
@@ -242,7 +263,7 @@ int ICCFD455ASetting::GetPreDriveTime(unsigned char value)
 }
 int ICCFD455ASetting::GetLowGrayStrength(unsigned char valuelow,unsigned char valuehigh)
 {
-    int value = valuelow + valuehigh * 256;
+    int value = (uchar)valuelow + (uchar)valuehigh * 256;
     int value1 = ((value >> 7) & 0x1F);
     return (32 - (value1 + 1));
 }
@@ -369,128 +390,135 @@ int ICCFD455ASetting::GetCurrentGraySetting(unsigned char value)
     return ((value >> 6) & 0x03);
 }
 
-
+int ICCFD455ASetting::GetOpeningSpeed(unsigned char value)
+{
+    switch (value & 0x40)
+    {
+    case 0x00:
+        return 0;
+    case 0x40:
+        return 1;
+    default:
+        return 0;
+    }
+}
 
 
 
 
 void ICCFD455ASetting::LoadForm()
 {
-    ui->LowGrayscaleRcomboBox->setCurrentIndex(GetLowGrayscale(ICPara[257]));
-    ui->LowGrayscaleGcomboBox->setCurrentIndex(GetLowGrayscale(ICPara[259]));
-    ui->LowGrayscaleBcomboBox->setCurrentIndex(GetLowGrayscale(ICPara[261]));
+    ui->LowGrayscaleRcomboBox->setCurrentIndex(GetLowGrayscale((uchar)ICPara[257]));
+    ui->LowGrayscaleGcomboBox->setCurrentIndex(GetLowGrayscale((uchar)ICPara[259]));
+    ui->LowGrayscaleBcomboBox->setCurrentIndex(GetLowGrayscale((uchar)ICPara[261]));
 
-    ui->ColBlankAdjRcomboBox->setCurrentIndex(GetColBlankAdj(ICPara[263]));
-    ui->ColBlankAdjGcomboBox->setCurrentIndex(GetColBlankAdj(ICPara[265]));
-    ui->ColBlankAdjBcomboBox->setCurrentIndex(GetColBlankAdj(ICPara[267]));
+    ui->ColBlankAdjRcomboBox->setCurrentIndex(GetColBlankAdj((uchar)ICPara[263]));
+    ui->ColBlankAdjGcomboBox->setCurrentIndex(GetColBlankAdj((uchar)ICPara[265]));
+    ui->ColBlankAdjBcomboBox->setCurrentIndex(GetColBlankAdj((uchar)ICPara[267]));
 
-    ui->ColBlankEnhanceRcheckBox->setChecked(GetColBlankEnhance(ICPara[263]));
-    ui->ColBlankEnhanceGcheckBox->setChecked(GetColBlankEnhance(ICPara[265]));
-    ui->ColBlankEnhanceBcheckBox->setChecked(GetColBlankEnhance(ICPara[267]));
+    ui->ColBlankEnhanceRcheckBox->setChecked(GetColBlankEnhance((uchar)ICPara[263]));
+    ui->ColBlankEnhanceGcheckBox->setChecked(GetColBlankEnhance((uchar)ICPara[265]));
+    ui->ColBlankEnhanceBcheckBox->setChecked(GetColBlankEnhance((uchar)ICPara[267]));
 
-    ui->ColumnBlankTimeRcomboBox->setCurrentIndex(GetColumnBlankTime(ICPara[268]));
-    ui->ColumnBlankTimeGcomboBox->setCurrentIndex(GetColumnBlankTime(ICPara[270]));
-    ui->ColumnBlankTimeBcomboBox->setCurrentIndex(GetColumnBlankTime(ICPara[272]));
+    ui->ColumnBlankTimeRcomboBox->setCurrentIndex(GetColumnBlankTime((uchar)ICPara[268]));
+    ui->ColumnBlankTimeGcomboBox->setCurrentIndex(GetColumnBlankTime((uchar)ICPara[270]));
+    ui->ColumnBlankTimeBcomboBox->setCurrentIndex(GetColumnBlankTime((uchar)ICPara[272]));
 
-    ui->CouplingStrengthAdjRcomboBox->setCurrentIndex(GetCouplingStrengthAdj(ICPara[263]));
-    ui->CouplingStrengthAdjGcomboBox->setCurrentIndex(GetCouplingStrengthAdj(ICPara[265]));
-    ui->CouplingStrengthAdjBcomboBox->setCurrentIndex(GetCouplingStrengthAdj(ICPara[267]));
+    ui->CouplingStrengthAdjRcomboBox->setCurrentIndex(GetCouplingStrengthAdj((uchar)ICPara[263]));
+    ui->CouplingStrengthAdjGcomboBox->setCurrentIndex(GetCouplingStrengthAdj((uchar)ICPara[265]));
+    ui->CouplingStrengthAdjBcomboBox->setCurrentIndex(GetCouplingStrengthAdj((uchar)ICPara[267]));
 
-    ui->CouplingRangeAdjRcomboBox->setCurrentIndex(GetCouplingRangeAdj(ICPara[262]));
-    ui->CouplingRangeAdjGcomboBox->setCurrentIndex(GetCouplingRangeAdj(ICPara[264]));
-    ui->CouplingRangeAdjBcomboBox->setCurrentIndex(GetCouplingRangeAdj(ICPara[266]));
+    ui->CouplingRangeAdjRcomboBox->setCurrentIndex(GetCouplingRangeAdj((uchar)ICPara[262]));
+    ui->CouplingRangeAdjGcomboBox->setCurrentIndex(GetCouplingRangeAdj((uchar)ICPara[264]));
+    ui->CouplingRangeAdjBcomboBox->setCurrentIndex(GetCouplingRangeAdj((uchar)ICPara[266]));
 
-    ui->CouplingOptimizationRcheckBox->setChecked(GetCouplingOptimization(ICPara[263]));
-    ui->CouplingOptimizationGcheckBox->setChecked(GetCouplingOptimization(ICPara[265]));
-    ui->CouplingOptimizationBcheckBox->setChecked(GetCouplingOptimization(ICPara[267]));
+    ui->CouplingOptimizationRcheckBox->setChecked(GetCouplingOptimization((uchar)ICPara[263]));
+    ui->CouplingOptimizationGcheckBox->setChecked(GetCouplingOptimization((uchar)ICPara[265]));
+    ui->CouplingOptimizationBcheckBox->setChecked(GetCouplingOptimization((uchar)ICPara[267]));
 
-    ui->PreDriveEnablementRcheckBox->setChecked(GetPreDriveEnablement(ICPara[262]));
-    ui->PreDriveEnablementGcheckBox->setChecked(GetPreDriveEnablement(ICPara[264]));
-    ui->PreDriveEnablementBcheckBox->setChecked(GetPreDriveEnablement(ICPara[266]));
+    ui->PreDriveEnablementRcheckBox->setChecked(GetPreDriveEnablement((uchar)ICPara[262]));
+    ui->PreDriveEnablementGcheckBox->setChecked(GetPreDriveEnablement((uchar)ICPara[264]));
+    ui->PreDriveEnablementBcheckBox->setChecked(GetPreDriveEnablement((uchar)ICPara[266]));
 
-    ui->PreDriveModeRcomboBox->setCurrentIndex(GetPreDriveMode(ICPara[275]));
-    ui->PreDriveModeGcomboBox->setCurrentIndex(GetPreDriveMode(ICPara[277]));
-    ui->PreDriveModeBcomboBox->setCurrentIndex(GetPreDriveMode(ICPara[279]));
+    ui->PreDriveModeRcomboBox->setCurrentIndex(GetPreDriveMode((uchar)ICPara[275]));
+    ui->PreDriveModeGcomboBox->setCurrentIndex(GetPreDriveMode((uchar)ICPara[277]));
+    ui->PreDriveModeBcomboBox->setCurrentIndex(GetPreDriveMode((uchar)ICPara[279]));
 
-    ui->PreDriveTimeRcomboBox->setCurrentIndex(GetPreDriveTime(ICPara[275]));
-    ui->PreDriveTimeGcomboBox->setCurrentIndex(GetPreDriveTime(ICPara[277]));
-    ui->PreDriveTimeBcomboBox->setCurrentIndex(GetPreDriveTime(ICPara[279]));
+    ui->PreDriveTimeRcomboBox->setCurrentIndex(GetPreDriveTime((uchar)ICPara[275]));
+    ui->PreDriveTimeGcomboBox->setCurrentIndex(GetPreDriveTime((uchar)ICPara[277]));
+    ui->PreDriveTimeBcomboBox->setCurrentIndex(GetPreDriveTime((uchar)ICPara[279]));
 
-    ui->LowGrayStrengthRcomboBox->setCurrentIndex(GetLowGrayStrength(ICPara[268],ICPara[269]));
-    ui->LowGrayStrengthGcomboBox->setCurrentIndex(GetLowGrayStrength(ICPara[270],ICPara[271]));
-    ui->LowGrayStrengthBcomboBox->setCurrentIndex(GetLowGrayStrength(ICPara[272],ICPara[273]));
+    ui->LowGrayStrengthRcomboBox->setCurrentIndex(GetLowGrayStrength((uchar)ICPara[268],(uchar)ICPara[269]));
+    ui->LowGrayStrengthGcomboBox->setCurrentIndex(GetLowGrayStrength((uchar)ICPara[270],(uchar)ICPara[271]));
+    ui->LowGrayStrengthBcomboBox->setCurrentIndex(GetLowGrayStrength((uchar)ICPara[272],(uchar)ICPara[273]));
 
-    ui->LowGrayTimeRcomboBox->setCurrentIndex(GetLowGrayTime(ICPara[262]));
-    ui->LowGrayTimeGcomboBox->setCurrentIndex(GetLowGrayTime(ICPara[264]));
-    ui->LowGrayTimeBcomboBox->setCurrentIndex(GetLowGrayTime(ICPara[266]));
+    ui->DataOutputRcomboBox->setCurrentIndex(GetLowGrayTime((uchar)ICPara[262]));
+    ui->DataOutputGcomboBox->setCurrentIndex(GetLowGrayTime((uchar)ICPara[264]));
+    ui->DataOutputBcomboBox->setCurrentIndex(GetLowGrayTime((uchar)ICPara[266]));
 
-    ui->DynamicEnergySavingRcheckBox->setChecked(GetDynamicEnergySaving(ICPara[268]));
-    ui->DynamicEnergySavingGcheckBox->setChecked(GetDynamicEnergySaving(ICPara[270]));
-    ui->DynamicEnergySavingBcheckBox->setChecked(GetDynamicEnergySaving(ICPara[272]));
+    ui->DynamicEnergySavingRcheckBox->setChecked(GetDynamicEnergySaving((uchar)ICPara[268]));
+    ui->DynamicEnergySavingGcheckBox->setChecked(GetDynamicEnergySaving((uchar)ICPara[270]));
+    ui->DynamicEnergySavingBcheckBox->setChecked(GetDynamicEnergySaving((uchar)ICPara[272]));
 
-    ui->WakeupSettingRcomboBox->setCurrentIndex(GetWakeupSetting(ICPara[274]));
-    ui->WakeupSettingGcomboBox->setCurrentIndex(GetWakeupSetting(ICPara[276]));
-    ui->WakeupSettingBcomboBox->setCurrentIndex(GetWakeupSetting(ICPara[278]));
+    ui->WakeupSettingRcomboBox->setCurrentIndex(GetWakeupSetting((uchar)ICPara[274]));
+    ui->WakeupSettingGcomboBox->setCurrentIndex(GetWakeupSetting((uchar)ICPara[276]));
+    ui->WakeupSettingBcomboBox->setCurrentIndex(GetWakeupSetting((uchar)ICPara[278]));
 
-    ui->OpenCircuitDetectionThresholdRcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold(ICPara[275]));
-    ui->OpenCircuitDetectionThresholdGcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold(ICPara[277]));
-    ui->OpenCircuitDetectionThresholdBcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold(ICPara[279]));
+    ui->OpenCircuitDetectionThresholdRcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold((uchar)ICPara[275]));
+    ui->OpenCircuitDetectionThresholdGcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold((uchar)ICPara[277]));
+    ui->OpenCircuitDetectionThresholdBcomboBox->setCurrentIndex(GetOpenCircuitDetectionThreshold((uchar)ICPara[279]));
 
-    ui->OpenTestPointAdjRcomboBox->setCurrentIndex(GetOpenTestPointAdj(ICPara[263]));
-    ui->OpenTestPointAdjGcomboBox->setCurrentIndex(GetOpenTestPointAdj(ICPara[265]));
-    ui->OpenTestPointAdjBcomboBox->setCurrentIndex(GetOpenTestPointAdj(ICPara[267]));
+    ui->OpenTestPointAdjRcomboBox->setCurrentIndex(GetOpenTestPointAdj((uchar)ICPara[263]));
+    ui->OpenTestPointAdjGcomboBox->setCurrentIndex(GetOpenTestPointAdj((uchar)ICPara[265]));
+    ui->OpenTestPointAdjBcomboBox->setCurrentIndex(GetOpenTestPointAdj((uchar)ICPara[267]));
 
-    ui->OpenCircuitProtcetEnableRcheckBox->setChecked(GetOpenCircuitProtcetEnable(ICPara[262]));
-    ui->OpenCircuitProtcetEnableGcheckBox->setChecked(GetOpenCircuitProtcetEnable(ICPara[264]));
-    ui->OpenCircuitProtcetEnableBcheckBox->setChecked(GetOpenCircuitProtcetEnable(ICPara[266]));
+    ui->OpenCircuitProtcetEnableRcheckBox->setChecked(GetOpenCircuitProtcetEnable((uchar)ICPara[262]));
+    ui->OpenCircuitProtcetEnableGcheckBox->setChecked(GetOpenCircuitProtcetEnable((uchar)ICPara[264]));
+    ui->OpenCircuitProtcetEnableBcheckBox->setChecked(GetOpenCircuitProtcetEnable((uchar)ICPara[266]));
 
-    ui->OpenCircuitDynamicDetecRcheckBox->setChecked(GetOpenCircuitDynamicDetec(ICPara[268]));
-    ui->OpenCircuitDynamicDetecGcheckBox->setChecked(GetOpenCircuitDynamicDetec(ICPara[270]));
-    ui->OpenCircuitDynamicDetecBcheckBox->setChecked(GetOpenCircuitDynamicDetec(ICPara[272]));
+    ui->OpenCircuitDynamicDetecRcheckBox->setChecked(GetOpenCircuitDynamicDetec((uchar)ICPara[268]));
+    ui->OpenCircuitDynamicDetecGcheckBox->setChecked(GetOpenCircuitDynamicDetec((uchar)ICPara[270]));
+    ui->OpenCircuitDynamicDetecBcheckBox->setChecked(GetOpenCircuitDynamicDetec((uchar)ICPara[272]));
 
-    ui->ScanModeRcomboBox->setCurrentIndex(GetScanMode(ICPara[262]));
-    ui->ScanModeGcomboBox->setCurrentIndex(GetScanMode(ICPara[264]));
-    ui->ScanModeBcomboBox->setCurrentIndex(GetScanMode(ICPara[266]));
+    ui->ScanModeRcomboBox->setCurrentIndex(GetScanMode((uchar)ICPara[262]));
+    ui->ScanModeGcomboBox->setCurrentIndex(GetScanMode((uchar)ICPara[264]));
+    ui->ScanModeBcomboBox->setCurrentIndex(GetScanMode((uchar)ICPara[266]));
 
-    ui->GclkDoubleAlongRcheckBox->setChecked(GetGclkDoubleAlong(ICPara[268]));
-    ui->GclkDoubleAlongGcheckBox->setChecked(GetGclkDoubleAlong(ICPara[270]));
-    ui->GclkDoubleAlongBcheckBox->setChecked(GetGclkDoubleAlong(ICPara[272]));
+    ui->GclkDoubleAlongRcheckBox->setChecked(GetGclkDoubleAlong((uchar)ICPara[268]));
+    ui->GclkDoubleAlongGcheckBox->setChecked(GetGclkDoubleAlong((uchar)ICPara[270]));
+    ui->GclkDoubleAlongBcheckBox->setChecked(GetGclkDoubleAlong((uchar)ICPara[272]));
 
-    ui->ConstantCurrentPointRcomboBox->setCurrentIndex(GetConstantCurrentPoint(ICPara[268]));
-    ui->ConstantCurrentPointGcomboBox->setCurrentIndex(GetConstantCurrentPoint(ICPara[270]));
-    ui->ConstantCurrentPointBcomboBox->setCurrentIndex(GetConstantCurrentPoint(ICPara[272]));
+    ui->ConstantCurrentPointRcomboBox->setCurrentIndex(GetConstantCurrentPoint((uchar)ICPara[268]));
+    ui->ConstantCurrentPointGcomboBox->setCurrentIndex(GetConstantCurrentPoint((uchar)ICPara[270]));
+    ui->ConstantCurrentPointBcomboBox->setCurrentIndex(GetConstantCurrentPoint((uchar)ICPara[272]));
 
-    ui->GDMixingRcheckBox->setChecked(GetGDMixing(ICPara[262]));
-    ui->GDMixingGcheckBox->setChecked(GetGDMixing(ICPara[264]));
-    ui->GDMixingBcheckBox->setChecked(GetGDMixing(ICPara[266]));
+    ui->GDMixingRcheckBox->setChecked(GetGDMixing((uchar)ICPara[262]));
+    ui->GDMixingGcheckBox->setChecked(GetGDMixing((uchar)ICPara[264]));
+    ui->GDMixingBcheckBox->setChecked(GetGDMixing((uchar)ICPara[266]));
 
-    ui->PWMGraySettingRcomboBox->setCurrentIndex(GetPWMGraySetting(ICPara[262]));
-    ui->PWMGraySettingGcomboBox->setCurrentIndex(GetPWMGraySetting(ICPara[264]));
-    ui->PWMGraySettingBcomboBox->setCurrentIndex(GetPWMGraySetting(ICPara[266]));
+    ui->PWMGraySettingRcomboBox->setCurrentIndex(GetPWMGraySetting((uchar)ICPara[262]));
+    ui->PWMGraySettingGcomboBox->setCurrentIndex(GetPWMGraySetting((uchar)ICPara[264]));
+    ui->PWMGraySettingBcomboBox->setCurrentIndex(GetPWMGraySetting((uchar)ICPara[266]));
 
-    ui->LowGrayDisplayOptimizationRcheckBox->setChecked(GetLowGrayDisplayOptimization(ICPara[268]));
-    ui->LowGrayDisplayOptimizationGcheckBox->setChecked(GetLowGrayDisplayOptimization(ICPara[270]));
-    ui->LowGrayDisplayOptimizationBcheckBox->setChecked(GetLowGrayDisplayOptimization(ICPara[272]));
+    ui->LowGrayDisplayOptimizationRcheckBox->setChecked(GetLowGrayDisplayOptimization((uchar)ICPara[268]));
+    ui->LowGrayDisplayOptimizationGcheckBox->setChecked(GetLowGrayDisplayOptimization((uchar)ICPara[270]));
+    ui->LowGrayDisplayOptimizationBcheckBox->setChecked(GetLowGrayDisplayOptimization((uchar)ICPara[272]));
 
-    ui->LowGrayOptimizationModeRcomboBox->setCurrentIndex(GetLowGrayOptimizationMode(ICPara[274]));
-    ui->LowGrayOptimizationModeGcomboBox->setCurrentIndex(GetLowGrayOptimizationMode(ICPara[276]));
-    ui->LowGrayOptimizationModeBcomboBox->setCurrentIndex(GetLowGrayOptimizationMode(ICPara[278]));
+    ui->LowGrayOptimizationModeRcomboBox->setCurrentIndex(GetLowGrayOptimizationMode((uchar)ICPara[274]));
+    ui->LowGrayOptimizationModeGcomboBox->setCurrentIndex(GetLowGrayOptimizationMode((uchar)ICPara[276]));
+    ui->LowGrayOptimizationModeBcomboBox->setCurrentIndex(GetLowGrayOptimizationMode((uchar)ICPara[278]));
 
-    ui->CurrentGearRcomboBox->setCurrentIndex(GetCurrentGear(ICPara[269]));
-    ui->CurrentGearGcomboBox->setCurrentIndex(GetCurrentGear(ICPara[271]));
-    ui->CurrentGearBcomboBox->setCurrentIndex(GetCurrentGear(ICPara[273]));
+    ui->CurrentGearRcomboBox->setCurrentIndex(GetCurrentGear((uchar)ICPara[269]));
+    ui->CurrentGearGcomboBox->setCurrentIndex(GetCurrentGear((uchar)ICPara[271]));
+    ui->CurrentGearBcomboBox->setCurrentIndex(GetCurrentGear((uchar)ICPara[273]));
 
-    ui->CurrentGrayRcomboBox->setCurrentIndex(GetCurrentGray(ICPara[274]));
-    ui->CurrentGrayGcomboBox->setCurrentIndex(GetCurrentGray(ICPara[276]));
-    ui->CurrentGrayBcomboBox->setCurrentIndex(GetCurrentGray(ICPara[278]));
+    ui->OutputPowerTubeRcomboBox->setCurrentIndex(GetCurrentGraySetting((uchar)ICPara[274]));
+    ui->OutputPowerTubeGcomboBox->setCurrentIndex(GetCurrentGraySetting((uchar)ICPara[276]));
+    ui->OutputPowerTubeBcomboBox->setCurrentIndex(GetCurrentGraySetting((uchar)ICPara[278]));
 
-    ui->CurrentGraySettingRcomboBox->setCurrentIndex(GetCurrentGraySetting(ICPara[274]));
-    ui->CurrentGraySettingGcomboBox->setCurrentIndex(GetCurrentGraySetting(ICPara[276]));
-    ui->CurrentGraySettingBcomboBox->setCurrentIndex(GetCurrentGraySetting(ICPara[278]));
-
-    ui->CurrentGrayBrightnessRspinBox->setValue(ICPara[135]);
-    ui->CurrentGrayBrightnessGspinBox->setValue(ICPara[136]);
-    ui->CurrentGrayBrightnessBspinBox->setValue(ICPara[137]);
+    ui->OpeningSpeedRcomboBox->setCurrentIndex(GetOpeningSpeed((uchar)ICPara[269]));
+    ui->OpeningSpeedGcomboBox->setCurrentIndex(GetOpeningSpeed((uchar)ICPara[271]));
+    ui->OpeningSpeedBcomboBox->setCurrentIndex(GetOpeningSpeed((uchar)ICPara[273]));
 }
 
 
@@ -510,7 +538,7 @@ void ICCFD455ASetting::LoadForm()
 /// <param name="value2"></param> 置1的值
 void ICCFD455ASetting::SetRegValue(int Num, int RGB, int hl, unsigned char value1, unsigned char value2)
 {
-    unsigned char value = ICPara[256 + (Num - 1) * 6 + RGB * 2 + hl];
+    unsigned char value = (uchar)ICPara[256 + (Num - 1) * 6 + RGB * 2 + hl];
 
     value &= value1;
     value |= value2;
@@ -522,16 +550,16 @@ void ICCFD455ASetting::SetLowGrayscale(int index, int RGB)
     switch (index)
     {
     case 0:
-        SetRegValue(1, RGB, 1, 0x9F, 0x00);
+        SetRegValue(1, RGB, 1, 0x3F, 0x00);
         break;
     case 1:
-        SetRegValue(1, RGB, 1, 0x9F, 0x20);
+        SetRegValue(1, RGB, 1, 0x3F, 0x40);
         break;
     case 2:
-        SetRegValue(1, RGB, 1, 0x9F, 0x40);
+        SetRegValue(1, RGB, 1, 0x3F, 0x80);
         break;
     case 3:
-        SetRegValue(1, RGB, 1, 0x9F, 0x60);
+        SetRegValue(1, RGB, 1, 0x3F, 0xC0);
         break;
     }
 }
@@ -682,7 +710,7 @@ void ICCFD455ASetting::SetPreDriveTime(int index, int RGB)
 }
 void ICCFD455ASetting::SetLowGrayStrength(int index, int RGB)
 {
-    int value = ICPara[268 + RGB * 2 + 0] + ICPara[268 + RGB * 2 + 1] * 256;
+    int value = (uchar)ICPara[268 + RGB * 2 + 0] + (uchar)ICPara[268 + RGB * 2 + 1] * 256;
 
     value &= 0xF07F;
     value |= ((32 - (index + 1)) << 7);
@@ -928,7 +956,18 @@ void ICCFD455ASetting::SetCurrentGraySetting(int index, int RGB)
         break;
     }
 }
-
+void ICCFD455ASetting::SetOpeningSpeed(int index, int RGB)
+{
+    switch (index)
+    {
+    case 0:
+        SetRegValue(3, RGB, 1, 0xBF, 0x00);
+        break;
+    case 1:
+        SetRegValue(3, RGB, 1, 0xBF, 0x40);
+        break;
+    }
+}
 
 void ICCFD455ASetting::on_SettingpushButton_clicked()
 {
@@ -977,9 +1016,9 @@ void ICCFD455ASetting::on_SettingpushButton_clicked()
     SetLowGrayStrength(ui->LowGrayStrengthGcomboBox->currentIndex(),1);
     SetLowGrayStrength(ui->LowGrayStrengthBcomboBox->currentIndex(),2);
 
-    SetLowGrayTime(ui->LowGrayTimeRcomboBox->currentIndex(),0);
-    SetLowGrayTime(ui->LowGrayTimeGcomboBox->currentIndex(),1);
-    SetLowGrayTime(ui->LowGrayTimeBcomboBox->currentIndex(),2);
+    SetLowGrayTime(ui->DataOutputRcomboBox->currentIndex(),0);
+    SetLowGrayTime(ui->DataOutputGcomboBox->currentIndex(),1);
+    SetLowGrayTime(ui->DataOutputBcomboBox->currentIndex(),2);
 
     SetDynamicEnergySaving(ui->DynamicEnergySavingRcheckBox->isChecked(),0);
     SetDynamicEnergySaving(ui->DynamicEnergySavingGcheckBox->isChecked(),1);
@@ -1037,38 +1076,37 @@ void ICCFD455ASetting::on_SettingpushButton_clicked()
     SetCurrentGear(ui->CurrentGearGcomboBox->currentIndex(),1);
     SetCurrentGear(ui->CurrentGearBcomboBox->currentIndex(),2);
 
-    SetCurrentGray(ui->CurrentGrayRcomboBox->currentIndex(),0);
-    SetCurrentGray(ui->CurrentGrayGcomboBox->currentIndex(),1);
-    SetCurrentGray(ui->CurrentGrayBcomboBox->currentIndex(),2);
+    SetCurrentGraySetting(ui->OutputPowerTubeRcomboBox->currentIndex(),0);
+    SetCurrentGraySetting(ui->OutputPowerTubeGcomboBox->currentIndex(),1);
+    SetCurrentGraySetting(ui->OutputPowerTubeBcomboBox->currentIndex(),2);
 
-    SetCurrentGraySetting(ui->CurrentGraySettingRcomboBox->currentIndex(),0);
-    SetCurrentGraySetting(ui->CurrentGraySettingGcomboBox->currentIndex(),1);
-    SetCurrentGraySetting(ui->CurrentGraySettingBcomboBox->currentIndex(),2);
-
-    //电流灰度分量亮度设置
-    if (ui->CurrentGrayRcomboBox->currentIndex() == 0x01)
-    {
-        ICPara[135] = ui->CurrentGrayBrightnessRspinBox->value();
-    }
-    if (ui->CurrentGrayGcomboBox->currentIndex() == 0x01)
-    {
-        ICPara[136] = ui->CurrentGrayBrightnessGspinBox->value();
-    }
-    if (ui->CurrentGrayBcomboBox->currentIndex() == 0x01)
-    {
-        ICPara[137] = ui->CurrentGrayBrightnessBspinBox->value();
-    }
+//    //电流灰度分量亮度设置
+//    if (ui->CurrentGrayRcomboBox->currentIndex() == 0x01)
+//    {
+//        ICPara[135] = ui->CurrentGrayBrightnessRspinBox->value();
+//    }
+//    if (ui->CurrentGrayGcomboBox->currentIndex() == 0x01)
+//    {
+//        ICPara[136] = ui->CurrentGrayBrightnessGspinBox->value();
+//    }
+//    if (ui->CurrentGrayBcomboBox->currentIndex() == 0x01)
+//    {
+//        ICPara[137] = ui->CurrentGrayBrightnessBspinBox->value();
+//    }
 
 
+    SetOpeningSpeed(ui->OpeningSpeedRcomboBox->currentIndex(),0);
+    SetOpeningSpeed(ui->OpeningSpeedGcomboBox->currentIndex(),1);
+    SetOpeningSpeed(ui->OpeningSpeedBcomboBox->currentIndex(),2);
 
     bool result = UniversalInterface::SendALLPara();
     this->setCursor(Qt::ArrowCursor);
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 
 
@@ -1077,51 +1115,51 @@ void ICCFD455ASetting::on_SettingpushButton_clicked()
 
 }
 
-void ICCFD455ASetting::on_CurrentGrayRcomboBox_currentIndexChanged(int index)
-{
-    if (index == 0x01)
-    {
-        ui->CurrentGraySettingRcomboBox->setEnabled(true);
-        ui->CurrentGrayBrightnessRspinBox->setEnabled(true);
-    }
-    else
-    {
-        ui->CurrentGraySettingRcomboBox->setEnabled(false);
-        ui->CurrentGrayBrightnessRspinBox->setEnabled(false);
-    }
-}
+//void ICCFD455ASetting::on_CurrentGrayRcomboBox_currentIndexChanged(int index)
+//{
+//    if (index == 0x01)
+//    {
+//        ui->CurrentGraySettingRcomboBox->setEnabled(true);
+//        ui->CurrentGrayBrightnessRspinBox->setEnabled(true);
+//    }
+//    else
+//    {
+//        ui->CurrentGraySettingRcomboBox->setEnabled(false);
+//        ui->CurrentGrayBrightnessRspinBox->setEnabled(false);
+//    }
+//}
 
-void ICCFD455ASetting::on_CurrentGrayGcomboBox_currentIndexChanged(int index)
-{
-    if (index == 0x01)
-    {
-        ui->CurrentGraySettingGcomboBox->setEnabled(true);
-        ui->CurrentGrayBrightnessGspinBox->setEnabled(true);
-    }
-    else
-    {
-        ui->CurrentGraySettingGcomboBox->setEnabled(false);
-        ui->CurrentGrayBrightnessGspinBox->setEnabled(false);
-    }
-}
+//void ICCFD455ASetting::on_CurrentGrayGcomboBox_currentIndexChanged(int index)
+//{
+//    if (index == 0x01)
+//    {
+//        ui->CurrentGraySettingGcomboBox->setEnabled(true);
+//        ui->CurrentGrayBrightnessGspinBox->setEnabled(true);
+//    }
+//    else
+//    {
+//        ui->CurrentGraySettingGcomboBox->setEnabled(false);
+//        ui->CurrentGrayBrightnessGspinBox->setEnabled(false);
+//    }
+//}
 
-void ICCFD455ASetting::on_CurrentGrayBcomboBox_currentIndexChanged(int index)
-{
-    if (index == 0x01)
-    {
-        ui->CurrentGraySettingBcomboBox->setEnabled(true);
-        ui->CurrentGrayBrightnessBspinBox->setEnabled(true);
-    }
-    else
-    {
-        ui->CurrentGraySettingBcomboBox->setEnabled(false);
-        ui->CurrentGrayBrightnessBspinBox->setEnabled(false);
-    }
-}
+//void ICCFD455ASetting::on_CurrentGrayBcomboBox_currentIndexChanged(int index)
+//{
+//    if (index == 0x01)
+//    {
+//        ui->CurrentGraySettingBcomboBox->setEnabled(true);
+//        ui->CurrentGrayBrightnessBspinBox->setEnabled(true);
+//    }
+//    else
+//    {
+//        ui->CurrentGraySettingBcomboBox->setEnabled(false);
+//        ui->CurrentGrayBrightnessBspinBox->setEnabled(false);
+//    }
+//}
 
 void ICCFD455ASetting::on_AdvancedSettingpushButton_clicked()
 {
-    ICAdvancedSetting *icadvanced = new ICAdvancedSetting();
+    ICAdvancedSetting *icadvanced = new ICAdvancedSetting(this);
     icadvanced->show();
 
 }

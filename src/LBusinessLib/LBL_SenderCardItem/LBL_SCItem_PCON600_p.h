@@ -36,8 +36,7 @@ namespace LBL
 		public:
 			SenderCardItem_PCON600Private() {}
 			~SenderCardItem_PCON600Private()
-			{
-				qDebug() << __FUNCTION__;
+            {
 			}
 
 		public:

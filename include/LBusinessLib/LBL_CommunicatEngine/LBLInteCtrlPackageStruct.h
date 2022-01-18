@@ -31,12 +31,25 @@ typedef struct tagIntegratedFrameLimit
 }SIntegratedFrameLimit;
 
 //LED一体机集成控制协议请求头3.0
+typedef struct tagIntegratedCtrlProtocolHeader
+{
+    SIntegratedFrameLimit frameLimit;
+
+    quint8 protocolNum; //0x01 LED一体机集成控制协议
+    quint8 protocolVersion; //0x01 协议版本
+
+    tagIntegratedCtrlProtocolHeader()
+    {
+        int i = sizeof(tagIntegratedCtrlProtocolHeader);
+        memset(this, 0x00, i);
+    }
+
+}SIntegratedCtrlProtocolHeader;
+
+//LED一体机集成控制协议请求头3.0
 typedef struct tagIntegratedCtrlHeader
 {
-	SIntegratedFrameLimit frameLimit;
-
-	quint8 protocolNum; //0x01 LED一体机集成控制协议
-	quint8 protocolVersion; //0x01 协议版本
+    SIntegratedCtrlProtocolHeader protocolHeader;
 
 	quint16 targetDeviceType; //0xD001 目标设备类型-安卓设备
 	quint16 sourceDeviceType; //0xD100 源设备类型-外部设备
@@ -54,7 +67,7 @@ typedef struct tagIntegratedCtrlHeader
 	{
 		int i = sizeof(tagIntegratedCtrlHeader);
 		memset(this, 0x00, i);
-		frameLimit.build();
+        protocolHeader.frameLimit.build();
 	}
 
 }SIntegratedCtrlHeader;

@@ -28,6 +28,8 @@ public:
     static QString appParamDataLocation();
     //程序语言路径-exe
     static QString appLocalsLocation();
+    //程序文档路径-exe
+    static QString appDocLocation();
     //程序配置数据路径-doc
     static QString appConfigDataLocation();
     //程序Log数据路径-doc
@@ -35,6 +37,9 @@ public:
     //程序runtime数据路径-doc
 	static QString appRunTimeDataLocation();
 
+    //设置是否打印通信log
+    static void setEnableCommunicatLog(bool enable);
+    static bool enableCommunicatLog();
 
 	//程序runtime连接关系保存路径
 	static QString appRunTimeConnectionDataFileName();

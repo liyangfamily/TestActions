@@ -1,10 +1,10 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** This Interface file is part of the HDMIChip module of the LBusinessLib.
-** �����LBusinessLib��HDMIChip�Ĵ�������ģ���࣬��ģ����⿪��
+** 这个是LBusinessLib中HDMIChip的创建工厂模板类，该模块对外开放
 **
-** ���ļ�ΪLEDϵͳ�����ڴ�����ͬ���Ϳ��Ĺ���ģ����
-** C++ģ���������ʵ�ֺͶ��嶼����ͷ�ļ��У����Ҳ��õ���
+** 该文件为LED系统中用于创建不同发送卡的工厂模板类
+** C++模板类必须是实现和定义都放在头文件中，而且不用导出
 **
 ****************************************************************************/
 #ifndef CVTE_H_LBLHDMICHIPFACTORY
@@ -23,7 +23,6 @@ namespace LBL
 		public:
 			~LBLHDMIChipFactory()
 			{
-				qDebug() << __FUNCTION__;
 			}
 			static AbstractHDMIChip_t* creatHDMIChipDevice(SDetectItemInfo* info, QObject * parent = 0)
 			{

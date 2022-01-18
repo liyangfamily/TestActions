@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QFocusEvent>
 // 自定义 Item
 class Arrow;
 class ModuleItem : public QGraphicsPolygonItem
@@ -27,6 +28,8 @@ public:
 	int port() const;
 	void setModuleIndex(int index);
 	int moduleIndex() const;
+    void setCorrectIndex(int index);
+    int correctIndex() const;
 	void setOrder(Order o);
 	bool isOrder(Order o) const;
 	bool isConnected() const;
@@ -42,6 +45,8 @@ public:
 	}
 
 protected:
+    void focusOutEvent(QFocusEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
@@ -57,8 +62,12 @@ private:
 	QPolygonF myPolygon;
 	QPointF m_centerPoint;
 	int m_port = -1;
+    int m_correctIndex = -1;
 	int m_moduleIndex = -1;
 	Order m_moduleOrder = Order::O_Null;
 
     CorrectDataHelper m_correctHelper;
+
+    QRectF m_test;
+    bool m_center=false;
 };

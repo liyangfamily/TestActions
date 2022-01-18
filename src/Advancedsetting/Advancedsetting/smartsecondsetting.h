@@ -1,13 +1,13 @@
 ﻿#ifndef SMARTSECONDSETTING_H
 #define SMARTSECONDSETTING_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class SmartSecondSetting;
 }
 
-class SmartSecondSetting : public QWidget
+class SmartSecondSetting : public QDialog
 {
     Q_OBJECT
 

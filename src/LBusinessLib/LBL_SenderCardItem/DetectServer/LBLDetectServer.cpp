@@ -98,7 +98,7 @@ void LBLDetectServer::slot_stopDetectServer()
 	{
 		m_detectServerTimer.stop();
 	}
-	qDebug() << "<<<<<<<<<<<<<<<<<<<Stop Detect SenderCard.";
+    //qDebug() << "<<<<<<<<<<<<<<<<<<<Stop Detect SenderCard.";
 }
 
 bool LBLDetectServer::event(QEvent * e)
@@ -258,7 +258,7 @@ void LBLDetectServer::slot_detectTimeOut()
 		}
 		emit sig_DetectComplite();
 		//checkHeartBeating();
-        qDebug() << "\n\n\nDetect Size: " << m_detectList.size() << "\n\n\n";
+        qDebug() << "<<<<<<<<<<<<<<<<<<Detect Size: " << m_detectList.size();
 		//探卡完成
 	}
 }

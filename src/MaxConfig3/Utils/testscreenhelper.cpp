@@ -21,6 +21,9 @@ TestScreenHelper::~TestScreenHelper()
 void TestScreenHelper::showImageList(QList<QPair<CorrectDataHelper*, QSharedPointer<QByteArray>>> imageData,
                                      const CorrectDataHelper::CorrectDataType type)
 {
+    if(imageData.size()<=0){
+        return;
+    }
     switch (type)
     {
     case CorrectDataHelper::CDT_6P:
@@ -31,6 +34,15 @@ void TestScreenHelper::showImageList(QList<QPair<CorrectDataHelper*, QSharedPoin
     case CorrectDataHelper::CDT_8P:
     {
         m_drawImageCount = 8;
+    }
+    case CorrectDataHelper::CDT_10P:
+    {
+        m_drawImageCount = 10;
+    }
+        break;
+    case CorrectDataHelper::CDT_2P_Lowgray:
+    {
+        m_drawImageCount = 2;
     }
         break;
     default:
@@ -46,11 +58,21 @@ void TestScreenHelper::showImageList(QList<QPair<CorrectDataHelper*, QSharedPoin
                      CorrectDataHelper::correctDataToImageList((item.second.get()),
                      item.first->paintRect(), item.first->correctDataType())));
     }
+    if(m_bFullScreen){
+        boundingRect.setTopLeft(QPoint(0,0));
+    }
     boundingRect.moveTo(boundingRect.topLeft()+m_paintStartPos);
     this->setGeometry(boundingRect);
 	this->show();
 	this->raise();
-    m_showTimer.start(500);
+    m_showTimer.start(200);
+}
+
+void TestScreenHelper::showFullScreenImageList(QList<QPair<CorrectDataHelper *, QSharedPointer<QByteArray> > > imageData,\
+                                               const CorrectDataHelper::CorrectDataType type)
+{
+     m_bFullScreen=true;
+     showImageList(imageData,type);
 }
 
 void TestScreenHelper::setPaintStartPos(const QPoint &pt)
@@ -72,6 +94,8 @@ void TestScreenHelper::showImageTimeOut()
         close();
         m_imageData.clear();
         m_imageList.clear();
+        m_bFullScreen=false;
+        this->deleteLater();
     }
 	update();
 }
@@ -83,9 +107,16 @@ void TestScreenHelper::paintEvent(QPaintEvent *event)
 
 	if (m_showTimer.isActive()) {
 		for (auto item : m_imageList) {
-			if (item.second.size() > m_drawImageIndex) {
-                QRect rt=QRect(item.first->paintRect().topLeft()-this->geometry().topLeft(),\
-                                                        item.first->paintRect().size());
+            if (item.second.size() > m_drawImageIndex) {
+                QRect rt=QRect();
+                if(m_bFullScreen){
+                    rt=QRect(item.first->paintRect().topLeft(),\
+                             item.first->paintRect().size());
+                }
+                else{
+                    rt=QRect(QPoint(0,0),\
+                             item.first->paintRect().size());
+                }
                 painter.drawImage(rt,item.second.at(m_drawImageIndex));
 			}
 		}

@@ -1,14 +1,14 @@
 ﻿#ifndef ICADVANCEDSETTING_H
 #define ICADVANCEDSETTING_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QSpinBox>
 
 namespace Ui {
 class ICAdvancedSetting;
 }
 
-class ICAdvancedSetting : public QWidget
+class ICAdvancedSetting : public QDialog
 {
     Q_OBJECT
 

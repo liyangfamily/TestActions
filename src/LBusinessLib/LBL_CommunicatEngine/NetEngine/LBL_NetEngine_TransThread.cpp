@@ -15,7 +15,6 @@ LBL_NetEngine_TransThread::LBL_NetEngine_TransThread(LBL_NetEngine* pThreadEngin
 
 LBL_NetEngine_TransThread::~LBL_NetEngine_TransThread()
 {
-	qDebug() << __FUNCTION__;
 }
 
 QList<QObject*> LBL_NetEngine_TransThread::clientsList()
@@ -119,11 +118,18 @@ void LBL_NetEngine_TransThread::slot_EstablishCOMConnection(LBL_NetEngine_TransT
 }
 
 //基类不实现，各子类负责对应socket的数据下发
+#include <QTime>
+#include <LBL_Core/LBLUIHelper>
 void LBL_NetEngine_TransThread::slot_SendData(QObject * objSocket, LBLEnginePackage package)
 {
     Q_UNUSED(objSocket)
     Q_UNUSED(package)
-	return;
+    if(LBLUIHelper::enableCommunicatLog()){
+        QString frame;
+        frame = LBLUIHelper::byteArrayToHexStr(package.data());
+        qInfo()<<QString("TX:Host:%2, Length:%3, Data:%4").arg(package.hostName()).arg(package.data().size()).arg(frame);
+    }
+    return;
 }
 
 void LBL_NetEngine_TransThread::slot_Deactivate()

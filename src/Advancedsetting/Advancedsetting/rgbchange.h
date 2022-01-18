@@ -1,13 +1,13 @@
 ﻿#ifndef RGBCHANGE_H
 #define RGBCHANGE_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class RGBchange;
 }
 
-class RGBchange : public QWidget
+class RGBchange : public QDialog
 {
     Q_OBJECT
 

@@ -16,39 +16,39 @@
 
 namespace LBL
 {
-	namespace RC
-	{
-		class LBLReceiveCardAbstract;
-		class LBLReceiveCardAbstractPrivate
-		{
-			Q_DECLARE_PUBLIC(LBLReceiveCardAbstract)
-		public:
-			LBLReceiveCardAbstractPrivate() {}
-			~LBLReceiveCardAbstractPrivate()
-			{
-				qDebug() << __FUNCTION__;
-			}
-			LBLReceiveCardAbstract *q_ptr;
+    namespace RC
+    {
+        class LBLReceiveCardAbstract;
+        class LBLReceiveCardAbstractPrivate
+        {
+            Q_DECLARE_PUBLIC(LBLReceiveCardAbstract)
+        public:
+            LBLReceiveCardAbstractPrivate() {}
+            ~LBLReceiveCardAbstractPrivate()
+            {
+            }
+            LBLReceiveCardAbstract *q_ptr;
 
-		public:
-			//公有数据定义
-			SReceiveCardInfoAck m_realData;
-			SReceiveCardInfoAck m_cacheData;
+        public:
+            //公有数据定义
+            SReceiveCardInfoAck m_realData;
+            SReceiveCardInfoAck m_cacheData;
 
-			QByteArray receiveCardFPGARegister; //临时储存读写发送卡寄存器的值，下一条指令会覆盖
-			QByteArray moduleParam;
-			QByteArray driveICParam;
-			QByteArray decodingICParam;
+            QByteArray receiveCardFPGARegister; //临时储存读写发送卡寄存器的值，下一条指令会覆盖
+            QByteArray moduleParam;
+            QByteArray driveICParam;
+            QByteArray decodingICParam;
+            QByteArray xmICParam;
 
-			QList<SRCStatusInfo> m_rcStatusInfo;
-			QList<SRCMonitorInfo> m_rcMonitorInfo;
-			//发送卡的探卡信息指针
-			SDetectItemInfo* m_parentItemDetectInfo = nullptr;
-			//负责数据包的分发
-			LBLPackageManager m_packageMgr;
-			LBLInteCtrlPackage::EDeviceType m_targetDeviceType = LBLInteCtrlPackage::EDeviceType::EDT_NULL;
-			LBLInteCtrlPackage::EDeviceType m_registerTargetDeviceType = LBLInteCtrlPackage::EDeviceType::EDT_NULL;
-		};
-	}
+            QList<SRCStatusInfo> m_rcStatusInfo;
+            QList<SRCMonitorInfo> m_rcMonitorInfo;
+            //发送卡的探卡信息指针
+            SDetectItemInfo* m_parentItemDetectInfo = nullptr;
+            //负责数据包的分发
+            LBLPackageManager m_packageMgr;
+            LBLInteCtrlPackage::EDeviceType m_targetDeviceType = LBLInteCtrlPackage::EDeviceType::EDT_NULL;
+            LBLInteCtrlPackage::EDeviceType m_registerTargetDeviceType = LBLInteCtrlPackage::EDeviceType::EDT_NULL;
+        };
+    }
 }
 #endif

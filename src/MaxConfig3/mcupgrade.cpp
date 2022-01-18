@@ -4,6 +4,13 @@
 #include <QFileDialog>
 #include "app.h"
 
+#include "ConnectionControl/connectionView.h"
+#include "ConnectionControl/connectionScene.h"
+
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
+
 MCUpgrade::MCUpgrade(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MCUpgrade)
@@ -16,14 +23,20 @@ MCUpgrade::MCUpgrade(QWidget *parent) :
     gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_ReadSCFPGARegister(), this);
     gDispatcher->registerDispatcherPackage(LBLPackageInteCtrl_Penetrate(), this);
 
-	QStringList upgradeType;
-	upgradeType << "SenderCard-MCU" << "SenderCard-FPGA" << "ReceiveCard-FPGA" << "HDMI Decoding Chip" << "16BitGamma" << "16BitGamma_512Byte";
-	ui->comboBoxUpgradeType->addItems(upgradeType);
+    ui->comboBoxUpgradeType->addItem(tr("SenderCard-MCU"),LBLFileTransferPackage::EFileType::EFT_SenderMCU);
+    ui->comboBoxUpgradeType->addItem(tr("SenderCard-FPGA"),LBLFileTransferPackage::EFileType::EFT_SenderFPGA);
+    ui->comboBoxUpgradeType->addItem(tr("ReceiveCard-MCU"),LBLFileTransferPackage::EFileType::EFT_ReciverMCU);
+    ui->comboBoxUpgradeType->addItem(tr("ReceiveCard-FPGA"),LBLFileTransferPackage::EFileType::EFT_ReciverFPGA);
+    ui->comboBoxUpgradeType->addItem(tr("HDMI Decoding Chip"),LBLFileTransferPackage::EFileType::EFT_SenderMonitor);
+    ui->comboBoxUpgradeType->addItem(tr("16BitGamma"),LBLFileTransferPackage::EFileType::EFT_GammaFile);
+    ui->comboBoxUpgradeType->addItem(tr("16BitGamma_512Byte"),LBLFileTransferPackage::EFileType::EFT_GammaFile_512B);
 
 	QStyledItemDelegate *delegate = new QStyledItemDelegate(ui->comboBoxUpgradeType);
 	ui->comboBoxUpgradeType->setItemDelegate(delegate);
 	 
 	connect(ui->comboBoxUpgradeType, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_upgradeTypeChanged(int)));
+    ui->comboBoxUpgradeType->setCurrentIndex(0);
+    slot_upgradeTypeChanged(0);
 
 	connect(&m_upgradeWatcher, &QFutureWatcher<quint16>::finished,
 		this, &MCUpgrade::onUpgradeFinished);
@@ -93,6 +106,9 @@ void MCUpgrade::cleanUpgradeWidget()
 	ui->labelFilePathInfo->clear();
 	ui->progressBarUpgrade->setValue(0);
 	ui->progressBarUpgrade->setFormat(tr("0%"));
+    if(ui->progressBarUpgrade->hasError()){
+        ui->progressBarUpgrade->setHasError(false);
+    }
 }
 
 void MCUpgrade::updateUpgrade()
@@ -120,6 +136,7 @@ quint16 MCUpgrade::onParseReadMCUAppVersion(const QByteArray& data)
 {
     LBLPackageInteCtrl_ReadMCUAppVersion pack(data);
     ui->labelMCUVer->setText(tr("%1").arg(pack.getVersion()));
+    ui->labelMCUVer->setToolTip(tr("%1").arg(pack.getVersion()));
 	return LBLPackage::EOR_Success;
 }
 
@@ -138,6 +155,7 @@ quint16 MCUpgrade::onParseReadAndroidVersion(const QByteArray& data)
     memcpy(&len, replyData.constData(), 2);
     QString name(replyData.mid(2, len));
     ui->labelAndroidVer->setText(tr("%1").arg(name));
+    ui->labelAndroidVer->setToolTip(tr("%1").arg(name));
     return quint16(LBLPackage::EOR_Success);
 }
 
@@ -178,6 +196,7 @@ void MCUpgrade::slot_ConnectItem()
 
 void MCUpgrade::slot_EnterNavigatPage()
 {
+    ConnectionFrame::instance()->setCurrentMode(ConnectionDiagramScene::Mode::NONE);
 	updateUpgrade();
 }
 
@@ -187,7 +206,7 @@ void MCUpgrade::on_btnSelectFile_clicked()
 	QString fileName = QFileDialog::getOpenFileName(this,
 		tr("Select File"),
 		App::lastOpenPath,
-		tr("Upgrade File(*.bin)"));
+        Utils::FileFilter::UPGRADE_FILTER);
 	if (!fileName.isEmpty()) {
 	//QString fileName = App::lastOpenPath;
 		ui->labelFilePathInfo->setText(fileName);
@@ -223,29 +242,7 @@ void MCUpgrade::on_btnClearFilePath_clicked()
 
 void MCUpgrade::slot_upgradeTypeChanged(int index)
 {
-	switch (index)
-	{
-	case 0:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_SenderMCU;
-		break;
-	case 1:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_SenderFPGA;
-		break;
-	case 2:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_ReciverFPGA;
-		break;
-	case 3:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_SenderMonitor;
-		break;
-	case 4:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_GammaFile;
-		break;
-	case 5:
-		m_upgradeType = LBLFileTransferPackage::EFileType::EFT_GammaFile_512B;
-		break;
-	default:
-		break;
-	}
+    m_upgradeType = ui->comboBoxUpgradeType->currentData().toInt();
 }
 
 void MCUpgrade::onUpgradeFinished()
@@ -259,9 +256,15 @@ void MCUpgrade::updateUpgardeProgressBar()
 {
 	ui->progressBarUpgrade->setValue(m_upgradeWatcher.progressValue());
 	if (m_upgradeWatcher.isRunning()) {
+        if(ui->progressBarUpgrade->hasError()){
+            ui->progressBarUpgrade->setHasError(false);
+        }
 		ui->progressBarUpgrade->setFormat(tr("%1 ,Progress：%2%").arg(m_upgradeWatcher.progressText()).arg(m_upgradeWatcher.progressValue()));
 	}
 	else {
+        if(m_upgradeWatcher.result()!=LAPI::EResult::ER_FILE_UpgradeStatus_Success){
+            ui->progressBarUpgrade->setHasError(true);
+        }
 		ui->progressBarUpgrade->setFormat(m_upgradeWatcher.progressText());
 	}
 }

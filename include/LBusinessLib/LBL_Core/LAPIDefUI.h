@@ -20,6 +20,18 @@ namespace LAPI
 			EIS_DP = 0x05,
 		};
 
+        /*输出源*/
+        enum EOutputSource
+        {
+            EOS_Android = 0x00,
+            EOS_PC = 0x01,
+            EOS_HDMI1 = 0x02,
+            EOS_HDMI2 = 0x03,
+            EOS_HDMI3 = 0x04,
+            EOS_DP = 0x05,
+            EOS_SameScreen = 0x06,
+        };
+
 		/*色温*/
 		enum EColorTemperature
 		{
@@ -60,6 +72,17 @@ namespace LAPI
 			EMSM_4Window = 0x06, //4个窗口
 			EMSM_UserMode = 0x07, //自定义模式
 		};
+
+        /*显示比例*/
+        enum EImageRatio
+        {
+            EIR_Full=0x00,
+            EIR_Original=0x01,
+            EIR_4_3=0x02,
+            EIR_16_9=0x03,
+            EIR_1_1=0x04,
+            EIR_SmartView
+        };
 
 		/*双拼分屏模式*/
 		enum ESplitDouScreenMode

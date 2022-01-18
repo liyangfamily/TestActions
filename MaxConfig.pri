@@ -64,7 +64,7 @@ defineReplace(stripSrcDir) {
 defineReplace(nativePath) {
     path = $$1
     # Replace slashes in paths with backslashes for Windows
-    win32:path ~= s,/,\\\\,g
+    win32:path ~= s,/,\\,g
     return($$path)
 }
 
@@ -79,6 +79,8 @@ isEmpty(PRO_BUILD_TREE) {
     PRO_BUILD_TREE = $$clean_path($$OUT_PWD)
     PRO_BUILD_TREE ~= s,$$re_escape($$sub_dir)$,,
 }
+PRO_SOURCE_SHARD = $$PRO_SOURCE_TREE/shard
+PRO_SOURCE_SCRIPTS = $$PRO_SOURCE_TREE/scripts
 
 PRO_APP_PATH = $$PRO_BUILD_TREE/bin
 
@@ -112,7 +114,21 @@ osx{
 INCLUDEPATH += \
     $$PRO_BUILD_TREE/src \ # for <app/app_version.h> in case of actual build directory
     $$PRO_SOURCE_TREE/src \ # for <app/app_version.h> in case of binary package with dev package
-    $$PRO_SOURCE_TREE/src/libs #for other files that are not plug-ins
+    $$PRO_SOURCE_SHARD #for shard file
+    $$PRO_SOURCE_SCRIPTS #for scripts file
+
+win32{
+    VLD_PATH= $$quote(C:\\Program Files (x86)\\Visual Leak Detector\\include)
+    exists($$VLD_PATH){
+        INCLUDEPATH += $$VLD_PATH
+        contains(QT_ARCH, i386) {
+                LIBS += $$quote(C:\Program Files (x86)\Visual Leak Detector\lib\Win32\vld.lib)
+            } else {
+                LIBS += $$quote(C:\Program Files (x86)\Visual Leak Detector\lib\Win64\vld.lib)
+            }
+
+    }
+}
 
 LBUSINESSLIB_INCLUDE= $$PRO_SOURCE_TREE/include/LBusinessLib
 INCLUDEPATH += $$LBUSINESSLIB_INCLUDE
@@ -142,7 +158,7 @@ for(ever) {
             error("Library dependency $$dep not found")
         include($$dependencies_file)
         LIBS += -l$$qtLibraryTargetName($$QTC_LIB_NAME)
-        #QMAKE_LFLAGS += -l$$qtLibraryTargetName($$QTC_LIB_NAME)
+        osx:QMAKE_LFLAGS += -l$$qtLibraryTargetName($$QTC_LIB_NAME)
     }
     QTC_LIB_DEPENDS = $$unique(QTC_LIB_DEPENDS)
     QTC_LIB_DEPENDS -= $$unique(done_libs)

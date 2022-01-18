@@ -23,8 +23,7 @@ namespace LBL
 		{
 		public:
 			~LBLSenderCardFactory()
-			{
-				qDebug("~LBLSenderCardFactory()\n");
+            {
 			}
 			static AbstractSenderCard_t* creatSenderCardDevice(SDetectItemInfo* info, QObject * parent = 0)
 			{

@@ -206,6 +206,7 @@ ConnectionFrame::ConnectionFrame(QWidget *parent)
     // Label layout
     QHBoxLayout *labelLayout = new QHBoxLayout;
     label2 = new QLabel(tr("Pointer Mode"));
+    label2->setVisible(false);
     selectModeButton = new QToolButton;
     selectModeButton->setText(tr("Select"));
     selectModeButton->setCheckable(true);
@@ -217,7 +218,7 @@ ConnectionFrame::ConnectionFrame(QWidget *parent)
 	correctModeButton = new QToolButton;
 	correctModeButton->setText(tr("Correct"));
 	correctModeButton->setCheckable(true);
-	correctModeButton->setChecked(false);
+    correctModeButton->setChecked(false);
     antialiasButton = new QToolButton;
     antialiasButton->setText(tr("Antialiasing"));
     antialiasButton->setCheckable(true);
@@ -235,8 +236,10 @@ ConnectionFrame::ConnectionFrame(QWidget *parent)
     openGlButton->setEnabled(false);
 #endif
     printButton = new QToolButton;
-    printButton->setText("Print");
+    printButton->setText(tr("Print"));
     printButton->setIcon(QIcon(QPixmap(":/fileprint.png")));
+    clearButton = new QToolButton;
+    clearButton->setText(tr("Clear"));
 
     QButtonGroup *pointerModeGroup = new QButtonGroup(this);
     pointerModeGroup->setExclusive(true);
@@ -249,15 +252,20 @@ ConnectionFrame::ConnectionFrame(QWidget *parent)
     labelLayout->addWidget(dragModeButton);
     labelLayout->addWidget(correctModeButton);
     labelLayout->addStretch();
-    //labelLayout->addWidget(antialiasButton);
+    labelLayout->addWidget(antialiasButton);
+    labelLayout->addWidget(openGlButton);
     labelLayout->addWidget(fitInViewButton);
     labelLayout->addWidget(resetButton);
-    labelLayout->addWidget(printButton);
+    //labelLayout->addWidget(printButton);
+    labelLayout->addWidget(clearButton);
+    labelLayout->setSpacing(5);
 
     QGridLayout *topLayout = new QGridLayout;
     topLayout->addLayout(labelLayout, 0, 0);
     topLayout->addWidget(graphicsView, 1, 0);
     setLayout(topLayout);
+    topLayout->setContentsMargins(0,3,0,0);
+    topLayout->setVerticalSpacing(5);
 
     connect(resetButton, SIGNAL(clicked()), this, SLOT(resetView()));
     connect(graphicsView->verticalScrollBar(), SIGNAL(valueChanged(int)),
@@ -271,8 +279,11 @@ ConnectionFrame::ConnectionFrame(QWidget *parent)
     connect(fitInViewButton, SIGNAL(clicked()), this, SLOT(toggleFitInView()));
     connect(openGlButton, SIGNAL(toggled(bool)), this, SLOT(toggleOpenGL()));
     connect(printButton, SIGNAL(clicked()), this, SLOT(print()));
+    connect(clearButton, SIGNAL(clicked()), this, SLOT(clearScene()));
 
     antialiasButton->setChecked(true);
+    antialiasButton->setVisible(false);
+    openGlButton->setVisible(false);
 }
 
 void ConnectionFrame::creatConnectionFrame(QWidget *parent)
@@ -328,7 +339,23 @@ void ConnectionFrame::setCurrentMode(ConnectionDiagramScene::Mode mode)
         correctModeButton->setChecked(true);
     }
     break;
+    case ConnectionDiagramScene::Mode::ModuleParam:
+    {
+        ConnectionDiagramScene::instance()->setSceneMode(mode);
+        graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        selectModeButton->hide();
+        dragModeButton->hide();
+        correctModeButton->hide();
+    }
+    break;
     default:
+    {
+        ConnectionDiagramScene::instance()->setSceneMode(ConnectionDiagramScene::Mode::NONE);
+        graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        selectModeButton->hide();
+        dragModeButton->hide();
+        correctModeButton->hide();
+    }
         break;
     }
 }
@@ -388,4 +415,9 @@ void ConnectionFrame::print()
         graphicsView->render(&painter);
     }
 #endif
+}
+
+void ConnectionFrame::clearScene()
+{
+    ConnectionDiagramScene::instance()->clearModuleConnection();
 }

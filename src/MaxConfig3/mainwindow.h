@@ -18,6 +18,8 @@ class QEvent;
 class QResizeEvent;
 class QMouseEvent;
 class QButtonGroup;
+class QAction;
+class QMenu;
 class MCScreen;
 class MCConnection;
 class MCUpgrade;
@@ -58,6 +60,10 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event)override;
 private:
     bool init();
+    //多语言后续移到单独对话框中
+    bool initSystemMenu();
+    bool hasQmFilesForLocale(const QString &locale, const QString &creatorTrPath);
+
     void updateSCList();
 signals:
     void display(int);
@@ -67,12 +73,12 @@ private slots:
     void on_toolBtnRefreshSCList_clicked();
     void on_toolBtnSCListHide_clicked();
     void on_toolBtnSCListShow_clicked();
-    void on_btnScreen_clicked();
-    void on_btnConnection_clicked();
-    void on_btnSC_clicked();
-    void on_btnRC_clicked();
-    void on_btnCorrect_clicked();
-    void on_btnUpgrade_clicked();
+    void on_btnScreen_toggled(bool checked);
+    void on_btnConnection_toggled(bool checked);
+    void on_btnSC_toggled(bool checked);
+    void on_btnRC_toggled(bool checked);
+    void on_btnCorrect_toggled(bool checked);
+    void on_btnUpgrade_toggled(bool checked);
     void on_btnHelp_clicked();
 
     void slot_SenderCardOnline(SDetectItemInfo info);
@@ -84,6 +90,15 @@ private slots:
     void on_toolBtnMinSize_clicked();
     void on_toolBtnMaxSize_clicked();
     void on_toolBtnClose_clicked();
+    //多语言
+    void slot_languageChanged();
+    void slot_manualShow();
+    void slot_aboutDlgShow();
+    void slot_checkForUpdates();
+    //展开属性栏
+    void slot_ExpandAttribute(bool b);
+
+
 private:
     ICore *m_coreImpl = nullptr;
 
@@ -101,6 +116,9 @@ private:
 
     bool m_bPressed;
     QPoint m_ptPress;
+
+    QMenu *m_languageMenu=nullptr;
+    QMenu *m_helpMenu=nullptr;
 };
 
 }// namespace Internal

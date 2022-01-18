@@ -23,8 +23,7 @@ namespace LBL
 		{
 		public:
 			~LBLFileTransferFactory()
-			{
-				qDebug("~LBLFileTransferFactory()\n");
+            {
 			}
 			static AbstractFileTransfer_t* creatFileTransferDevice(SDetectItemInfo* info, QObject * parent = 0) //FIXME：函数名有问题
 			{

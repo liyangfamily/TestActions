@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>368</height>
+    <width>710</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="font">
@@ -18,942 +18,1159 @@
   <property name="windowTitle">
    <string>驱动芯片高级设置</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_11">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,1,0">
-     <property name="spacing">
-      <number>10</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="0,1">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="0,1">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>10</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>驱动芯片：</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="IClineEdit">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_35">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>10</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_22">
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_11">
-             <property name="spacing">
-              <number>75</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>20</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>红色</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>绿色</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>蓝色</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
-           <property name="spacing">
-            <number>10</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>寄存器1低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>寄存器1高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>寄存器2低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>寄存器2高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>寄存器3低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>寄存器3高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>寄存器4低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>寄存器4高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg1RLowspinBox">
-                 <property name="font">
-                  <font>
-                   <family>Calibri</family>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg1GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg1BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg1RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg1GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg1BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg2RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg2GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg2BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg2RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg2GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg2BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_7">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg3RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg3GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg3BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg3RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg3GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg3BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg4RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg4GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg4BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg4RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg4GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg4BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>驱动芯片：</string>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_34">
-           <item>
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_33">
-             <property name="spacing">
-              <number>75</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>20</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>红色</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>绿色</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>蓝色</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="0,1">
-           <property name="spacing">
-            <number>10</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_8">
-             <item>
-              <widget class="QLabel" name="label_27">
-               <property name="text">
-                <string>寄存器5低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_28">
-               <property name="text">
-                <string>寄存器5高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_29">
-               <property name="text">
-                <string>寄存器6低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_30">
-               <property name="text">
-                <string>寄存器6高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_31">
-               <property name="text">
-                <string>寄存器7低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_32">
-               <property name="text">
-                <string>寄存器7高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_33">
-               <property name="text">
-                <string>寄存器8低位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_34">
-               <property name="text">
-                <string>寄存器8高位(00-FF)</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_9">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_24">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg5RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg5GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg5BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_25">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg5RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg5GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg5BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_26">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg6RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg6GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg6BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_27">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg6RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg6GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg6BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_28">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg7RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg7GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg7BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_29">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg7RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg7GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg7BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_30">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg8RLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg8GLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg8BLowspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_31">
-               <property name="spacing">
-                <number>20</number>
-               </property>
-               <item>
-                <widget class="QSpinBox" name="Reg8RHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg8GHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="Reg8BHighspinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="displayIntegerBase">
-                  <number>16</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
+        <widget class="QLineEdit" name="IClineEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_36">
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1,1">
+       <property name="horizontalSpacing">
+        <number>20</number>
+       </property>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="Reg3RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="maximum">
+          <number>255</number>
          </property>
-        </spacer>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
+       <item row="2" column="3">
+        <widget class="QSpinBox" name="Reg1BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>    设置    </string>
+          <string>寄存器2低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器3高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="Reg3GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QSpinBox" name="Reg4GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="Reg1RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="Reg4RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="Reg4RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QSpinBox" name="Reg4GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>绿色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="Reg1GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="Reg2RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="Reg2RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QSpinBox" name="Reg3GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>蓝色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QSpinBox" name="Reg2GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="Reg2GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="Reg2BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QSpinBox" name="Reg4BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="Reg1BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="Reg3RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QSpinBox" name="Reg3BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器3低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器4低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器4高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QSpinBox" name="Reg3BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
+        <widget class="QSpinBox" name="Reg4BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器1低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="Reg1RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>红色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QSpinBox" name="Reg2BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器1高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="Reg1GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器2高位(00-FF)</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,1,1,1">
+       <property name="horizontalSpacing">
+        <number>20</number>
+       </property>
+       <item row="2" column="3">
+        <widget class="QSpinBox" name="Reg5BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_26">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>蓝色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QSpinBox" name="Reg8BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_24">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>红色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="Reg5BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="Reg7GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="Reg6RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QSpinBox" name="Reg8GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="Reg5RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QSpinBox" name="Reg8GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="Reg7RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="Reg5RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QSpinBox" name="Reg6BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_25">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>绿色</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QSpinBox" name="Reg7BLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="Reg7RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="Reg5GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="Reg8RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="Reg6RHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QSpinBox" name="Reg7GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="Reg5GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="Reg6BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="Reg6GLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QSpinBox" name="Reg6GHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QSpinBox" name="Reg7BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
+        <widget class="QSpinBox" name="Reg8BHighspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="Reg8RLowspinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="displayIntegerBase">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器5低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_28">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器5高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_29">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器6低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_30">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器6高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_31">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器7低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_32">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器7高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_33">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器8低位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_34">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>寄存器8高位(00-FF)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_36">
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>设置</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

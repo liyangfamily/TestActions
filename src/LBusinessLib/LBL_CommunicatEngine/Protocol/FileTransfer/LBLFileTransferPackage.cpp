@@ -117,6 +117,90 @@ QByteArray LBLPackageFileTransfer_CommonStartSendFile::CmdContent() const
 	return temp;
 }
 
+LBLPackageFileTransfer_CommonStartSendFile_New::LBLPackageFileTransfer_CommonStartSendFile_New(quint16 fileType, quint32 fileLength,\
+                                                                                               QString fileName, \
+                                                                                               QByteArray fileIdentifyContent, \
+                                                                                               quint8 portIndex, quint16 moduleIndex):
+    m_portIndex(portIndex),m_moduleIndex(moduleIndex),m_fileType(fileType),m_fileLength(fileLength)
+{
+    setFileName(fileName);
+    setFileIdentifyContent(fileIdentifyContent);
+}
+
+quint16 LBLPackageFileTransfer_CommonStartSendFile_New::getOperationResult() const
+{
+    DO_GETOPERATIONRESULT()
+}
+
+quint8 LBLPackageFileTransfer_CommonStartSendFile_New::getPortIndex() const
+{
+    quint8 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 3) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 2, 1);
+    return value;
+}
+
+quint16 LBLPackageFileTransfer_CommonStartSendFile_New::getModuleIndex() const
+{
+    quint16 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 5) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 3, 2);
+    return value;
+}
+
+quint16 LBLPackageFileTransfer_CommonStartSendFile_New::getFileType() const
+{
+    quint16 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 7) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 5, 2);
+    return value;
+}
+
+quint16 LBLPackageFileTransfer_CommonStartSendFile_New::getMaxLengthOfSinglePackage() const
+{
+    quint16 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 9) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 7, 2);
+    return value;
+}
+
+quint32 LBLPackageFileTransfer_CommonStartSendFile_New::getSendFileID() const
+{
+    quint32 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 13) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 9, 4);
+    return value;
+}
+
+QByteArray LBLPackageFileTransfer_CommonStartSendFile_New::CmdContent() const
+{
+    QByteArray temp;
+    temp.append((char *)&m_portIndex, 1);
+    temp.append((char *)&m_moduleIndex, 2);
+    temp.append((char *)&m_fileType, 2);
+    temp.append((char *)&m_fileLength, 4);
+    temp.append((char *)&m_fileNameLength, 2);
+    temp.append(m_fileName);
+    temp.append((char *)&m_fileIdentifyContentLength, 2);
+    temp.append(m_fileIdentifyContent);
+    return temp;
+}
+
 LBLPackageFileTransfer_CommonSendFileData::LBLPackageFileTransfer_CommonSendFileData(quint32 sendFileID, quint16 packageIndex, QByteArray package):
 	m_sendFileID(sendFileID),m_packageIndex(packageIndex)
 {
@@ -166,7 +250,39 @@ QByteArray LBLPackageFileTransfer_CommonRequestUpgrade::CmdContent() const
 	return temp;
 }
 
-LBLPackageFileTransfer_CommonQueryUpgradeStatus::LBLPackageFileTransfer_CommonQueryUpgradeStatus(quint16 fileType) :
+
+LBLPackageFileTransfer_CommonRequestUpgrade_New::LBLPackageFileTransfer_CommonRequestUpgrade_New(quint16 fileType, quint8 portIndex, quint16 moduleIndex):
+    m_fileType(fileType),m_portIndex(portIndex),m_moduleIndex(moduleIndex)
+{
+
+}
+
+quint16 LBLPackageFileTransfer_CommonRequestUpgrade_New::getOperationResult() const
+{
+    DO_GETOPERATIONRESULT()
+}
+
+quint8 LBLPackageFileTransfer_CommonRequestUpgrade_New::getOperatFailReason() const
+{
+    quint8 value = 0;
+    QByteArray buffer = getContent();
+    if (buffer.size() < 3) {
+        return value;
+    }
+    memcpy(&value, buffer.constData() + 2, 1);
+    return value;
+}
+
+QByteArray LBLPackageFileTransfer_CommonRequestUpgrade_New::CmdContent() const
+{
+    QByteArray temp;
+    temp.append((char *)&m_fileType, 2);
+    temp.append((char *)&m_portIndex, 1);
+    temp.append((char *)&m_moduleIndex, 2);
+    return temp;
+}
+
+LBLPackageFileTransfer_CommonQueryUpgradeStatus::LBLPackageFileTransfer_CommonQueryUpgradeStatus(quint16 fileType):
 	m_fileType(fileType)
 {
 }

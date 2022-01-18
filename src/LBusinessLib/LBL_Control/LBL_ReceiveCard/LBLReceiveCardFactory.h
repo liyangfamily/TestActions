@@ -22,8 +22,7 @@ namespace LBL
 		{
 		public:
 			~LBLReceiveCardFactory()
-			{
-				qDebug("~LBLReceiveCardFactory()\n");
+            {
 			}
 			static AbstractReceiveCard_t* creatReceiveCardDevice(SDetectItemInfo* info, QObject * parent = 0) //FIXME：函数名有问题
 			{

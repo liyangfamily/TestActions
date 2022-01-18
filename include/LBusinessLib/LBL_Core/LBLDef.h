@@ -15,8 +15,8 @@
 #define LBL_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
 
-#define LBL_VERSION_STR "0.0.1"
-#define LBL_VERSION_MAJOR 0
+#define LBL_VERSION_STR "1.0.1"
+#define LBL_VERSION_MAJOR 1
 #define LBL_VERSION_MINOR 0
 #define LBL_VERSION_PATCH 1
 

@@ -26,8 +26,7 @@ namespace LBL
 		public:
 			LBLNT68400AbstractPrivate() {}
 			~LBLNT68400AbstractPrivate()
-			{
-				qDebug("~LBLNT68400AbstractPrivate()\n");
+            {
 			}
 			LBLNT68400Abstract *q_ptr;
 

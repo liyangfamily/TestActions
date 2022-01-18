@@ -33,6 +33,8 @@ namespace Core
         static QWidget *dialogParent();
         static void raiseWindow(QWidget *widget);
 
+        static void showRaise(QWidget *widget);
+        static void showCenter(QWidget *widget);
         //about
         static QString versionString();
 

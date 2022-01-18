@@ -1,13 +1,13 @@
 ﻿#ifndef ICCFD435ASETTING_H
 #define ICCFD435ASETTING_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class ICCFD435ASetting;
 }
 
-class ICCFD435ASetting : public QWidget
+class ICCFD435ASetting : public QDialog
 {
     Q_OBJECT
 
@@ -18,11 +18,9 @@ public:
 private slots:
     void on_SettingpushButton_clicked();
 
-    void on_CurrentGrayRcomboBox_currentIndexChanged(int index);
-
-    void on_CurrentGrayGcomboBox_currentIndexChanged(int index);
-
-    void on_CurrentGrayBcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayRcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayGcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayBcomboBox_currentIndexChanged(int index);
 
     void on_AdvancedSettingpushButton_clicked();
 

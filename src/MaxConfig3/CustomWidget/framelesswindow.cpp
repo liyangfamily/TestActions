@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QPoint>
 #include <QSize>
+#include <QDebug>
 #ifdef Q_OS_WIN
 
 #include <windows.h>
@@ -187,13 +188,18 @@ bool CFramelessWindow::nativeEvent(const QByteArray &eventType, void *message, l
 
 		//support highdpi
 		double dpr = this->devicePixelRatioF();
-		QPoint pos = m_titlebar->mapFromGlobal(QPoint(x / dpr, y / dpr));
+        //dpr=1.0;
+        QPoint pos = m_titlebar->mapFromGlobal(QPoint(x , y));
+        pos = QPoint(pos.x()/dpr,pos.y()/dpr);
 
-		if (!m_titlebar->rect().contains(pos)) return false;
+        QRect rect = m_titlebar->rect();
+        //rect.setSize(QSize(rect.size().width()*dpr,rect.size().height()*dpr));
+        //qDebug()<<QPoint(x,y)<<pos<<rect;
+        if (!rect.contains(pos)) return false;
 		QWidget* child = m_titlebar->childAt(pos);
 		if (!child)
 		{
-			*result = HTCAPTION;
+            *result = HTCAPTION;
 			return true;
 		}
 		else {

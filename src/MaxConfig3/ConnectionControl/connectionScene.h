@@ -19,7 +19,7 @@ class ConnectionDiagramScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-	enum Mode { SceneView, SceneEdit, Correct };
+    enum Mode { NONE, SceneView, SceneEdit, Correct, ModuleParam };
 	ConnectionDiagramScene(QObject * parent = nullptr);
 
 	static void creatConnectionDiagramScene(QObject * parent);
@@ -51,6 +51,10 @@ public:
 	}
 
 	QList<QPair<CorrectDataHelper*, QString>> correctInfoList();
+    //将连接状态的Item按照校正数据要求顺序进行排序
+    void sortItemToCorrectData();
+    //给所有排序后的Item设置校正数据路径
+    void setItemCorrectDataFilePath(const QMap<int,QString>& path);
 signals:
     void sig_operatPortChanged(int port);
     void sig_connectionSettingChanged();
@@ -75,7 +79,7 @@ private:
 	void clearModuleItem();
 	void prepareModuleItem();
 	bool addArrow(ModuleItem* startItem, ModuleItem* endItem);
-	bool deleteArrow(ModuleItem* startItem, ModuleItem* endItem);
+    bool deleteArrow(ModuleItem* startItem, ModuleItem* endItem);
 private:
 	QMenu *m_ItemMenu;
 	Mode m_mode;

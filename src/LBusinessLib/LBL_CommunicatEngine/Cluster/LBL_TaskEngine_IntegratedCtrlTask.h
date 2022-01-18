@@ -19,6 +19,8 @@ public:
 protected:
 	//返回使用的字节数
 	int filter_message(const LBLEnginePackage&, int offset);
+    int filter_identifyProtocolHeader(const LBLEnginePackage&, int offset);
+    int filter_identifyStandardHeader3_0(const LBLEnginePackage&, int offset);
 	//处理当前的消息块
 	virtual int deal_current_message_block(const LBLEnginePackage&);
 

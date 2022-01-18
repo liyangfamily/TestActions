@@ -1,13 +1,13 @@
 ﻿#ifndef SCANPARAMATER_H
 #define SCANPARAMATER_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class Scanparamater;
 }
 
-class Scanparamater : public QWidget
+class Scanparamater : public QDialog
 {
     Q_OBJECT
 

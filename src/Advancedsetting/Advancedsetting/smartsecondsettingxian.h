@@ -1,7 +1,7 @@
 ﻿#ifndef SMARTSECONDSETTINGXIAN_H
 #define SMARTSECONDSETTINGXIAN_H
 
-#include <QWidget>
+#include <QDialog>
 #include "form.h"
 #include <LAPIControl>
 
@@ -9,7 +9,7 @@ namespace Ui {
 class SmartSecondSettingXian;
 }
 
-class SmartSecondSettingXian : public QWidget
+class SmartSecondSettingXian : public QDialog
 {
     Q_OBJECT
 
@@ -27,7 +27,8 @@ private slots:
     void TimerSetPicture2();
     void update();
     void on_tableWidget_itemSelectionChanged();
-    void GetTable();
+    void GetTableXA();
+    void GetTableGZ();
     void closeEvent(QCloseEvent * e );
 
 private:
@@ -37,8 +38,10 @@ private:
     int Col = 0;
     int Row = 0;
     int Index = 1;
-    int Colindex = 1;
+    uchar scannum = 0;
+
     QByteArray XAPara;
+    QByteArray GZPara;
     Form wf;
     //屏幕信息
     int ScreenX = 0;

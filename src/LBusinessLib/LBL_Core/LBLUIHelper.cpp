@@ -92,6 +92,20 @@ QString LBLUIHelper::appLocalsLocation()
     return appLocalsLocation;
 }
 
+QString LBLUIHelper::appDocLocation()
+{
+    static QString appLocalsLocation;
+    if (appLocalsLocation.isEmpty()) {
+        QString tempPath = LBLUIHelper::appDataLocation();
+        tempPath.append(tr("/doc"));
+        QDir dir;
+        if (dir.mkpath(tempPath)) {
+            appLocalsLocation = tempPath;
+        }
+    }
+    return appLocalsLocation;
+}
+
 QString LBLUIHelper::appLogDataLocation()
 {
 	static QString path;
@@ -117,7 +131,18 @@ QString LBLUIHelper::appRunTimeDataLocation()
 			path = tempPath;
 		}
 	}
-	return path;
+    return path;
+}
+
+static bool bEnableCommunicatLog = false;
+void LBLUIHelper::setEnableCommunicatLog(bool enable)
+{
+    bEnableCommunicatLog = enable;
+}
+
+bool LBLUIHelper::enableCommunicatLog()
+{
+    return bEnableCommunicatLog;
 }
 
 QString LBLUIHelper::appRunTimeConnectionDataFileName()

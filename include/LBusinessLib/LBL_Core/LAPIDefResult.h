@@ -16,6 +16,7 @@ namespace LAPI
 		ER_INTECTRL_Fail_Busy = 0x0005, //失败-忙碌
 		ER_INTECTRL_Fail_Exclusive = 0x0006, //失败-被占用
 		ER_INTECTRL_Fail_NoCMD = 0x0007, //失败-命令码不支持
+        ER_INTECTRL_Fail_Param = 0x0008, //失败-参数错误
 
 		ER_INTECTRL_PENETRAT_SetSuccess=0x0050,
 		ER_INTECTRL_PENETRAT_SetFaild =0x0051,
@@ -69,6 +70,7 @@ namespace LAPI
 		ER_FILE_Upgrade_IllegalFileData =0xF046,
 		ER_FILE_Upgrade_RunTimeFileCreatFail =0xF047,
 		ER_FILE_Upgrade_RequestUpgradeFail =0xF048,
+        ER_FILE_Upgrade_FileCheckFail =0xF049,
 
 	};
 }

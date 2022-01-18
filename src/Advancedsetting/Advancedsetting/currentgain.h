@@ -1,13 +1,13 @@
 ﻿#ifndef CURRENTGAIN_H
 #define CURRENTGAIN_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class CurrentGain;
 }
 
-class CurrentGain : public QWidget
+class CurrentGain : public QDialog
 {
     Q_OBJECT
 

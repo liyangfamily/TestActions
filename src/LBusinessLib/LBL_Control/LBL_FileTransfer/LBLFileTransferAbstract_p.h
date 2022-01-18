@@ -27,8 +27,7 @@ namespace LBL
 		public:
 			LBLFileTransferAbstractPrivate() {}
 			~LBLFileTransferAbstractPrivate()
-			{
-				qDebug() << __FUNCTION__;
+            {
 			}
 			LBLFileTransferAbstract *q_ptr;
 
@@ -62,7 +61,7 @@ namespace LBL
 			LBLInteCtrlPackage::EDeviceType m_registerTargetDeviceType = LBLInteCtrlPackage::EDeviceType::EDT_NULL;
 
 			//升级进程控制
-            std::atomic_bool m_upgradeCancel{false}; //是否取消升级
+            std::atomic_int m_upgradeCancel{0}; //是否取消升级
 			bool m_upgradingSend = true;
 			LBLFileTransferPackage::EFileType m_upgradingFileType = LBLFileTransferPackage::EFT_SelectFile;
 			quint8 m_upgradingPort = 0xFF;

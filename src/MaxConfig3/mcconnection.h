@@ -48,6 +48,8 @@ public slots:
 	void slot_ConnectItem();
 	void slot_EnterNavigatPage();
 	void on_btnItemClear_clicked();
+    void on_btnImport_clicked();
+    void on_btnExport_clicked();
 	void on_btnConnectionRead_clicked();
 	void on_btnConnectionSend_clicked();
 

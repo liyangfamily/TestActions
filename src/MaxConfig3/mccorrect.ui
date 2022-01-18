@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>335</width>
-    <height>548</height>
+    <width>326</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>333</width>
-        <height>546</height>
+        <width>324</width>
+        <height>673</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -98,22 +98,6 @@
            <widget class="QSpinBox" name="spinBoxCol"/>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Height:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBoxHeight"/>
-          </item>
-          <item row="3" column="0">
            <widget class="QLabel" name="label_3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -126,8 +110,24 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="2" column="1">
            <widget class="QSpinBox" name="spinBoxWidth"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Height:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="spinBoxHeight"/>
           </item>
          </layout>
         </widget>
@@ -157,14 +157,28 @@
           <item>
            <widget class="QRadioButton" name="radioBtnSixPic">
             <property name="text">
-             <string>Six Picture</string>
+             <string>6 P</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioBtnEightPic">
             <property name="text">
-             <string>Eight Picture</string>
+             <string>8 P</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioBtn10Pic">
+            <property name="text">
+             <string>10 P</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioBtnLowGray">
+            <property name="text">
+             <string>Low Gray</string>
             </property>
            </widget>
           </item>
@@ -231,6 +245,32 @@
            <widget class="QPushButton" name="btnSave">
             <property name="text">
              <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Full Screen Options</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="lableFullScreenDataPath">
+            <property name="text">
+             <string>Path:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditFullScreenData"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolBtnFullScreenData">
+            <property name="text">
+             <string>...</string>
             </property>
            </widget>
           </item>

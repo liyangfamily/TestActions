@@ -171,6 +171,40 @@ namespace LAPI
         return EResult(gCluster->canExit());
     }
 
+
+    int MaxPortCount()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->maxPortCount();
+        }
+        return 20;
+    }
+
+    bool HasMS9570()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->hasMS9570();
+        }
+        return true;
+    }
+
+    bool HasNT68400()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->hasNT68400();
+        }
+        return true;
+    }
+
+    bool HasAndroid()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->hasAndroid();
+        }
+        return true;
+    }
+
+
     EResult LAPI_Stdcall WriteBrightness(const int value, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
@@ -637,6 +671,88 @@ namespace LAPI
         return quint8();
     }
 
+
+    ILAPI_CONTROL_EXPORT EResult WriteSCNT68400Resolution(quint8 value, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return (EResult)i->writeSCNT68400Resolution(value, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSCNT68400Resolution(bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->readSCNT68400Resolution(sync, msec);
+        }
+        return QByteArray();
+    }
+
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSCNT68400Resolution()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->getSCNT68400Resolution();
+        }
+        return quint8();
+    }
+
+    ILAPI_CONTROL_EXPORT EResult WriteSC10BitSource(quint8 value, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return (EResult)i->writeSC10BitSource(value, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSC10BitSource(bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->readSC10BitSource(sync, msec);
+        }
+        return QByteArray();
+    }
+
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSC10BitSource()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->getSC10BitSource();
+        }
+        return quint8();
+    }
+
+    ILAPI_CONTROL_EXPORT EResult WriteSCLowDelay(quint8 value, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return (EResult)i->writeSCLowDelay(value, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT QByteArray LAPI_Stdcall ReadSCLowDelay(bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->readSCLowDelay(sync, msec);
+        }
+        return QByteArray();
+    }
+
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetSCLowDelay()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return i->getSCLowDelay();
+        }
+        return quint8();
+    }
+
     EResult WriteRCFPGARegister(quint8 port, quint8 module, quint32 addr, QByteArray value, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
@@ -735,6 +851,31 @@ namespace LAPI
         return QByteArray();
     }
 
+    EResult WriteXMICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeXMICParam(port,module,value, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    QByteArray ReadXMICParam(quint8 port, quint8 module, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->readXMICParam(port,module, sync, msec);
+        }
+        return QByteArray();
+    }
+
+    EResult writeLinearTableFile(quint8 port, quint8 module, QByteArray value, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeLinearTableFile(port,module,value, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+
     ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteCalibrationDataErase(quint8 port, quint8 module, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
@@ -759,6 +900,35 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
+    EResult clearDeadPoint(quint8 port, quint8 module, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->clearDeadPoint(port,module, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+  EResult WriteLowGrayCalibrationDataErase(quint8 port, quint8 module, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeLowGrayCalibrationDataErase(port,module, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+    EResult WriteLowGrayCalibrationDataSave(quint8 port, quint8 module, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeLowGrayCalibrationDataSave(port,module, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    EResult WriteLowGrayCalibrationDataReload(quint8 port, quint8 module, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeLowGrayCalibrationDataReload(port,module, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
     QList<LBL::RC::SRCStatusInfo> ReadRCStatusInfo(bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
@@ -835,7 +1005,7 @@ namespace LAPI
         return quint8();
     }
 
-    EResult LAPI_Stdcall WriteHDMIImageRatio(const quint8 value, bool sync, int msec)
+    EResult LAPI_Stdcall WriteHDMIImageRatio(const LAPI::UI::EImageRatio value, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
@@ -853,16 +1023,16 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
-    quint8 LAPI_Stdcall GetHDMIImageRatio()
+    LAPI::UI::EImageRatio LAPI_Stdcall GetHDMIImageRatio()
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
-            return i->getHDMIImageRatio();
+            return (LAPI::UI::EImageRatio)i->getHDMIImageRatio();
         }
-        return quint8();
+        return UI::EImageRatio();
     }
 
-    EResult LAPI_Stdcall WriteHDMIInputSource(const quint8 value, bool sync, int msec)
+    EResult LAPI_Stdcall WriteHDMIInputSource(const UI::EInputSource value, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
@@ -997,6 +1167,38 @@ namespace LAPI
         return QList<quint8>();
     }
 
+
+    QByteArray LAPI_Stdcall GetEDIDData()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            i->GetEDIDData();
+        }
+        return QByteArray();
+    }
+
+    quint16 LAPI_Stdcall writeHDMIEDID(int dataGroupIndex, quint8* pDataBuff,int dataLen)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            i->writeHDMIEDID(dataGroupIndex,pDataBuff,dataLen);
+        }
+        return quint16();
+    }
+
+
+
+    quint16 LAPI_Stdcall writeFacTest_UpdateEDID(quint8 dataGroupIndex, quint8* pDataBuff, quint8 dataLen, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            i->writeFacTest_UpdateEDID(dataGroupIndex,pDataBuff,dataLen,sync,msec);
+        }
+        return quint16();
+    }
+
+
+
     bool LAPI_Stdcall IsUpgradeSend()
     {
         for (auto i : gSCItemMgr->getUsingItemList())
@@ -1087,40 +1289,39 @@ namespace LAPI
         return QFuture<quint16>();
     }
 
-    EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QString fileName, bool sync, int msec)
-    {
-        for (auto i : gSCItemMgr->getUsingItemList())
-        {
-            return (EResult)i->upgradeFile(sync, msec, fileType, fileName);
-        }
-        return EResult::ER_Success;
-    }
-
     EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QString fileName, quint8 portIndex, quint16 moduleIndex, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
             return (EResult)i->upgradeFile(sync, msec, fileType, fileName, portIndex, moduleIndex);
         }
-        return EResult::ER_Success;
+        return EResult::ER_Fail;
     }
-    EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, bool sync, int msec)
+    EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QString fileName, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
-            return (EResult)i->upgradeFile(sync, msec, fileType, data);
+            return (EResult)i->upgradeFile(sync, msec, fileType, fileName,0xFF,0xFFFF);
         }
-        return EResult::ER_Success;
+        return EResult::ER_Fail;
     }
+
     EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, quint8 portIndex, quint16 moduleIndex, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList())
         {
             return (EResult)i->upgradeFile(sync, msec, fileType, data, portIndex, moduleIndex);
         }
-        return EResult::ER_Success;
+        return EResult::ER_Fail;
     }
-
+    EResult LAPI_Stdcall UpgradeFile(quint16 fileType, QByteArray data, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList())
+        {
+            return (EResult)i->upgradeFile(sync, msec, fileType, data,0xFF,0xFFFF);
+        }
+        return EResult::ER_Fail;
+    }
 
 
     EResult LAPI_Stdcall ReadAndroidVersion(bool sync, int msec)
@@ -1160,7 +1361,7 @@ namespace LAPI
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->writeDeviceName(name, sync, msec);
         }
-        return EResult::ER_Success;
+        return EResult::ER_Fail;
     }
 
     EResult LAPI_Stdcall ReadDeviceName(bool sync, int msec)
@@ -1588,7 +1789,7 @@ namespace LAPI
         return QString();
     }
 
-    EResult writeHDMIMultiScreenMode(const UI::EMultiScreenMode value, bool sync, int msec)
+    EResult WriteHDMIMultiScreenMode(const UI::EMultiScreenMode value, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->writeHDMIMultiScreenMode(value, sync, msec);
@@ -1596,7 +1797,7 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
-    EResult readHDMIMultiScreenMode(bool sync, int msec)
+    EResult ReadHDMIMultiScreenMode(bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->readHDMIMultiScreenMode(sync, msec);
@@ -1604,7 +1805,7 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
-    UI::EMultiScreenMode getHDMIMultiScreenMode()
+    UI::EMultiScreenMode GetHDMIMultiScreenMode()
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (UI::EMultiScreenMode)i->getHDMIMultiScreenMode();
@@ -1700,7 +1901,7 @@ namespace LAPI
         return QPoint();
     }
 
-    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIWindowStatus(quint8 status, UI::EHDMIChannel channel, bool sync, int msec)
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIWindowShowStatus(quint8 status, UI::EHDMIChannel channel, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->writeHDIMIWindowStatus(status, channel, sync, msec);
@@ -1708,7 +1909,7 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
-    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIWindowStatus(UI::EHDMIChannel channel, bool sync, int msec)
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIWindowShowStatus(UI::EHDMIChannel channel, bool sync, int msec)
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->readHDIMIWindowStatus(channel, sync, msec);
@@ -1716,10 +1917,92 @@ namespace LAPI
         return EResult::ER_Success;
     }
 
-    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIWindowStatus()
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIWindowShowStatus()
     {
         for (auto i : gSCItemMgr->getUsingItemList()) {
             return i->getHDIMIWindowStatus();
+        }
+        return quint8();
+    }
+
+    EResult ReadAllHDMIAdvanceData_PIP(quint8 param, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readAllHDMIAdvanceData_PIP(param,channel,sync,msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    EResult WriteHDMIOutputSource(UI::EOutputSource hdmi1, UI::EOutputSource hdmi2, \
+                                  UI::EOutputSource dp, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeHDMIOutputSource(hdmi1, hdmi2, dp, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    EResult ReadHDMIOutputSource(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readHDMIOutputSource(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    QList<quint8> GetHDMIOutputSource()
+    {
+        for(auto&&item : gSCItemMgr->getUsingItemList())
+        {
+            return item->getHDMIOutputSource();
+        }
+        return QList<quint8>();
+    }
+
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteDP_TX_Pcon600(quint8 hdmi1, quint8 hdmi2, quint8 dp, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeDP_TX_Pcon600(hdmi1, hdmi2, dp, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadDP_TX_Pcon600(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readDP_TX_Pcon600(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+    ILAPI_CONTROL_EXPORT bool LAPI_Stdcall GetDP_TX_Pcon600(quint8 &hdmi1, quint8 &hdmi2, quint8 &dp)
+    {
+        for(auto&&item : gSCItemMgr->getUsingItemList())
+        {
+            return item->getDP_TX_Pcon600(hdmi1, hdmi2,dp);
+        }
+        return false;
+    }
+
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteDP_TX_2ndPlus(quint8 param, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeDP_TX_2ndPlus(param, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadDP_TX_2ndPlus(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readDP_TX_2ndPlus(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetDP_TX_2ndPlus()
+    {
+        for(auto&&item : gSCItemMgr->getUsingItemList())
+        {
+            return item->getDP_TX_2ndPlus();
         }
         return quint8();
     }
@@ -1734,7 +2017,7 @@ namespace LAPI
 
     ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIAudioSrc(UI::EHDMIChannel channel, bool sync, int msec)
     {
-        for (auto i : gSCItemMgr->getUsingItemList()) {
+        for (auto&&i : gSCItemMgr->getUsingItemList()) {
             return (EResult)i->readHDIMIAudioSrc(channel, sync, msec);
         }
         return EResult::ER_Success;
@@ -1742,10 +2025,86 @@ namespace LAPI
 
     ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIAudioSrc()
     {
-        for (auto i : gSCItemMgr->getUsingItemList()) {
-            return i->getHDIMIAudioSrc();
+        for(auto&&item : gSCItemMgr->getUsingItemList())
+        {
+            return item->getHDIMIAudioSrc();
         }
         return quint8();
     }
+
+
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall WriteHDIMIAudioVolume(quint8 param, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeHDIMIAudioVolume(param, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT EResult LAPI_Stdcall ReadHDIMIAudioVolume(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readHDIMIAudioVolume(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    ILAPI_CONTROL_EXPORT quint8 LAPI_Stdcall GetHDIMIAudioVolume()
+    {
+        for (auto i : gSCItemMgr->getUsingItemList()) {
+            return i->getHDIMIAudioVolume();
+        }
+        return quint8();
+    }
+
+    EResult WriteHDIMISharpness(quint8 param, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeHDIMISharpness(param, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    EResult ReadHDIMISharpness(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readHDIMISharpness(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    quint8 GetHDIMISharpness()
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return i->getHDIMISharpness();
+        }
+        return quint8();
+    }
+
+    EResult WriteHDIMIDisplayArea(QSize value, UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->writeHDIMIDisplayArea(value, channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    EResult ReadHDIMIDisplayArea(UI::EHDMIChannel channel, bool sync, int msec)
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return (EResult)i->readHDIMIDisplayArea(channel, sync, msec);
+        }
+        return EResult::ER_Success;
+    }
+
+    QSize GetHDIMIDisplayArea()
+    {
+        for (auto&& i : gSCItemMgr->getUsingItemList()) {
+            return i->getHDIMIDisplayArea();
+        }
+        return QSize();
+    }
+
+
 
 }

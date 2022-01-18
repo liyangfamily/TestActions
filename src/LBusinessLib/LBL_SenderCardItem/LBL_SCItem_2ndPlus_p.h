@@ -34,8 +34,7 @@ namespace LBL
 		public:
 			SenderCardItem_2ndPlusPrivate() {}
 			~SenderCardItem_2ndPlusPrivate()
-			{
-				qDebug() << __FUNCTION__;
+            {
 			}
 
 		public:

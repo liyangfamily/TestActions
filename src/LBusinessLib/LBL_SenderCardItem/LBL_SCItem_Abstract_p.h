@@ -64,8 +64,7 @@ namespace LBL
 		public:
 			LBLAbstractSCItemPrivate() {}
 			virtual ~LBLAbstractSCItemPrivate()
-			{
-				qDebug("~AbstractSenderCardItemPrivate()\n");
+            {
 			}
 			LBLAbstractSCItem *q_ptr;
 
@@ -78,12 +77,12 @@ namespace LBL
 			Android::LBLAndroidAbstract* m_AndroidCtrl = nullptr; //AndroidCtrl控制
 			SC::LBLSenderCardAbstract* m_SenderCardCtrl = nullptr; //SenderCard控制
 			RC::LBLReceiveCardAbstract* m_ReceiveCardCtrl = nullptr; //ReceiveCard控制
-			FileTransfer::LBLFileTransferAbstract* m_FileTransfer = nullptr; //文件传输控制
+            FileTransfer::LBLFileTransferAbstract* m_FileTransfer = nullptr; //文件传输控制
 
 
 			//联合数据
 			QList<RC::SRCStatusInfo> m_allRCStatusInfo; //所有接收卡状态信息
-			QList<RC::SRCStatusInfo> m_allRCStatusCacheInfo; //所有接收卡缓存状态信息
+            QList<RC::SRCStatusInfo> m_allRCStatusCacheInfo; //所有接收卡缓存状态信息
 		};
 	}
 }

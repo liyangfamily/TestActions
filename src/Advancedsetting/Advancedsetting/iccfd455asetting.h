@@ -1,13 +1,13 @@
 ﻿#ifndef ICCFD455ASETTING_H
 #define ICCFD455ASETTING_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class ICCFD455ASetting;
 }
 
-class ICCFD455ASetting : public QWidget
+class ICCFD455ASetting : public QDialog
 {
     Q_OBJECT
 
@@ -18,11 +18,11 @@ public:
 private slots:
     void on_SettingpushButton_clicked();
 
-    void on_CurrentGrayRcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayRcomboBox_currentIndexChanged(int index);
 
-    void on_CurrentGrayGcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayGcomboBox_currentIndexChanged(int index);
 
-    void on_CurrentGrayBcomboBox_currentIndexChanged(int index);
+//    void on_CurrentGrayBcomboBox_currentIndexChanged(int index);
 
     void on_AdvancedSettingpushButton_clicked();
 
@@ -59,6 +59,7 @@ private:
     int GetCurrentGear(unsigned char value);
     int GetCurrentGray(unsigned char value);
     int GetCurrentGraySetting(unsigned char value);
+    int GetOpeningSpeed(unsigned char value);
 
 
 
@@ -90,6 +91,7 @@ private:
     void SetCurrentGear(int index, int RGB);
     void SetCurrentGray(int index, int RGB);
     void SetCurrentGraySetting(int index, int RGB);
+    void SetOpeningSpeed(int index, int RGB);
 
 
 

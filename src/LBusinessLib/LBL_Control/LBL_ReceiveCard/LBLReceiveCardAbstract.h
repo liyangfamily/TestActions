@@ -26,63 +26,77 @@
 
 namespace LBL
 {
-	namespace RC
-	{
-		class LBLReceiveCardAbstractPrivate;
-		class LBL_RECEIVECARD_EXPORT LBLReceiveCardAbstract :public QObject
-		{
-			Q_DECLARE_PRIVATE(LBLReceiveCardAbstract)
-		public:
-			virtual ~LBLReceiveCardAbstract();
+    namespace RC
+    {
+        class LBLReceiveCardAbstractPrivate;
+        class LBL_RECEIVECARD_EXPORT LBLReceiveCardAbstract :public QObject
+        {
+            Q_DECLARE_PRIVATE(LBLReceiveCardAbstract)
+        public:
+            virtual ~LBLReceiveCardAbstract();
 
-			bool setDetectInfoStruct(SDetectItemInfo *detectInfo);
-			virtual bool init() = 0;
-			//由发送卡分发数据包
-			virtual bool parsingDataFrame(const LBLPackage& pack);
+            bool setDetectInfoStruct(SDetectItemInfo *detectInfo);
+            virtual bool init() = 0;
+            //由发送卡分发数据包
+            virtual bool parsingDataFrame(const LBLPackage& pack);
 
-			/*********************************************************************************************************
-			**寄存器相关- 注意：如果读取函数为异步读取，则无法保证获取到的结果为预期结果
+            /*********************************************************************************************************
+            **寄存器相关- 注意：如果读取函数为异步读取，则无法保证获取到的结果为预期结果
             *********************************************************************************************************/
-			virtual quint16 writeFPGARegister(quint8 port, quint8 module, quint32 addr, QByteArray value, bool sync, int msec);
-			virtual QByteArray readFPGARegister(quint8 port, quint8 module, quint32 addr, quint16 len, bool sync, int msec);
-			virtual QByteArray getFPGARegister();
+            virtual quint16 writeFPGARegister(quint8 port, quint8 module, quint32 addr, QByteArray value, bool sync, int msec);
+            virtual QByteArray readFPGARegister(quint8 port, quint8 module, quint32 addr, quint16 len, bool sync, int msec);
+            virtual QByteArray getFPGARegister();
 
-			virtual quint16 writeModuleParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
-			virtual QByteArray readModuleParam(quint8 port, quint8 module, bool sync, int msec);
-			virtual QByteArray getModuleParam();
+            virtual quint16 writeModuleParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
+            virtual QByteArray readModuleParam(quint8 port, quint8 module, bool sync, int msec);
+            virtual QByteArray getModuleParam();
 
-			virtual quint16 writeDriveICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
-			virtual QByteArray readDriveICParam(quint8 port, quint8 module, bool sync, int msec);
-			virtual QByteArray getDriveICParam();
+            virtual quint16 writeDriveICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
+            virtual QByteArray readDriveICParam(quint8 port, quint8 module, bool sync, int msec);
+            virtual QByteArray getDriveICParam();
 
-			virtual quint16 writeDecodingICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
-			virtual QByteArray readDecodingICParam(quint8 port, quint8 module, bool sync, int msec);
-			virtual QByteArray getDecodingICParam();
+            virtual quint16 writeDecodingICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
+            virtual QByteArray readDecodingICParam(quint8 port, quint8 module, bool sync, int msec);
+            virtual QByteArray getDecodingICParam();
 
-			virtual quint16 writeSaveRCParamByRegister(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeXMICParam(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
+            virtual QByteArray readXMICParam(quint8 port, quint8 module, bool sync, int msec);
+
+
+            virtual quint16 writeLinearTableFile(quint8 port, quint8 module, QByteArray value, bool sync, int msec);
+
+            virtual quint16 writeSaveRCParamByRegister(quint8 port, quint8 module, bool sync, int msec);
+
 
             virtual quint16 writeCalibrationDataErase(quint8 port, quint8 module, bool sync, int msec);
-			virtual quint16 writeCalibrationDataSave(quint8 port, quint8 module, bool sync, int msec);
-			virtual quint16 writeCalibrationDataReload(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeCalibrationDataSave(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeCalibrationDataReload(quint8 port, quint8 module, bool sync, int msec);
 
-			/*********************************************************************************************************
-			**其他
+            virtual quint16 clearDeadPoint(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeLowGrayCalibrationDataErase(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeLowGrayCalibrationDataSave(quint8 port, quint8 module, bool sync, int msec);
+            virtual quint16 writeLowGrayCalibrationDataReload(quint8 port, quint8 module, bool sync, int msec);
+
+
+            virtual quint16 write10BitGammaDataReload(quint8 port, quint8 module, bool sync, int msec);
+            /*********************************************************************************************************
+            **其他
             *********************************************************************************************************/
-			virtual quint16 readStatusInfo(quint8 portStart, quint8 portCount, quint8 moduleStart, quint8 moduleCount, quint8 lengthFlag,bool sync, int msec);
-			virtual QList<SRCStatusInfo> getStatusInfo();
+            virtual quint16 readStatusInfo(quint8 portStart, quint8 portCount, quint8 moduleStart, quint8 moduleCount, quint8 lengthFlag,bool sync, int msec);
+            virtual QList<SRCStatusInfo> getStatusInfo();
 
-			virtual quint16 readMonitorInfo(quint8 portIndex, bool sync, int msec);
-			virtual QList<SRCMonitorInfo> getMonitorInfo();
+            virtual quint16 readMonitorInfo(quint8 portIndex, bool sync, int msec);
+            virtual QList<SRCMonitorInfo> getMonitorInfo();
 
-			virtual quint16 writeSaveRCParam(quint8 port, quint16 module, bool sync, int msec);
+            virtual quint16 writeSaveRCParam(quint8 port, quint16 module, bool sync, int msec);
 
-		protected:
-			LBLReceiveCardAbstract(QObject* parent = 0);
-			LBLReceiveCardAbstract(LBLReceiveCardAbstractPrivate& dd, QObject* parent = 0); // 允许子类通过它们自己的私有结构体来初始化
+        protected:
+            LBLReceiveCardAbstract(QObject* parent = 0);
+            LBLReceiveCardAbstract(LBLReceiveCardAbstractPrivate& dd, QObject* parent = 0); // 允许子类通过它们自己的私有结构体来初始化
 
-		protected:
-			QScopedPointer<LBLReceiveCardAbstractPrivate> d_ptr;
-		};
-	}
+        protected:
+            QScopedPointer<LBLReceiveCardAbstractPrivate> d_ptr;
+        };
+    }
 }
 #endif

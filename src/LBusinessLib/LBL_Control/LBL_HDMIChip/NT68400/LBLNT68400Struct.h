@@ -523,11 +523,15 @@ namespace LBL
 		//显示-高级数据
 		typedef struct tagNT68400DisPlayTX
 		{
-			unsigned char tx; //
+            //0: Android; 1:PC; 2:HDMI1;3:HDMI2;4:HDMI3;5:DP; 6:同屏
+            //note:hdmi源仅能为hdmi或者同屏。  **不能设置为android或DP
+            unsigned char hdmi1;
+            unsigned char hdmi2;
+            unsigned char dp;
 
 			tagNT68400DisPlayTX()
 			{
-                                Q_ASSERT(sizeof(tagNT68400DisPlayTX) == 1);
+                Q_ASSERT(sizeof(tagNT68400DisPlayTX) == 3);
 				SetToDefault();
 			}
 			void SetToDefault()

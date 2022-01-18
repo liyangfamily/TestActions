@@ -1,13 +1,13 @@
 ﻿#ifndef GRAYFINEPROCESSING_H
 #define GRAYFINEPROCESSING_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class GrayFineProcessing;
 }
 
-class GrayFineProcessing : public QWidget
+class GrayFineProcessing : public QDialog
 {
     Q_OBJECT
 

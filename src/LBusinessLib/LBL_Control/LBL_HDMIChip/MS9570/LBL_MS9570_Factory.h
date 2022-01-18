@@ -22,8 +22,7 @@ namespace LBL
 		{
 		public:
 			~MS9570CtrlFactory()
-			{
-				qDebug("~MS9570CtrlFactory()\n");
+            {
 			}
 			static AbstractMS9570Ctrl_t* creatSenderItem(SDetectItemInfo* info, QObject * parent = 0)
 			{

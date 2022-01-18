@@ -1,13 +1,13 @@
 ﻿#ifndef DATAGROUP_H
 #define DATAGROUP_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class DataGroup;
 }
 
-class DataGroup : public QWidget
+class DataGroup : public QDialog
 {
     Q_OBJECT
 

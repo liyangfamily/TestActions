@@ -7,6 +7,7 @@
 #include <QList>
 #include <QPair>
 #include <QFutureWatcher>
+#include "CustomWidget/mcelevatedclass.h"
 
 
 class S6PPixelData
@@ -70,7 +71,11 @@ protected:
     static quint32 pixelColorConvert_R(const quint16& r, const quint16& r_g, const quint16& r_b);
     static quint32 pixelColorConvert_G(const quint16& g_r, const quint16& g, const quint16& g_b);
     static quint32 pixelColorConvert_B(const quint16& b_r, const quint16& b_g, const quint16& b);
-private:
+protected:
+    //原始精度
+    static const quint32 s_mainCutoffValue = 0x7FF8;
+    static const quint32 s_assistCutoffValue = 0x1FF8;
+protected:
     quint16 m_r = 0, m_rg = 0, m_rb = 0;
     quint16 m_gr = 0, m_g = 0, m_gb = 0;
     quint16 m_br = 0, m_bg = 0, m_b = 0;
@@ -118,7 +123,7 @@ class S8PPixelData : public S6PPixelData
                                      \/
                 主色去掉最高1bit和低3bit，辅色去掉最高和最低3bit
     转换后：
-    0bit               ->               32bit
+    48bit               ->               32bit
     -----------------------------------------
     |  12bit R  |  10bit R_g  |  10bit R_b  | ==> 32bit ==> 4Byte R_Data
     -----------------------------------------
@@ -131,7 +136,41 @@ public:
     bool build(char* data) override;
 };
 
-class TestScreenHelper;
+
+class S10PPixelData : public S6PPixelData
+{
+    /*********************************************************************************************************
+    校正数据原始数据：(数据位为内存排列顺序）
+    -------------------------------------------------------------------------------------------------------------------------
+    |  2Byte R  |  2Byte R_g  |  2Byte R_b  |  2Byte G_r  |  2Byte G  |  2Byte G_b  |  2Byte B_r  |  2Byte B_g  |  2Byte B  |
+    -------------------------------------------------------------------------------------------------------------------------
+    10张图像素点转换,每个像素数据构成:（数据位为内存排列顺序）
+    ----------------------------------------------------
+    |  5Byte R_Data  |  5Byte G_Data  |  5Byte B_Data  |
+    ----------------------------------------------------
+                                        \/
+                            主色16bit，辅色去掉最高4bit
+    转换后：
+    48bit               ->               40bit
+    -----------------------------------------
+    |  16bit R  |  12bit R_g  |  12bit R_b  | ==> 40bit
+    -----------------------------------------
+    -----------------------------------------
+    |  12bit R  |  16bit R_g  |  12bit R_b  | ==> 40bit
+    -----------------------------------------
+    -----------------------------------------
+    |  12bit R  |  12bit R_g  |  16bit R_b  | ==> 40bit
+    -----------------------------------------
+
+    *********************************************************************************************************/
+public:
+    //用于图片生成10P校正数据图片，pixel代表每个像素点主色值，辅色值为0
+    S10PPixelData(const QPoint& pt, const QRgb& pixel, const QSize& moduleSize);
+    //用于校正文件生成10P校正数据图片，pixel代表每个像素点的主色值和辅色值，共18Byte
+    S10PPixelData(const QPoint& pt, const char* pixel, const int& len, const QSize& moduleSize);
+    bool build(char* data) override;
+};
+
 class CorrectDataHelper : public QObject
 {
     Q_OBJECT
@@ -140,6 +179,7 @@ public:
     enum CorrectDataType {
         CDT_6P, //6图校正数据
         CDT_8P, //8图校正数据
+        CDT_10P, //10图校正数据
         CDT_2P_Lowgray, //2图低灰校正数据
         CDT_2P_Gap, //2图修缝数据
     };
@@ -185,6 +225,9 @@ public:
         return qMakePair(this, m_correctFilePath);
     }
 
+    //一般用于手动设置发送校正文件路径，需要同步设置文件选择器的值
+    void setCorrectFilePath(QString path);
+
     bool isLoaded(){
         return !m_correctFilePath.isEmpty();
     }
@@ -205,6 +248,7 @@ public slots:
 private slots:
     void correctDataCalculateFinished();
 private:
+    static QImage adaptiveByteArrayToImage(const uchar *data,const QRect& rect,bool forceDeepCopy = false);
     static QSharedPointer<QByteArray> imageTo6PData(const QImage& img, const QRect& rect);			//生成六张图数据
     static QSharedPointer<QByteArray> fileTo6PData(const QByteArray& fileData, const QRect& rect);			//生成六张图数据
     static QList<QImage> convert6PDataToImageList(const QByteArray *data, const QRect& rect, const CorrectDataType type);
@@ -214,10 +258,19 @@ private:
     static QImage creat8PHeaderImage(const int index, const QRect& rect); //固定头
     static QList<QImage> convert8PDataToImageList(const QByteArray *data, const QRect& rect, const CorrectDataType type);
 
-    static QByteArray imageTo2PLowGrayData(const QImage& img, const QRect& rect);	//生成2张图低灰数据
+    static QSharedPointer<QByteArray> imageTo10PData(const QImage& img, const QRect& rect);		//生成5张图数据， 另5张图为固定头
+    static QSharedPointer<QByteArray> fileTo10PData(const QByteArray& fileData, const QRect& rect);		//生成5张图数据， 另5张图为固定头
+    static QImage creat10PHeaderImage(const int index, const QRect& rect); //固定头
+    static QList<QImage> convert10PDataToImageList(const QByteArray *data, const QRect& rect, const CorrectDataType type);
+
+    static QSharedPointer<QByteArray> imageTo2PLowGrayData(const QImage& img, const QRect& rect);	//生成2张图低灰数据
+    static QSharedPointer<QByteArray> fileTo2PLowGrayData(const QByteArray& fileData, const QRect& rect);		//生成2张图低灰数据
+    static QImage creat2PLowGrayHeaderImage(const QRect& rect); //固定头
+    static QList<QImage> convert2PLowGrayDataToImageList(const QByteArray *data, const QRect& rect, const CorrectDataType type);
+
     static QByteArray imageTo2PGapData(const QImage& img, const QRect& rect);		//生成2张图修缝文件
 private:
-    QMenu m_itemCorrectMenu;
+    RoundedMenu m_itemCorrectMenu;
 
     QAction *m_addCorrectFileAction;
     QAction *m_deleteCorrectFileAction;
@@ -234,5 +287,4 @@ private:
     QRect m_paintRect;
 
     QFutureWatcher<QPair<CorrectDataHelper*, QSharedPointer<QByteArray>>> m_correctWatcher;
-    TestScreenHelper* m_testScrrenHelper;
 };

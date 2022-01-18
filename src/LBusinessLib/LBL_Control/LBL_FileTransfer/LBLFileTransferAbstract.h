@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QScopedPointer>
 #include <LBL_CommunicatEngine/LBLFileTransferPackage>
+#include <LBL_Core/LAPIDef>
 #include <QFuture>
 #include <QFutureInterface>
 #include <QFutureWatcher>
@@ -49,7 +50,7 @@ namespace LBL
 			virtual bool isUpgradeStarted();
 			virtual bool isUpgrading();
 			virtual bool isUpgradeFinished();
-			virtual bool cancelUpgrade();
+            virtual bool cancelUpgrade(LAPI::EResult ret = LAPI::EResult::ER_FILE_Upgrade_ExternalCancel);
 			virtual quint16 upgradeResult();
 			virtual QFuture<quint16> upgradeFuture();
 
@@ -57,11 +58,11 @@ namespace LBL
 			**与Android的文件传输                                                                     
             *********************************************************************************************************/
 			//virtual quint16 common_RequestFile(quint16 fileType);
-			virtual quint16 common_UpgradeFile(bool sync, int msec, quint16 fileType, QString filePath);
-			virtual quint16 common_UpgradeFile(bool sync, int msec, quint16 fileType, QByteArray data);
+            virtual quint16 common_UpgradeFile(bool sync, int msec, quint16 fileType, QString filePath, quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
+            virtual quint16 common_UpgradeFile(bool sync, int msec, quint16 fileType, QByteArray data, quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
 
 			/*********************************************************************************************************
-			**与MCU的文件传输                                                                     
+            **与MCU的文件传输      -后续会与Android统一
             *********************************************************************************************************/
 			virtual quint16 forMCU_RequestFile(bool sync, int msec, quint16 fileType, QString filePath);
 			virtual quint16 forMCU_RequestFile(bool sync, int msec, quint16 fileType, QByteArray& data);
@@ -72,6 +73,17 @@ namespace LBL
 			**用于获取回读到的文件数据                                                                     
             *********************************************************************************************************/
 			virtual quint16 getRequestFileData(QByteArray& fileData);
+
+        protected:
+            //标准文件传输
+            virtual quint16 common_StartSendFile_New(quint16 fileType, quint32 fileLength, QString fileName, QByteArray fileIdentifyContent,\
+                                             quint8 portIndex, quint16 moduleIndex, QUuid exclusiveKey, bool sync, int msec);
+            virtual quint16 common_SendFileData(quint32 fileID, quint16 packIndex, QByteArray packData, QUuid exclusiveKey, bool sync, int msec);
+        protected:
+            void resetCancelUpgrade();
+            virtual void registerCallBack();
+            virtual quint16 onParseCommon_StartSendFile_New(const QByteArray& data);
+            virtual quint16 onParseCommon_SendFileData(const QByteArray& data);
 		protected:
 			LBLFileTransferAbstract(QObject* parent = 0);
 			LBLFileTransferAbstract(LBLFileTransferAbstractPrivate& dd, QObject* parent = 0); // 允许子类通过它们自己的私有结构体来初始化

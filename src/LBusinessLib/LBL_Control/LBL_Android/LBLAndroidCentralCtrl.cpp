@@ -23,8 +23,7 @@ namespace LBL
 		}
 
 		LBLAndroidCentralCtrl::~LBLAndroidCentralCtrl()
-		{
-			qDebug() << __FUNCTION__;
+        {
 		}
 
 		
@@ -597,7 +596,7 @@ namespace LBL
 
 		quint16 LBLAndroidCentralCtrl::onParseWriteDeviceName(const QByteArray & data)
 		{
-			LBLPackageInteCtrl_WriteAndroidDeviceName pack(data);
+            LBLPackageInteCtrl_WriteAndroidDeviceName pack(data);
 			return pack.getOperationResult();
 		}
 

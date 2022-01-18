@@ -1,7 +1,7 @@
 ﻿ #ifndef ADVANCEDSETTING_H
 #define ADVANCEDSETTING_H
 
-#include <QWidget>
+#include <QDialog>
 #include "AdvancedSetting_global.h"
 #include "smartsetting.h"
 #include "universalinterface.h"
@@ -52,6 +52,9 @@ enum ChipType{
     CFD_435A,
     CFD_555A,
     CFD_455A,
+    ICND_2138,
+    XM11202G,
+    XM10480G,
 };
 
 namespace Ui {
@@ -61,13 +64,15 @@ class AdvancedSetting;
 
 
 
-class ADVANCEDSETTING_EXPORT AdvancedSetting : public QWidget
+class ADVANCEDSETTING_EXPORT AdvancedSetting : public QDialog
 {
     Q_OBJECT
 
 public:
     explicit AdvancedSetting(QWidget *parent = nullptr);
     ~AdvancedSetting();
+
+
 
 private slots:
     void on_SmartSettingBtn_clicked();
@@ -100,13 +105,14 @@ private slots:
     void on_OtherpushButton_clicked();
 //    void romoveAllItem (QComboBox *cb);
 
-
-
-
-
     void on_ReadpushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_SavepushButton_clicked();
+
+    void on_ButtonColorGamdat_clicked();
+    void WriteFrequencyDoubling(int Regnum, int ByteCount, int StartByte);
 
 public slots:
     void ICconfigShow();
@@ -124,6 +130,7 @@ public:
     QStringList DclkGclkList;
     bool ShowPara;
     bool InitCombobox;
+
 
 
 

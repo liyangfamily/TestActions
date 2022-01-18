@@ -3,18 +3,24 @@
 #include "advancedsetting.h"
 
 FLASHsetting::FLASHsetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::FLASHsetting)
 {
     ui->setupUi(this);
 
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
+
     InitForm();
     LoadForm();
-
-
-
-
 }
+
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 
 FLASHsetting::~FLASHsetting()
 {
@@ -24,10 +30,10 @@ void FLASHsetting::InitForm()
 {
 
     ui->tableWidget->setColumnCount(2);
-    ui->tableWidget->setRowCount(ModulePara[0x28]);
+    ui->tableWidget->setRowCount((uchar)ModulePara[0x28]);
 
     QStringList header;
-    header<<QStringLiteral("FLASH端口")<<QStringLiteral("FLASH对应编号");
+    header<<tr("FLASH端口")<<tr("FLASH对应编号");
     ui->tableWidget->setHorizontalHeaderLabels(header);
     ui->tableWidget->setShowGrid(true);
     ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:rgb(240,240,240);color: black;}");//设置表头背景和字体颜色
@@ -46,12 +52,12 @@ void FLASHsetting::LoadForm()
     for (i=0;i<ui->tableWidget->rowCount();i++ )
     {
 
-        int FlashNumber = DataPara[0x100 + i];
+        int FlashNumber = (uchar)DataPara[0x100 + i];
 
         ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i+1)));
         ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::number(FlashNumber)));
     }
-    ui->FLASHSumCountspinBox->setValue(ModulePara[0x28]);
+    ui->FLASHSumCountspinBox->setValue((uchar)ModulePara[0x28]);
 
 }
 
@@ -71,7 +77,7 @@ void FLASHsetting::on_FLASHSetting_clicked()
         bool ok ;
 
 
-        unsigned char Number = QString(ui->tableWidget->item(i,1)->text()).toInt(&ok,10);
+        uchar Number = QString(ui->tableWidget->item(i,1)->text()).toInt(&ok,10);
 
         DataPara[0x100 + i] = Number;
 
@@ -83,9 +89,9 @@ void FLASHsetting::on_FLASHSetting_clicked()
 
     if (result)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("设置"),tr("设置成功"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("设置"),tr("设置失败"));
     }
 }

@@ -25,8 +25,7 @@ namespace LBL
 		public:
 			LBLSenderCardAbstractPrivate() {}
 			~LBLSenderCardAbstractPrivate()
-			{
-				qDebug() << __FUNCTION__;
+            {
 			}
 			LBLSenderCardAbstract *q_ptr;
 

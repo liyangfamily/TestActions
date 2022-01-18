@@ -148,6 +148,18 @@ namespace LBL
 			virtual quint16 writeProtocolType(quint8 value, bool sync, int msec);
 			virtual QByteArray readProtocolType(bool sync, int msec);
 			virtual quint8  getProtocolType();
+
+            virtual quint16 writeNT68400Resolution(quint8 value, bool sync, int msec);
+            virtual QByteArray readNT68400Resolution(bool sync, int msec);
+            virtual quint8  getNT68400Resolution();
+
+            virtual quint16 write10BitSource(quint8 value, bool sync, int msec);
+            virtual QByteArray read10BitSource(bool sync, int msec);
+            virtual quint8  get10BitSource();
+
+            virtual quint16 writeLowDelay(quint8 value, bool sync, int msec);
+            virtual QByteArray readLowDelay(bool sync, int msec);
+            virtual quint8  getLowDelay();
 		protected:
 			LBLSenderCardAbstract(QObject* parent = 0);
 			LBLSenderCardAbstract(LBLSenderCardAbstractPrivate& dd, QObject* parent = 0); // 允许子类通过它们自己的私有结构体来初始化

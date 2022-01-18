@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+  <DisplayName>MaxConfig3</DisplayName>
+  <Description>LED display control software.</Description>
+  <Version>3.1.1</Version>
+  <ReleaseDate>2022-01-17</ReleaseDate>
+  <Default>true</Default>
+  <Script>installscript.qs</Script>
+  <UserInterfaces>
+    <UserInterface>targetwidget.ui</UserInterface>
+  </UserInterfaces>
+</Package>

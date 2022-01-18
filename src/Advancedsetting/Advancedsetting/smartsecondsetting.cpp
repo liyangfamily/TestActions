@@ -4,14 +4,16 @@
 #include "advancedsetting.h"
 
 SmartSecondSetting::SmartSecondSetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::SmartSecondSetting)
 {
     ui->setupUi(this);
 
     InitForm();
 }
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 SmartSecondSetting::~SmartSecondSetting()
 {
     delete ui;

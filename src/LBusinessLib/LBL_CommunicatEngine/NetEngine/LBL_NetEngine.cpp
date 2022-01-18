@@ -22,7 +22,6 @@ LBL_NetEngine::LBL_NetEngine(int nPayLoad/* = 4096*/, QObject *parent /*= 0*/) :
 
 LBL_NetEngine::~LBL_NetEngine()
 {
-	qDebug() << __FUNCTION__;
 }
 
 void LBL_NetEngine::creatTransThreads(int nThreads)

@@ -16,13 +16,22 @@ namespace LBL
 {
 	namespace FileTransfer
 	{
-		template<class AbstractFileTransfer_t, class ConFileTransfer_t>
-		class LBLFileTransferFactory; //前置声明，告诉编译器工厂为模板
+        template<class AbstractFileTransfer_t, class ConFileTransfer_t>
+        class LBLFileTransferFactory; //前置声明，告诉编译器工厂为模板
 
-		class LBL_FILETRANSFER_EXPORT LBLFileTransferCentralCtrl_COM : public LBLFileTransferAbstract
+        //this class in order to solve the LUPDATE: Qualifying with unknown namespace/class
+        class TestTransfer2 : public LBLFileTransferAbstract
+        {
+            Q_OBJECT
+        public:
+            TestTransfer2(){};
+        };
+
+
+        class LBL_FILETRANSFER_EXPORT LBLFileTransferCentralCtrl_COM : public LBLFileTransferAbstract
 		{
 			Q_DECLARE_PRIVATE(LBLFileTransferAbstract)
-
+            Q_OBJECT
 		public:
 			~LBLFileTransferCentralCtrl_COM();
 
@@ -33,20 +42,21 @@ namespace LBL
 
 		protected:
 			//For广州MCU
-			int calculateHandshakeWaitingTime(quint16 fileType);
-			quint16 forMCU_RequestUpgrade(quint16 fileType, quint32 fileLength, quint8 portIndex, quint16 moduleIndex, \
+            int calculateHandshakeWaitingTime(quint16 fileType);
+            quint16 forMCU_RequestUpgrade(quint16 fileType, quint32 fileLength, quint8 portIndex, quint16 moduleIndex, \
+                QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
+            quint16 forMCU_SendFileData(quint16 fileType, quint32 packIndex, QByteArray packData, quint8 portIndex, quint16 moduleIndex, \
 				QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
-			quint16 forMCU_SendFileData(quint16 fileType, quint32 packIndex, QByteArray packData, quint8 portIndex, quint16 moduleIndex, \
-				QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
-			quint16 forMCU_SendRequestFile(quint16 fileType, QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
+            quint16 forMCU_SendRequestFile(quint16 fileType, QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
 			quint16 forMCU_ReceiveFileData(quint16 fileType, quint32 packIndex, QUuid exclusiveKey, QByteArray& rePackage, bool sync, int msec);
 			quint16 forMCU_concurrent_RequestFunction(quint16 fileType);
-			quint16 forMCU_concurrent_UpgradeFunction(quint16 fileType, QString fileName, quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
+            quint16 forMCU_concurrent_UpgradeFunction(quint16 fileType, QString fileName, quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
+            quint16 forMCU_concurrent_UpgradeFunction_D(quint16 fileType,const QByteArray& fileData, quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
 		protected:
 			bool init();
-			virtual void registerCallBack();
-			quint16 onParseForMCU_RequestUpgrade(const QByteArray& data);
-			quint16 onParseForMCU_SendFileData(const QByteArray& data);
+            virtual void registerCallBack();
+            quint16 onParseForMCU_RequestUpgrade(const QByteArray& data);
+            quint16 onParseForMCU_SendFileData(const QByteArray& data);
 			quint16 onParseForMCU_RequestFile(const QByteArray& data);
 			quint16 onParseForMCU_ReceiveFileData(const QByteArray& data);
 		protected:

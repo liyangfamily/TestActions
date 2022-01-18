@@ -27,13 +27,32 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>拼接模式：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="SplicingModecomboBox"/>
+          <widget class="QComboBox" name="SplicingModecomboBox">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -41,13 +60,32 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label_2">
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>旋转方式：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="RotationMethodcomboBox"/>
+          <widget class="QComboBox" name="RotationMethodcomboBox">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -55,13 +93,32 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>转接板型号：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="AdapterModelcomboBox"/>
+          <widget class="QComboBox" name="AdapterModelcomboBox">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -73,13 +130,32 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>电压控制(第一组)：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="VoltageControl1comboBox"/>
+          <widget class="QComboBox" name="VoltageControl1comboBox">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -87,13 +163,32 @@
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>130</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>电压控制(第二组)：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="VoltageControl2comboBox"/>
+          <widget class="QComboBox" name="VoltageControl2comboBox">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -105,6 +200,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
       <widget class="QLabel" name="label_6">
+       <property name="minimumSize">
+        <size>
+         <width>130</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>IC Z型打折数：</string>
        </property>
@@ -112,6 +213,18 @@
      </item>
      <item>
       <widget class="QSpinBox" name="ICTortuousspinBox">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Calibri</family>
@@ -124,12 +237,18 @@
         <number>255</number>
        </property>
        <property name="displayIntegerBase">
-        <number>16</number>
+        <number>10</number>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_7">
+       <property name="minimumSize">
+        <size>
+         <width>130</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>子场个数：</string>
        </property>
@@ -137,6 +256,18 @@
      </item>
      <item>
       <widget class="QSpinBox" name="ChildspinBox">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Calibri</family>
@@ -149,7 +280,7 @@
         <number>255</number>
        </property>
        <property name="displayIntegerBase">
-        <number>16</number>
+        <number>10</number>
        </property>
       </widget>
      </item>

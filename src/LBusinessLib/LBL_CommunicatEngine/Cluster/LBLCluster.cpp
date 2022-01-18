@@ -21,11 +21,11 @@
 #include "LBL_TaskEngine_IntegratedCtrlTask.h"
 #include "../LBL_CommunicatEngine/NetEngine/LBL_NetEngine.h"
 #include "../LBL_CommunicatEngine/TaskEngine/LBL_TaskEngine.h"
+#include "LBL_CommunicatEngine/LBLClusterProxy.h"
 
 LBLCluster::LBLCluster(QObject *parent)
 	: QObject(parent)
 {
-	qDebug() << __FUNCTION__;
 	m_pNetEngine = new LBL_NetEngine(4096, this);
 	m_pTaskEngine = new LBL_TaskEngine(this);
 	connect(m_pNetEngine, &LBL_NetEngine::sig_Message, this, &LBLCluster::sig_Message, Qt::QueuedConnection);
@@ -50,7 +50,6 @@ LBLCluster::LBLCluster(QObject *parent)
 
 LBLCluster::~LBLCluster()
 {
-	qDebug() << __FUNCTION__;
 	/*if (m_pNetEngine)
 		m_pNetEngine->deleteLater();
 	if (m_pTaskEngine)
@@ -367,7 +366,7 @@ void LBLCluster::slot_SendHelloPackage()
 	for (QMap<QObject *, LBL_TaskEngine_TaskBase *>::iterator p = m_hash_sock2node.begin();
 		p != m_hash_sock2node.end(); p++)
 	{
-		if (!isSocketInExclusive(p.key()))
+        if (!isSocketInExclusive(p.key()) && !LBLClusterProxy::isItemExlusive(m_hash_Name2node.key(p.value())))
 			p.value()->sendHelloPackage();
 	}
 	m_hash_mutex.unlock();

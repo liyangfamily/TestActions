@@ -4,10 +4,11 @@
 #include <QWidget>
 #include <LAPIControl>
 #include "mcmonitor.h"
+
 namespace Ui {
 class MCReceiveCard;
 }
-
+class MCGammaTable;
 class MCReceiveCard : public QWidget
 {
 	Q_OBJECT
@@ -17,6 +18,7 @@ class MCReceiveCard : public QWidget
 		ECol_ModuleIndex,
 		ECol_HardWareVer,
 		ECol_SoftWareVer,
+        ECol_MCUVer,
 		ECol_ProtocolType,
 		ECol_PackLoseRate,
 		ECol_BitErrorRate,
@@ -28,7 +30,8 @@ public:
 
 private:
     Ui::MCReceiveCard *ui;
-	MCMonitor m_monitor;
+    MCMonitor* m_monitor = nullptr;
+    MCGammaTable* m_gamma = nullptr;
 
 protected:
 	bool event(QEvent* e) override;
@@ -46,14 +49,10 @@ public slots:
 	void slot_EnterNavigatPage();
 private slots:
     void on_btnParamImport_clicked();
-
-    void on_btnModuleExport_clicked();
-    void on_btnModuleSend_clicked();
-	void on_btnDriveICExport_clicked();
-	void on_btnDriveICSend_clicked();
-	void on_btnDecodingICExport_clicked();
-	void on_btnDecodingICSend_clicked();
+    void on_btnParamExport_clicked();
     void on_btnParamSave_clicked();
+
+    void on_btnGamma_clicked();
 
     void on_btnRCUpgradeAll_clicked();
     void on_btnRCInfoRefresh_clicked();

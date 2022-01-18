@@ -11,7 +11,6 @@ LBL_NetEngine_UDPTransThread::LBL_NetEngine_UDPTransThread(LBL_NetEngine* pThrea
 
 LBL_NetEngine_UDPTransThread::~LBL_NetEngine_UDPTransThread()
 {
-	qDebug() << __FUNCTION__;
 }
 
 void LBL_NetEngine_UDPTransThread::closeSocket(QObject * objSocket)
@@ -65,7 +64,7 @@ void LBL_NetEngine_UDPTransThread::slot_EstablishUDPConnection(LBL_NetEngine_Tra
 		}
 		else
 		{
-			qDebug() << tr("UDP Socket Bound Faild. IP:") << addr << tr(" Port:") << port;
+            //qDebug() << tr("UDP Socket Bound Faild. IP:") << addr << tr(" Port:") << port;
 			push_to_rabbish_can(socket_client);
 			return;
 		}
@@ -83,6 +82,7 @@ void LBL_NetEngine_UDPTransThread::slot_SendData(QObject * objSocket, LBLEngineP
 		return;
 	}
 	m_mutex_protect.unlock();
+    LBL_NetEngine_TransThread::slot_SendData(objSocket,package);
 	QUdpSocket * pSocket = qobject_cast<QUdpSocket*>(objSocket);
 	if (pSocket)
 	{
@@ -96,8 +96,8 @@ void LBL_NetEngine_UDPTransThread::slot_SendData(QObject * objSocket, LBLEngineP
 		{
 			qint64 bytesWritten = pSocket->writeDatagram(package.data().constData(),
 				qMin(package.data().size(), m_nPayLoad), QHostAddress(package.hostAddress()), package.hostPort());
-			qDebug() << tr("UDP Socket Send. IP:") << package.hostAddress() << tr(" Port:")
-				<< package.hostPort() << tr(" Length:") << bytesWritten;
+            //qDebug() << tr("UDP Socket Send. IP:") << package.hostAddress() << tr(" Port:")
+                //<< package.hostPort() << tr(" Length:") << bytesWritten;
 			if (bytesWritten < package.data().size())
 			{
 				list_sock_data.push_back(package);
@@ -138,7 +138,7 @@ void LBL_NetEngine_UDPTransThread::slot_New_Data_Recieved()
 		if (udpPack.data().size() != 0)
 		{
 			QString hostName = udpPack.hostName();
-			//qDebug() << "slot_New_Data_Recieved form " << hostName;
+            //qDebug() << "slot_New_Data_Recieved form " << hostName;
 			emit sig_Data_Received(pSocket, udpPack);
 		}
 	}

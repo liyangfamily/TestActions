@@ -22,8 +22,7 @@ namespace LBL
 		{
 		public:
 			~LBLAndroidFactory()
-			{
-				qDebug("~LBLAndroidFactory()\n");
+            {
 			}
 
 			static AbstractAndroid_t* creatAndroidDevice(SDetectItemInfo* info, QObject * parent = 0) //FIXME：函数名有问题

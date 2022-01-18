@@ -24,8 +24,7 @@ namespace LBL
 		public:
 			LBLMS9570AbstractPrivate() {}
 			~LBLMS9570AbstractPrivate()
-			{
-				qDebug() << __FUNCTION__;
+            {
 			}
 			LBLMS9570Abstract *q_ptr;
 

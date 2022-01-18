@@ -14,12 +14,16 @@
 
 
 SmartSetting::SmartSetting(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::SmartSetting)
 {
     ui->setupUi(this);
 
-
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    setWindowFlags(windowFlag);
 
 
     initCombobox();
@@ -29,7 +33,9 @@ SmartSetting::SmartSetting(QWidget *parent) :
 
 }
 
-
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
 
 
 SmartSetting::~SmartSetting()
@@ -52,12 +58,15 @@ void SmartSetting::LoadPara()
     ui->LightWspinBox->setValue((unsigned char)ModulePara[0x02] + (unsigned char)ModulePara[0x03] * 256);
     ui->LightHspinBox->setValue((unsigned char)ModulePara[0x04] + (unsigned char)ModulePara[0x05] * 256);
 
+    ui->DataWspinBox->setValue((unsigned char)ModulePara[0x74] + (unsigned char)ModulePara[0x75] * 256);
+    ui->DataHspinBox->setValue((unsigned char)ModulePara[0x76] + (unsigned char)ModulePara[0x77] * 256);
+
     ShowCombobox();
 
-    ui->ScanspinBox->setValue(ModulePara[0x25]);
-    ui->OneDataspinBox->setValue(ModulePara[0x1E]);
+    ui->ScanspinBox->setValue((uchar)ModulePara[0x25]);
+    ui->OneDataspinBox->setValue((uchar)ModulePara[0x1E]);
 
-    switch (ModulePara[0x71]) {
+    switch ((uchar)ModulePara[0x71]) {
     case 0:
         ui->CLKcomboBox->setCurrentIndex(2);
         break;
@@ -68,18 +77,18 @@ void SmartSetting::LoadPara()
         ui->CLKcomboBox->setCurrentIndex(0);
         break;
     default:
-        ui->CLKcomboBox->setCurrentIndex(2);
+        ui->CLKcomboBox->setCurrentIndex(-1);
         break;
     }
 
 
-    ui->ScancomboBox->setCurrentIndex((ModulePara[0x23] >> 2) & 0x01);
+    ui->ScancomboBox->setCurrentIndex(((uchar)ModulePara[0x23] >> 2) & 0x01);
 
 }
 void SmartSetting::initCombobox()
 {
     QStringList ic;
-    ic.append(QString::fromLocal8Bit("常规芯片"));
+    ic.append(tr("常规芯片"));
 
     //普通芯片需配寄存器
     ic.append("ICN-2038S");
@@ -121,12 +130,15 @@ void SmartSetting::initCombobox()
     ic.append("CFD-555A");
     ic.append("CFD-455A");
     ic.append("DP-3246");
+    ic.append("ICND2163");
+    ic.append("XM11202G");
+    ic.append("XM10480G");
 
 
     ui->ICcomboBox->addItems(ic);
 
-    ui->MOScomboBox->addItem(QString::fromLocal8Bit("直通译码"));
-    ui->MOScomboBox->addItem(QString::fromLocal8Bit("138译码"));
+    ui->MOScomboBox->addItem(tr("直通译码"));
+    ui->MOScomboBox->addItem(tr("138译码"));
     ui->MOScomboBox->addItem("RT5957");
     ui->MOScomboBox->addItem("SM5366");
     ui->MOScomboBox->addItem("ICND2018/2019");
@@ -138,16 +150,21 @@ void SmartSetting::initCombobox()
     ui->CLKcomboBox->addItem("125 MHz");
     ui->CLKcomboBox->addItem("150 MHz");
 
-    ui->ScancomboBox->addItem(QString::fromLocal8Bit("行扫"));
-    ui->ScancomboBox->addItem(QString::fromLocal8Bit("列扫"));
+    ui->ScancomboBox->addItem(tr("行扫"));
+    ui->ScancomboBox->addItem(tr("列扫"));
 
     ui->HubcomboBox->addItem("hub320");
     ui->HubcomboBox->addItem("hub75");
+
+    ui->ICTurnsspinBox->setValue((uchar)ModulePara[0x21]);
+
+    ui->SplicingModecomboBox->addItem("H31/M31");
+    ui->SplicingModecomboBox->addItem("M30/M27Plus");
 }
 
 void SmartSetting::ShowCombobox()
 {
-    unsigned char index = (unsigned char)ModulePara[0x13] + (unsigned char)ModulePara[0x14] * 256;
+    unsigned char index = (unsigned char)ModulePara[0x13]/* + (unsigned char)ModulePara[0x14] * 256*/;
     switch (index)
     {
     case CONVENTSIONALCHIP:
@@ -263,14 +280,24 @@ void SmartSetting::ShowCombobox()
         break;
     case DP_3246:
         ui->ICcomboBox->setCurrentIndex(37);
+        break;
+    case ICND_2138:
+        ui->ICcomboBox->setCurrentIndex(38);
+        break;
+    case XM11202G:
+        ui->ICcomboBox->setCurrentIndex(39);
+        break;
+    case XM10480G:
+        ui->ICcomboBox->setCurrentIndex(40);
+        break;
     default:
         break;
 
     }
 
 
-    ui->MOScomboBox->setCurrentIndex(ModulePara[0x12]);
-
+    ui->MOScomboBox->setCurrentIndex((uchar)ModulePara[0x12]);
+    ui->SplicingModecomboBox->setCurrentIndex((uchar)ModulePara[0x15]);
 
 }
 
@@ -307,14 +334,15 @@ void SmartSetting::on_ImportpushButton_clicked()
     QByteArray file = UniversalInterface::Readbin(fileName);
 
     //send file
-    LAPI::EResult ret2 = LAPI::UpgradeFile(m_upgradeType,file);
+    LAPI::EResult ret2 = LAPI::writeLinearTableFile(0xFF,0xFF,file);
+
     if (ret2 == LAPI::EResult::ER_INTECTRL_Success)
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("导入文件"),QString::fromLocal8Bit("文件导入成功"));
+        UniversalInterface::MessageBoxShow(tr("导入文件"),tr("文件导入成功"));
     }
     else
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("导入文件"),QString::fromLocal8Bit("文件导入失败"));
+        UniversalInterface::MessageBoxShow(tr("导入文件"),tr("文件导入失败"));
     }
 
 }
@@ -333,25 +361,25 @@ void SmartSetting::on_NextpushButton_clicked()
     this->setCursor(Qt::WaitCursor);
 
     //先发送默认连线关系文件
+
     LBLConnection* connection = LAPI::GetConnection();
     if (connection)
     {
-        connection->clear();
+        connection->resetJsonData();
         connection->setModuleHeight(512);
         connection->setModuleWidth(512);
-        connection->setPortCount(1);
         connection->addPort(LBLSPort(0,QRectF(0,0,512,512)));
-        connection->getPort(0).addModule(LBLSModule(0, QRectF(0,0,512,512)));
+        connection->port(0).addModule(LBLSModule(0, QRectF(0,0,512,512)));
         if (LAPI::EResult::ER_Success != LAPI::WriteConnection(connection))
         {
             //ICore::statusBar()->showMessage(tr("连接关系发送失败."), 1000);
-            UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("描点"),QString::fromLocal8Bit("设置失败！"));
+            UniversalInterface::MessageBoxShow(tr("描点"),tr("设置失败！"));
               this->setCursor(Qt::ArrowCursor);
             return;
         }
     }
     else{
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("描点"),QString::fromLocal8Bit("设置失败！"));
+        UniversalInterface::MessageBoxShow(tr("描点"),tr("位置设置失败！"));
           this->setCursor(Qt::ArrowCursor);
         return;
     }
@@ -385,27 +413,21 @@ void SmartSetting::on_NextpushButton_clicked()
         //自解码芯片
     case 6:
         value1 = SUM_2030;
-         WriteScan(1, 4, 7);
         break;
     case 7:
         value1 = SUM_2030T;
-         WriteScan(1, 4, 7);
         break;
     case 8:
         value1 = SUM_2032;
-         WriteScan(1, 4, 7);
         break;
     case 9:
         value1 = SUM_2131;
-          WriteScan(1, 5, 6);
         break;
     case 10:
         value1 = SUM_2033;
-          WriteScan(1, 5, 6);
         break;
     case 11:
         value1 = MBI_5252;
-         WriteScan(1, 4, 8);
         break;
     case 12:
         value1 = MBI_5041B;
@@ -433,29 +455,21 @@ void SmartSetting::on_NextpushButton_clicked()
         break;
     case 20:
         value1 = MBI_5153;
-           WriteScan(1, 5, 8);
         break;
     case 21:
         value1 = MBI_5155;
-         WriteScan(1, 5, 8);
         break;
     case 22:
         value1 = SUM_2035;
-         WriteScan(1, 5, 6);
         break;
     case 23:
         value1 = SM_16259;
-         WriteScan(1, 5, 8);
         break;
     case 24:
         value1 = MBI_5353;
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x01;         //串行芯片设置
-        WriteScan5353();
         break;
     case 25:
         value1 = SUM_6086;
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x01;         //串行芯片设置
-        WriteScan(1, 5, 6);
         break;
     case 26:
         value1 = LS_9935;
@@ -465,14 +479,12 @@ void SmartSetting::on_NextpushButton_clicked()
         break;
     case 28:
         value1 = CFD_335A;
-         WriteScan(1, 5, 6);
         break;
     case 29:
         value1 = SUM_2035NEW;
         break;
     case 30:
         value1 = ICN_2153;
-        WriteScan(1, 5, 8);
         break;
     case 31:
         value1 = FM_6363;
@@ -485,24 +497,29 @@ void SmartSetting::on_NextpushButton_clicked()
         break;
     case 34:
         value1 = CFD_435A;
-         WriteScan(1, 5, 6);
         break;
     case 35:
         value1 = CFD_555A;
-         WriteScan(1, 6, 6);
         break;
     case 36:
         value1 = CFD_455A;
-         WriteScan(1, 6, 6);
         break;
     case 37:
         value1 = DP_3246;
+        break;
+    case 38:
+        value1 = ICND_2138;
+        break;
+    case 39:
+        value1 = XM11202G;
+        break;
+    case 40:
+        value1 = XM10480G;
         break;
     default:
         break;
 
     }
-
 
     int i = 0;
     //驱动芯片
@@ -521,11 +538,18 @@ void SmartSetting::on_NextpushButton_clicked()
     ModulePara[0x04] = ui->LightHspinBox->value() & 0xFF;
     ModulePara[0x05] = (ui->LightHspinBox->value() >> 8) & 0xFF;
 
+    //数据宽高
+    ModulePara[0x74] = ui->DataWspinBox->value() & 0xFF;
+    ModulePara[0x75] = (ui->DataWspinBox->value() >> 8) & 0xFF;
+    ModulePara[0x76] = ui->DataHspinBox->value() & 0xFF;
+    ModulePara[0x77] = (ui->DataHspinBox->value() >> 8) & 0xFF;
+
     //行管
     ModulePara[0x12] = ui->MOScomboBox->currentIndex();
 
     //扫描 sn
     ModulePara[0x25] = ui->ScanspinBox->value();
+
     uchar sn = ui->ScanspinBox->value();
 
     //IC级联数/一组数据芯片数 cn
@@ -557,21 +581,21 @@ void SmartSetting::on_NextpushButton_clicked()
     //行扫列扫
     if (ui->ScancomboBox->currentIndex() == 0)
     {
-        ModulePara[0x23] = ModulePara[0x23] & 0xFB;
+        ModulePara[0x23] = (uchar)ModulePara[0x23] & 0xFB;
     }
     else
     {
-        ModulePara[0x23] = ModulePara[0x23] | 0x04;
+        ModulePara[0x23] = (uchar)ModulePara[0x23] | 0x04;
     }
 
     //hub320/hub75
     if (ui->HubcomboBox->currentIndex() == 0)
     {
-        ModulePara[0x5C] = ModulePara[0x5C] & 0xBF;
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] & 0xBF;
     }
     else
     {
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x40;
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] | 0x40;
     }
 
     //自解码芯片
@@ -586,12 +610,12 @@ void SmartSetting::on_NextpushButton_clicked()
         ModulePara[0x18] = floor(fs * 1000000 / (cn * sn * channelCount * bitCount * FrameRate * 2)) - 1;
     }
     //DCLK/TXD高电系数
-    ModulePara[0x19] = ModulePara[0x18] / 2;
+    ModulePara[0x19] = (uchar)ModulePara[0x18] / 2;
     //DCLK/TXD相位系数
-    ModulePara[0x1A] = ModulePara[0x18] / 2;
+    ModulePara[0x1A] = (uchar)ModulePara[0x18] / 2;
 
 
-    //西安协议
+
     //GCLK分频系数
     ModulePara[0x1B] = 0x0C;
     //GCLK高电系数
@@ -605,7 +629,11 @@ void SmartSetting::on_NextpushButton_clicked()
     ModulePara[0x20] = cn;
 
 
-
+    //广州协议
+    //IC打折数
+    ModulePara[0x21] = ui->ICTurnsspinBox->value();
+    //拼接模式
+    ModulePara[0x15] = ui->SplicingModecomboBox->currentIndex();
 
 
     //DataPara
@@ -615,7 +643,7 @@ void SmartSetting::on_NextpushButton_clicked()
 
     for (i=0;i<MOSdata.length();i++)
     {
-        DataPara[i] = MOSdata[i];
+        DataPara[i] = (uchar)MOSdata[i];
     }
     //扫描参数
     for (i=0;i<64;i++)
@@ -643,7 +671,6 @@ void SmartSetting::on_NextpushButton_clicked()
     }
 
 
-
     //读取默认列芯片参数
     QString ICfilename = UniversalInterface::GetICFilename(value1);
     QByteArray icPara = UniversalInterface::ReadcsvContent("DriverIC",ICfilename);
@@ -653,7 +680,7 @@ void SmartSetting::on_NextpushButton_clicked()
         ICPara[i] = icPara[i];
     }
 
-    switch (index1)
+     switch (index1)
     {
     //常规芯片
     case 0:
@@ -718,11 +745,11 @@ void SmartSetting::on_NextpushButton_clicked()
         WriteScan(1, 5, 8);
         break;
     case 24:
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x01;         //串行芯片设置
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] | 0x01;         //串行芯片设置
         WriteScan5353();
         break;
     case 25:
-        ModulePara[0x5C] = ModulePara[0x5C] | 0x01;         //串行芯片设置
+        ModulePara[0x5C] = (uchar)ModulePara[0x5C] | 0x01;         //串行芯片设置
         WriteScan(1, 5, 6);
         break;
     case 26:
@@ -754,10 +781,19 @@ void SmartSetting::on_NextpushButton_clicked()
         break;
     case 37:
         break;
+    case 38:
+        break;
+    case 39:
+        break;
+    case 40:
+        break;
     default:
         break;
 
     }
+
+
+
 
     if (UniversalInterface::SendALLPara())
     {
@@ -767,20 +803,20 @@ void SmartSetting::on_NextpushButton_clicked()
         UniversalInterface::Writebin(LBLUIHelper::appParamDataLocation() + "//DefaultLinearTable.bin",LinearTable);
 
         //发送描点表
-        LAPI::EResult ret1 = LAPI::UpgradeFile(m_upgradeType,LinearTable);
+        LAPI::EResult ret1 = LAPI::writeLinearTableFile(0xFF,0xFF,LinearTable);
         if (ret1 == LAPI::EResult::ER_INTECTRL_Success)
         {
-            SmartSecondSettingXian *smartsecondxian = new SmartSecondSettingXian();
+            SmartSecondSettingXian *smartsecondxian = new SmartSecondSettingXian(this);
             smartsecondxian->show();
         }
         else
         {
-            UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("描点"),QString::fromLocal8Bit("设置失败！"));
+            UniversalInterface::MessageBoxShow(tr("描点"),tr("设置失败！"));
         }
     }
     else
     {
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("描点"),QString::fromLocal8Bit("设置失败！"));
+        UniversalInterface::MessageBoxShow(tr("描点"),tr("设置失败！"));
     }
 
     this->setCursor(Qt::ArrowCursor);
@@ -805,7 +841,7 @@ void SmartSetting::WriteScan(int Regnum, int ByteCount, int StartByte)
 
     for (i = 0; i < Regold.length(); i++)
     {
-        Regold[i] = ICPara[0x100 + i + (Regnum - 1) * 6];
+        Regold[i] = (uchar)ICPara[0x100 + i + (Regnum - 1) * 6];
     }
     for (i = 0; i < 3; i++)
     {
@@ -822,7 +858,7 @@ void SmartSetting::WriteScan(int Regnum, int ByteCount, int StartByte)
     }
     for (i = 0; i < Regnew.length(); i++)
     {
-        ICPara[0x100 + i + (Regnum - 1) * 6] = Regnew[i];
+        ICPara[0x100 + i + (Regnum - 1) * 6] = (uchar)Regnew[i];
     }
 }
 //
@@ -832,7 +868,7 @@ void SmartSetting::WriteScan5353()
 {
     int REGold = 0;
 
-    REGold = ICPara[0x100] + ICPara[0x101] * 256;
+    REGold = (uchar)ICPara[0x100] + (uchar)ICPara[0x101] * 256;
 
     REGold = (REGold & ~((int)(qPow(2, 5) - 1) << 5)) | ((int)(ui->ScanspinBox->value() - 1) << 5);
 

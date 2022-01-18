@@ -106,7 +106,7 @@ quint8 LBLPackage::getProtocolNum() const
 		return 0;
 	}
 	const SIntegratedCtrlHeader *pHeader = (const SIntegratedCtrlHeader*)headerData.constData();
-	return pHeader->protocolNum;
+    return pHeader->protocolHeader.protocolNum;
 }
 
 quint8 LBLPackage::getProtocolVersion() const
@@ -117,7 +117,7 @@ quint8 LBLPackage::getProtocolVersion() const
 		return 0;
 	}
 	const SIntegratedCtrlHeader *pHeader = (const SIntegratedCtrlHeader*)headerData.constData();
-	return pHeader->protocolVersion;
+    return pHeader->protocolHeader.protocolVersion;
 }
 
 quint16 LBLPackage::getCmdNum() const
@@ -266,8 +266,8 @@ LBLPackage & LBLPackage::build(quint16 serialNum)
 	m_data.clear();
 
 	SIntegratedCtrlHeader sendHeader;
-	sendHeader.protocolNum = CmdProtocolNum();
-	sendHeader.protocolVersion = CmdProtocolVersion();
+    sendHeader.protocolHeader.protocolNum = CmdProtocolNum();
+    sendHeader.protocolHeader.protocolVersion = CmdProtocolVersion();
 	sendHeader.targetDeviceType = CmdTargetDevice();
 	sendHeader.sourceDeviceType = CmdSourceDevice();
 	sendHeader.cmd = CmdNum();

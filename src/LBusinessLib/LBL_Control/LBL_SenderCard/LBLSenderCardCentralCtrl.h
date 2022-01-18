@@ -124,6 +124,17 @@ namespace LBL
 			virtual QByteArray readProtocolType(bool sync, int msec)override;
 			virtual quint8  getProtocolType()override;
 
+            virtual quint16 writeNT68400Resolution(quint8 value, bool sync, int msec)override;
+            virtual QByteArray readNT68400Resolution(bool sync, int msec)override;
+            virtual quint8  getNT68400Resolution()override;
+
+            virtual quint16 write10BitSource(quint8 value, bool sync, int msec)override;
+            virtual QByteArray read10BitSource(bool sync, int msec)override;
+            virtual quint8  get10BitSource()override;
+
+            virtual quint16 writeLowDelay(quint8 value, bool sync, int msec)override;
+            virtual QByteArray readLowDelay(bool sync, int msec)override;
+            virtual quint8  getLowDelay()override;
 		protected:
             bool init() override;
 			virtual void registerCallBack();

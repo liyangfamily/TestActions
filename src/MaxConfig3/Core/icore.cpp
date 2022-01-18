@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "Core/app_version.h"
 #include <QApplication>
+#include <QDesktopWidget>
 
 #ifdef Q_CC_MSVC
 #pragma execution_character_set("utf-8")
@@ -75,6 +76,31 @@ namespace Core
             window->raise();
             window->activateWindow();
         }
+    }
+
+    void ICore::showRaise(QWidget *widget)
+    {
+        if (!widget)
+            return;
+        widget->setWindowState(widget->windowState() & ~Qt::WindowMinimized);
+        widget->raise();
+        widget->activateWindow();
+        widget->show();
+    }
+
+    void ICore::showCenter(QWidget *widget)
+    {
+        if (!widget)
+            return;
+        QWidget* parent=qobject_cast<QWidget*>(widget->parent());
+        if(!parent){
+            parent = m_mainwindow;
+        }
+        QRect screenGeometry = QApplication::desktop()->screenGeometry(parent);
+        int x = screenGeometry.left() + (screenGeometry.width()-widget->width()) / 2;
+        int y = screenGeometry.top() + (screenGeometry.height()-widget->height()) / 2;
+        widget->move(x, y);
+        showRaise(widget);
     }
 
 

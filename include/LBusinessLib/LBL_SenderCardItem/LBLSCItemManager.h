@@ -85,8 +85,7 @@ namespace LBL
 			{
 			public:
 				~CGarbo()
-				{
-					qDebug("~CGarbo()\n");
+                {
 					if (LBLSCItemManager::m_instance)
 					{
 						delete LBLSCItemManager::m_instance;

@@ -23,9 +23,9 @@ public:
 	static bool exclusiveSyncSend(const LBLEnginePackage& sendPack, LBLEnginePackage& recPack, int mesc = LBL_Defalut_SyncTimeout, bool force = false);
 	static bool asyncSend(const LBLEnginePackage& sendPack);
 
+    static bool isItemExlusive(QString hostName);
 protected:
-	static QUuid setItemExlusive(QString hostName, bool enable);
-	static bool isItemExlusive(QString hostName);
+    static QUuid setItemExlusive(QString hostName, bool enable);
 private:
 	static QMutex m_mutex_protect;
 	static QMutex m_exclusive_protect;

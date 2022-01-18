@@ -24,8 +24,7 @@ namespace LBL
 		LBLSenderCardAbstract::~LBLSenderCardAbstract()
 		{
 			Q_D(LBLSenderCardAbstract);
-			d->m_packageMgr.unregisterAll();
-			qDebug() << __FUNCTION__;
+            d->m_packageMgr.unregisterAll();
 		}
 
 		bool LBLSenderCardAbstract::setDetectInfoStruct(SDetectItemInfo *detectInfo)
@@ -494,8 +493,68 @@ namespace LBL
 
 		quint8 LBLSenderCardAbstract::getProtocolType()
 		{
-			return quint8();
-		}
+            return quint8();
+        }
+
+        quint16 LBLSenderCardAbstract::writeNT68400Resolution(quint8 value, bool sync, int msec)
+        {
+            Q_UNUSED(value);
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return LAPI::EResult::ER_NotSupportThisCommand;
+        }
+
+        QByteArray LBLSenderCardAbstract::readNT68400Resolution(bool sync, int msec)
+        {
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return QByteArray();
+        }
+
+        quint8 LBLSenderCardAbstract::getNT68400Resolution()
+        {
+            return quint8();
+        }
+
+        quint16 LBLSenderCardAbstract::write10BitSource(quint8 value, bool sync, int msec)
+        {
+            Q_UNUSED(value);
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return LAPI::EResult::ER_NotSupportThisCommand;
+        }
+
+        QByteArray LBLSenderCardAbstract::read10BitSource(bool sync, int msec)
+        {
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return QByteArray();
+        }
+
+        quint8 LBLSenderCardAbstract::get10BitSource()
+        {
+            return quint8();
+        }
+
+        quint16 LBLSenderCardAbstract::writeLowDelay(quint8 value, bool sync, int msec)
+        {
+            Q_UNUSED(value);
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return LAPI::EResult::ER_NotSupportThisCommand;
+        }
+
+        QByteArray LBLSenderCardAbstract::readLowDelay(bool sync, int msec)
+        {
+            Q_UNUSED(sync);
+            Q_UNUSED(msec);
+            return QByteArray();
+        }
+
+        quint8 LBLSenderCardAbstract::getLowDelay()
+        {
+            return quint8();
+        }
 
 	}
 }

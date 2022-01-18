@@ -11,71 +11,81 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>智能设置2</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <widget class="QRadioButton" name="radioButtonXA">
+       <property name="text">
+        <string>西安协议</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButtonGZ">
+       <property name="text">
+        <string>广州协议</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="QPushButton" name="EmptypushButton">
+         <property name="text">
+          <string>空</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="EmptypushButton">
-           <property name="text">
-            <string>     空     </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="RevokepushButton">
-           <property name="text">
-            <string>    撤销    </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ClearpushButton">
-           <property name="text">
-            <string>    清除    </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="FinishpushButton">
-           <property name="text">
-            <string>    完成    </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ExportpushButton">
-           <property name="text">
-            <string>    导出    </string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="RevokepushButton">
+         <property name="text">
+          <string>撤销</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ClearpushButton">
+         <property name="text">
+          <string>清除</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="FinishpushButton">
+         <property name="text">
+          <string>完成</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ExportpushButton">
+         <property name="text">
+          <string>导出</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget"/>
-     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget"/>
    </item>
   </layout>
  </widget>

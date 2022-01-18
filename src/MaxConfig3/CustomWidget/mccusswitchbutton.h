@@ -32,7 +32,7 @@ namespace Style {
 	struct Switch {
 		Switch() :
 			height{ 36 },
-            font{ QFont("Microsoft YaHei", 10) },
+            font{ QFont("Microsoft YaHei", 12) },
             indicatorMargin{ QMargins(6, 6, 6, 6) },
 			thumbOnBrush{ blue200 },
 			thumbOnOpacity{ 1 },

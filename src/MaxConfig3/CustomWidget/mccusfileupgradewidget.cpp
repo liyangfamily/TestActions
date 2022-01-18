@@ -9,6 +9,10 @@
 #include <QFileDialog>
 #include "app.h"
 
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
+
 namespace Internal
 {
 	namespace CustomWidget
@@ -265,7 +269,7 @@ namespace Internal
 				QString fileName = QFileDialog::getOpenFileName(this,
 					tr("Select File"),
 					App::lastOpenPath,
-					tr("Upgrade File(*.bin)"));
+                    Utils::FileFilter::UPGRADE_FILTER);
 				App::lastOpenPath = fileName;
 				App::writeConfig();
 

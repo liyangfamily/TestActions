@@ -11,7 +11,6 @@ LBL_TaskEngine::LBL_TaskEngine(QObject *parent/* = 0*/) :
 
 LBL_TaskEngine::~LBL_TaskEngine()
 {
-	qDebug() << __FUNCTION__;
 }
 
 int LBL_TaskEngine::creatThreads(int nThreads)

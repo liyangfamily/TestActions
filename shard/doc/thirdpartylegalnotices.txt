@@ -1,0 +1,14 @@
+Third Party Legal Notices
+
+This product use Third Party code for certain functions may include licensed under
+terms that require MaxConfig to display the following notices:
+
+************************************************************************************
+Qt
+
+  The Qt Project is licensed under the GNU General Public License v.3 ("GPL") and the
+  GNU Lesser General Public License v. 2.1 ("LGPL"). In addition to GPL and LGPL, the
+  Qt libraries are available also under commercial license terms from Digia. The Qt
+  documentation is licensed under the GNU Free Documentation License version 1.3.
+
+MaxConfig use Qt as LGPL.

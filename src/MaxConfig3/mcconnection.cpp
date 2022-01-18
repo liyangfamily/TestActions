@@ -4,10 +4,13 @@
 #include <LAPIControl>
 #include <QVBoxLayout>
 #include <QButtonGroup>
+#include <QFileDialog>
 
 #include "ConnectionControl/moduleItem.h"
 #include "ConnectionControl/connectionView.h"
 #include "ConnectionControl/connectionScene.h"
+#include "app.h"
+#include "Utils/utilsfilefilter.h"
 
 #include "Core/icore.h"
 #include <QStatusBar>
@@ -27,7 +30,8 @@ MCConnection::MCConnection(QWidget *parent)
 	initViewAndScene();
 
 	m_portBtnGroup = new QButtonGroup(this);
-	for (int i = 0; i < 20; ++i) {
+    int portCount = LAPI::MaxPortCount();
+    for (int i = 0; i < portCount; ++i) {
 		QPushButton *btn = this->findChild<QPushButton*>(QString("btnPort%1").arg(i + 1));
 		m_portBtnGroup->addButton(btn, i);
 		btn->setCheckable(true);
@@ -40,14 +44,16 @@ MCConnection::MCConnection(QWidget *parent)
     connect(ui->spinBoxWidth, QOverload<int>::of(&QSpinBox::valueChanged),m_scene,&ConnectionDiagramScene::setModuleWidth);
     connect(ui->spinBoxHeight, QOverload<int>::of(&QSpinBox::valueChanged),m_scene,&ConnectionDiagramScene::setModuleHeight);
 
+
+
 	ui->spinBoxRow->setMinimum(0);
 	//ui->spinBoxRow->setValue(5);
 	ui->spinBoxCol->setMinimum(0);
 	//ui->spinBoxCol->setValue(5);
-	ui->spinBoxWidth->setMinimum(1);
+    ui->spinBoxWidth->setMinimum(128);
 	ui->spinBoxWidth->setMaximum(0xFFFF);
 	//ui->spinBoxWidth->setValue(480);
-	ui->spinBoxHeight->setMinimum(1);
+    ui->spinBoxHeight->setMinimum(128);
 	ui->spinBoxHeight->setMaximum(0xFFFF);
 	//ui->spinBoxHeight->setValue(270);
 
@@ -93,6 +99,22 @@ void MCConnection::resizeEvent(QResizeEvent *event)
 void MCConnection::slot_ConnectItem()
 {
 	on_btnConnectionRead_clicked();
+    int portCount = LAPI::MaxPortCount();
+    for (int i = 0; i < m_portBtnGroup->buttons().count(); ++i) {
+        QPushButton *btn = qobject_cast<QPushButton*>(m_portBtnGroup->button(i));
+        if(btn){
+            if(i<portCount){
+                btn->setVisible(true);
+            }
+            else{
+                if(btn->isChecked()){
+                    m_portBtnGroup->button(0)->setChecked(true);
+                    slot_OperatPortClicked();
+                }
+                btn->setVisible(false);
+            }
+        }
+    }
 }
 
 void MCConnection::slot_EnterNavigatPage()
@@ -105,6 +127,53 @@ void MCConnection::slot_EnterNavigatPage()
 void MCConnection::on_btnItemClear_clicked()
 {
     m_scene->clearModuleConnection();
+}
+
+void MCConnection::on_btnImport_clicked()
+{
+    QString selectFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Select File"),
+        App::lastOpenPath,
+        QString("%1").arg(Utils::FileFilter::CONNECTION_FILTER),
+        &selectFilter);
+    if (fileName.isEmpty()) {
+        return;
+    }
+    App::lastOpenPath = fileName;
+    App::writeConfig();
+
+    LBLConnection connection;
+    connection.resetJsonData();
+    connection.setJsonPath(fileName);
+    if(connection.readJson()){
+        connection.calculateBaseInfo();
+        connection.checkPortLoadArea(connection.portList());
+        m_scene->drawConnection(&connection);
+        ICore::statusBar()->showMessage(tr("Connection relationship import successfully."), 1000);
+    }
+}
+
+void MCConnection::on_btnExport_clicked()
+{
+    QString selectFilter;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), \
+        App::lastOpenPath,
+        QString("%1").arg(Utils::FileFilter::CONNECTION_FILTER),
+        &selectFilter);
+    if (fileName.isEmpty()) {
+        return;
+    }
+    App::lastOpenPath = fileName;
+    App::writeConfig();
+
+    LBLConnection connection;
+    if(m_scene->creatConnection(&connection)){
+        connection.setJsonPath(fileName);
+        if(connection.saveJson()){
+            ICore::statusBar()->showMessage(tr("Connection relationship export successfully."), 1000);
+        }
+    }
 }
 
 void MCConnection::on_btnConnectionRead_clicked()
@@ -125,14 +194,14 @@ void MCConnection::on_btnConnectionSend_clicked()
 {
     LBLConnection* connection = LAPI::GetConnection();
     if (connection) {
-        m_scene->creatConnection(connection);
-        if (LAPI::EResult::ER_Success == LAPI::WriteConnection(connection)) {
-            ICore::statusBar()->showMessage(tr("Connection relationship send successfully."), 1000);
-        }
-        else {
-            ICore::statusBar()->showMessage(tr("Connection relationship send failed."), 1000);
+        if(m_scene->creatConnection(connection)){
+            if (LAPI::EResult::ER_Success == LAPI::WriteConnection(connection)) {
+                ICore::statusBar()->showMessage(tr("Connection relationship send successfully."), 1000);
+                return;
+            }
         }
     }
+    ICore::statusBar()->showMessage(tr("Connection relationship send failed."), 1000);
 }
 
 void MCConnection::slot_OperatPortClicked()

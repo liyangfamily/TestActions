@@ -1,9 +1,17 @@
-# Type a script or drag a script file from your workspace to insert its path.
+#!/bin/bash
+#判断参数个数
+if [ $# != 2 ]; then
+echo "Usage: $0 TARGET_BUILD_DIR PRODUCT_NAME"
+echo "Usage: $0 ../bin MaxConfig"
+exit
+fi
+echo "start $0"
 
-#Copy Files ... replace to cp -r xxx.dylib
-#UNIX_TARGET=$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME
-TARGET_BUILD_DIR="/Users/it00007409/GitHubSrc/build-MaxConfig-Desktop_Qt_5_12_10_clang_64bit-Release/bin"
-PRODUCT_NAME="MaxConfig"
+TARGET_BUILD_DIR=$1
+echo "TARGET_BUILD_DIR:$1"
+PRODUCT_NAME=$2
+echo "PRODUCT_NAME:$2"
+
 UNIX_TARGET=$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME
 LIB_TARGET=$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks
 #改变dylib的引用地址，防止library/framewokr not found
@@ -83,5 +91,4 @@ install_name_tool -change "libLBL_FileTransfer.1.dylib" "@rpath/libLBL_FileTrans
 
 macdeployqt $TARGET_BUILD_DIR/MaxConfig.app
 echo "finish install_name_tool target $UNIX_TARGET"
-
-
+echo "finish $0"

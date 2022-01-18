@@ -13,7 +13,6 @@ LBL_TaskEngine_WorkingThread::LBL_TaskEngine_WorkingThread(LBL_TaskEngine * task
 
 LBL_TaskEngine_WorkingThread::~LBL_TaskEngine_WorkingThread()
 {
-	qDebug() << __FUNCTION__;
 }
 
 void LBL_TaskEngine_WorkingThread::slot_SetStopMark(LBL_TaskEngine_WorkingThread* taskThread)

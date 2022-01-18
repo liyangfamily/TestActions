@@ -2,8 +2,14 @@
 
 QString App::ConfigFile = "config.ini";
 
+//UI Param
 QString App::lastOpenPath = "";
 QString App::lastLanguage = "";
+//UI Control
+qulonglong App::maxPortLoadPoint = 65 * 10000;
+bool App::showRegister = true;
+bool App::enableLog = true;
+bool App::enableCommunicatLog = false;
 
 void App::readConfig()
 {
@@ -18,6 +24,20 @@ void App::readConfig()
     App::lastLanguage = set.value("LastLanguage").toString();
     set.endGroup();
 
+    set.beginGroup("UIControl");
+    if(set.contains("MaxPortLoadPoint")){
+        App::maxPortLoadPoint = set.value("MaxPortLoadPoint").toULongLong();
+    }
+    if(set.contains("ShowRegister")){
+        App::showRegister = set.value("ShowRegister").toBool();
+    }
+    if(set.contains("EnableLog")){
+        App::enableLog = set.value("EnableLog").toBool();
+    }
+    if(set.contains("EnableCommunicatLog")){
+        App::enableCommunicatLog = set.value("EnableCommunicatLog").toBool();
+    }
+    set.endGroup();
 }
 
 void App::writeConfig()
@@ -27,6 +47,13 @@ void App::writeConfig()
     set.beginGroup("UIParam");
     set.setValue("LastOpenPath", App::lastOpenPath);
     set.setValue("LastLanguage", App::lastLanguage);
+    set.endGroup();
+
+    set.beginGroup("UIControl");
+    set.setValue("MaxPortLoadPoint", App::maxPortLoadPoint);
+    set.setValue("ShowRegister", App::showRegister);
+    set.setValue("EnableLog", App::enableLog);
+    set.setValue("EnableCommunicatLog", App::enableCommunicatLog);
     set.endGroup();
 }
 

@@ -25,8 +25,7 @@ namespace LBL
 		public:
 			LBLHDMIChipAbstractPrivate() {}
 			~LBLHDMIChipAbstractPrivate()
-			{
-				qDebug("~LBLHDMIChipAbstractPrivate()\n");
+            {
 			}
 			LBLHDMIChipAbstract *q_ptr;
 

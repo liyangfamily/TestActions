@@ -1,7 +1,7 @@
 ﻿#include "mainwindow_new.h"
 #include "ui_mainwindow_new.h"
 #include "CustomWidget/mcelevatedclass.h"
-#include "CustomWidget/mcsclistitemwidget.h"
+#include "CustomWidget/mccussclistitemwidget.h"
 
 MainWindow_New::MainWindow_New(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +15,7 @@ MainWindow_New::MainWindow_New(QWidget *parent) :
 
     for(int i=0;i<10;++i){
         QListWidgetItem* pListWidgetItem = new QListWidgetItem(ui->listSenderCard);
-        MCSCListItemWidget* item=new MCSCListItemWidget(ui->listSenderCard);
+        MCCusSCListItemWidget* item=new MCCusSCListItemWidget(ui->listSenderCard);
         ui->listSenderCard->setItemWidget(pListWidgetItem, item);
     }
     ui->comboBox->setView(new QListView());

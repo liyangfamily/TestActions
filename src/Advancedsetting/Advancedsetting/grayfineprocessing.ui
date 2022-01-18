@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>447</width>
-    <height>315</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,6 +54,12 @@
               </item>
               <item>
                <widget class="QLabel" name="CompensationRlabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>255</string>
                 </property>
@@ -89,6 +95,12 @@
               </item>
               <item>
                <widget class="QLabel" name="CompensationGlabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>255</string>
                 </property>
@@ -124,6 +136,12 @@
               </item>
               <item>
                <widget class="QLabel" name="CompensationBlabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>255</string>
                 </property>
@@ -209,6 +227,12 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="LimitRlabel">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>255</string>
                   </property>
@@ -244,6 +268,12 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="LimitGlabel">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>255</string>
                   </property>
@@ -279,6 +309,12 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="LimitBlabel">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>255</string>
                   </property>
@@ -312,8 +348,20 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
-          <string>    设置    </string>
+          <string>设置</string>
          </property>
         </widget>
        </item>

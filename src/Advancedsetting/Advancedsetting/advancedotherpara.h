@@ -1,13 +1,13 @@
 ﻿#ifndef ADVANCEDOTHERPARA_H
 #define ADVANCEDOTHERPARA_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class AdvancedOtherPara;
 }
 
-class AdvancedOtherPara : public QWidget
+class AdvancedOtherPara : public QDialog
 {
     Q_OBJECT
 

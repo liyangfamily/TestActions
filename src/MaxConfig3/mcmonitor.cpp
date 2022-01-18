@@ -1,9 +1,15 @@
 ﻿#include "mcmonitor.h"
 #include "ui_mcmonitor.h"
 #include <QFile>
-#include <Core/icore.h>
+#include "Core/icore.h"
 #include <LBL_Core/LBLUIHelper>
 #include <QStatusBar>
+#include "CustomWidget/mcprogressdialog.h"
+
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
+
 MCMonitorTemperatureTable::MCMonitorTemperatureTable()
 {
 }
@@ -123,6 +129,7 @@ MCMonitor::MCMonitor(QWidget *parent)
 {
 	ui = new Ui::MCMonitor();
 	ui->setupUi(this);
+    setWindowFlag(Qt::WindowContextHelpButtonHint,false);
 	this->setMouseTracking(true);
 	initRCMonitorInfoTable();
 	m_tTable.loadTxtFile(LBLUIHelper::appParamDataLocation() + "/" + LBLUIHelper::appMonitorTemperatureTableFileName());
@@ -183,8 +190,12 @@ void MCMonitor::processTabelData(QList<LBL::RC::SRCMonitorInfo> rcMonitorInfoLis
 
 void MCMonitor::on_pushButton_clicked()
 {
-	ui->pushButton->setEnabled(false);
+    ui->pushButton->setEnabled(false);
+    MCProgressDialog bar(this);
+    bar.setLabelText(tr("Refreshing..."));
+    bar.show();
 	QList<LBL::RC::SRCMonitorInfo> tempMonitorList = LAPI::ReadRCMonitorInfo(0xFF, true);
 	processTabelData(tempMonitorList);
-	ui->pushButton->setEnabled(true);
+    bar.delayReset();
+    ui->pushButton->setEnabled(true);
 }

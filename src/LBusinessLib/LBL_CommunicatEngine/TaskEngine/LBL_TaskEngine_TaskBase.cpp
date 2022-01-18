@@ -8,7 +8,6 @@ LBL_TaskEngine_TaskBase::LBL_TaskEngine_TaskBase(QObject *parent /*= 0*/) :
 
 LBL_TaskEngine_TaskBase::~LBL_TaskEngine_TaskBase()
 {
-	qDebug() << __FUNCTION__;
 }
 
 int LBL_TaskEngine_TaskBase::push_new_data(const LBLEnginePackage & dataArray)

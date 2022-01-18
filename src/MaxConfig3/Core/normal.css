@@ -5,6 +5,34 @@
 ****************************************************************************************************************************/
 
 
+/*************************************************QMenu************************************************************/
+
+QMenu {
+    background-color: #1f344d;
+    padding: 1px;
+    border-radius: 8px;
+}
+
+QMenu::item {
+    /*font-size: 12pt; Do Not Set Font In CSS.Because font init Before polish CSS.*/
+    color: #AFBCCC;
+    background-color: #1f344d;
+    padding: 5px 20px 5px 5px;
+    margin: 4px 4px;
+}
+
+QMenu::item:selected {
+    background-color: #2e4b6e;
+}
+
+QMenu::separator {
+    height: 2px;
+    background: rgb(235, 235, 236);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
 /*************************************************QScrollArea************************************************************/
 
 QScrollArea .QWidget#scrollAreaWidgetContents {
@@ -26,24 +54,28 @@ QScrollArea {
     color: #AFBCCC;
 }
 
+QSplitter::handle {
+    background-color: #09111C
+}
+
 
 /*************************************************QTableView************************************************************/
 
 QTableView {
-    min-height: 90px;
+    min-height: 150px;
     outline: 0px;
     border: 1px solid #4a5d72;
     background-color: #14202F;
     alternate-background-color: #1F2C3D;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     gridline-color: #4a5d72;
 }
 
 QTableView::item:first {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     gridline-color: #ccddf0;
 }
@@ -55,12 +87,10 @@ QTableView::item:selected {
 }
 
 QHeaderView::section {
-    height: 32px;
     border: 1px solid #3b526d;
-    /* border-left: none; */
     background-color: #09111C;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
 }
@@ -84,14 +114,14 @@ QFrame {
 /*************************************************QToolButton*******************************************************/
 
 .QToolButton {
-    min-width: 16px;
+    min-width: 25px;
     /* max-width: 36px; */
-    min-height: 16px;
+    /*min-height: 16px;*/
     /* max-height: 36px; */
     border-radius: 2px;
     background-color: #1F2C3D;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
 }
 
@@ -119,15 +149,15 @@ QFrame {
 /*************************************************QPushButton*******************************************************/
 
 .QPushButton {
-    min-width: 26px;
+    /* min-width: 26px;*/
     /* max-width: 36px; */
-    min-height: 14px;
+    /*min-height: 14px;*/
     /* max-height: 36px; */
     border-radius: 2px;
     background: #1F2C3D;
     padding: 4px 14px 4px 14px;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
     /* qproperty-enabled: 'false'; */
@@ -154,15 +184,15 @@ QFrame {
 }
 
 BluePushButton {
-    min-width: 36px;
+    /*min-width: 36px;*/
     /* max-width: 36px; */
-    min-height: 14px;
+    /*min-height: 14px;*/
     /* max-height: 36px; */
     border-radius: 2px;
     background: #038DFF;
     padding: 4px 14px 4px 14px;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #FFFFFF;
     text-align: center;
     /* qproperty-enabled: 'false'; */
@@ -193,8 +223,9 @@ BluePushButton:disabled {
 
 .QLabel {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #9bacc2;
+    qproperty-textInteractionFlags: 'TextBrowserInteraction';
 }
 
 
@@ -204,6 +235,7 @@ BluePushButton:disabled {
 /* QSlider Horizontal*/
 
 QSlider:horizontal {
+    min-width: 100px;
     height: 15px;
 }
 
@@ -328,7 +360,7 @@ HasErrorProgressBar::chunk[hasError=true] {
 
 .QRadioButton {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
 }
@@ -345,38 +377,42 @@ HasErrorProgressBar::chunk[hasError=true] {
     color: #ffffff;
 }
 
+.QRadioButton:checked:disabled {
+    color: #58606C;
+}
+
 .QRadioButton::indicator {
     width: 14px;
     height: 14px;
 }
 
 .QRadioButton::indicator::unchecked {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Empty.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Empty.svg);
 }
 
 .QRadioButton::indicator:unchecked:hover {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Empty_Hover.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Empty_Hover.svg);
 }
 
 .QRadioButton::indicator:unchecked:disabled {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Empty_Disable.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Empty_Disable.svg);
 }
 
 .QRadioButton::indicator:checked {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Full_Normal.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Full_Normal.svg);
 }
 
 .QRadioButton::indicator:checked:hover {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Full_Hover.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Full_Hover.svg);
 }
 
 .QRadioButton::indicator:checked:disabled {
-    border-image: url(:/Normal/Resources/Normal/RadioButton_Full_Disable.svg);
+    image: url(:/Normal/Resources/Normal/RadioButton_Full_Disable.svg);
 }
 
 SwitchRadioButton {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
     qproperty-autoExclusive: 'false';
@@ -397,11 +433,11 @@ SwitchRadioButton::indicator {
 }
 
 SwitchRadioButton::indicator::unchecked {
-    border-image: url(:/Normal/Resources/Normal/Switch_Close_Normal.svg);
+    image: url(:/Normal/Resources/Normal/Switch_Close_Normal.svg);
 }
 
 SwitchRadioButton::indicator:unchecked:hover {
-    border-image: url(:/Normal/Resources/Normal/Switch_Close_Click.svg);
+    image: url(:/Normal/Resources/Normal/Switch_Close_Click.svg);
 }
 
 SwitchRadioButton::indicator:unchecked:disabled {
@@ -409,15 +445,15 @@ SwitchRadioButton::indicator:unchecked:disabled {
 }
 
 SwitchRadioButton::indicator:checked {
-    border-image: url(:/Normal/Resources/Normal/Switch_Open_Normal.svg);
+    image: url(:/Normal/Resources/Normal/Switch_Open_Normal.svg);
 }
 
 SwitchRadioButton::indicator:checked:hover {
-    border-image: url(:/Normal/Resources/Normal/Switch_Open_Hover.svg);
+    image: url(:/Normal/Resources/Normal/Switch_Open_Hover.svg);
 }
 
 SwitchRadioButton::indicator:checked:disabled {
-    border-image: url(:/Normal/Resources/Normal/Switch_Close_Disable.svg);
+    image: url(:/Normal/Resources/Normal/Switch_Close_Disable.svg);
 }
 
 
@@ -425,7 +461,7 @@ SwitchRadioButton::indicator:checked:disabled {
 
 QCheckBox {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
 }
@@ -542,7 +578,7 @@ QSpinBox {
     border-radius: 2px;
     background: #09111C;
     font-family: Microsoft YaHei;
-    font-size: 11px;
+    font-size: 13px;
     color: #AFBCCC;
     qproperty-alignment: 'AlignCenter';
 }
@@ -616,21 +652,31 @@ QPlainTextEdit {
     border-radius: 2px;
     background: #09111C;
     font-family: Microsoft YaHei;
-    font-size: 11px;
+    font-size: 13px;
     color: #AFBCCC;
     /* qproperty-alignment: 'AlignCenter'; */
+}
+
+QLineEdit:focus {
+    border: 1px solid #52698a;
+    background: #172942;
+}
+
+QPlainTextEdit,
+QTextEdit {
+    min-height: 200px;
 }
 
 
 /*************************************************QGroupBox*******************************************************/
 
 QGroupBox {
-    min-width: 232px;
+    /*min-width: 232px;*/
     border-radius: 2px;
     background-color: #101B28;
     padding: 35px 8px 8px 8px;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #a2aebd;
 }
 
@@ -645,12 +691,13 @@ QGroupBox::title {
 /*************************************************QComboBox*******************************************************/
 
 QComboBox {
-    min-height: 22px;
+    /* min-height: 22px;*/
     border-radius: 2px;
     padding-left: 4px;
+    padding-right: 4px;
     background-color: #1F2C3D;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
 }
 
@@ -728,7 +775,7 @@ QFrame#frameAppTitle {
 
 QLabel#labelAppIcon {
     font-family: Microsoft YaHei;
-    font-size: 10px;
+    /*font-size: 12px;*/
     color: #FFFFFF;
     text-align: center;
     line-height: 16px;
@@ -739,9 +786,18 @@ QLabel#labelAppIcon {
     border-image: url(:/Normal/Resources/Normal/MaxConfig.ico);
 }
 
+QToolButton#toolBtnAppIcon {
+    font-family: Microsoft YaHei;
+    min-width: 16px;
+    max-width: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    image: url(:/Normal/Resources/Normal/MaxConfig.ico);
+}
+
 QLabel#labelAppName {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #FFFFFF;
     qproperty-alignment: 'AlignCenter';
     line-height: 16px;
@@ -839,7 +895,7 @@ QFrame#frameShow {
 
 QLabel#labelSCList {
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     line-height: 16px;
 }
@@ -849,22 +905,22 @@ QToolButton#toolBtnRefreshSCList {
     max-width: 32px;
     min-height: 22px;
     max-height: 22px;
-    background-image: url(:/Normal/Resources/Normal/Icon_Refresh_Normal.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Refresh_Normal.svg);
     background-position: center;
     background-origin: content;
     background-repeat: none;
 }
 
 QToolButton#toolBtnRefreshSCList:hover {
-    background-image: url(:/Normal/Resources/Normal/Icon_Refresh_Hover.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Refresh_Hover.svg);
 }
 
 QToolButton#toolBtnRefreshSCList:pressed {
-    background-image: url(:/Normal/Resources/Normal/Icon_Refresh_Click.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Refresh_Click.svg);
 }
 
 QToolButton#toolBtnRefreshSCList:disabled {
-    background-image: url(:/Normal/Resources/Normal/Icon_Refresh_Disable.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Refresh_Disable.svg);
 }
 
 QToolButton#toolBtnSCListHide {
@@ -872,22 +928,22 @@ QToolButton#toolBtnSCListHide {
     max-width: 32px;
     min-height: 22px;
     max-height: 22px;
-    background-image: url(:/Normal/Resources/Normal/Icon_Hide_Normal.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Normal.svg);
     background-position: center;
     background-origin: content;
     background-repeat: none;
 }
 
 QToolButton#toolBtnSCListHide:hover {
-    background-image: url(:/Normal/Resources/Normal/Icon_Hide_Hover.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Hover.svg);
 }
 
 QToolButton#toolBtnSCListHide:pressed {
-    background-image: url(:/Normal/Resources/Normal/Icon_Hide_Click.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Click.svg);
 }
 
 QToolButton#toolBtnSCListHide:disabled {
-    background-image: url(:/Normal/Resources/Normal/Icon_Hide_Disable.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Disable.svg);
 }
 
 QToolButton#toolBtnSCListShow {
@@ -895,22 +951,22 @@ QToolButton#toolBtnSCListShow {
     max-width: 32px;
     min-height: 22px;
     max-height: 22px;
-    background-image: url(:/Normal/Resources/Normal/Icon_Spread_Normal.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Normal.svg);
     background-position: center;
     background-origin: content;
     background-repeat: none;
 }
 
 QToolButton#toolBtnSCListShow:hover {
-    background-image: url(:/Normal/Resources/Normal/Icon_Spread_Hover.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Hover.svg);
 }
 
 QToolButton#toolBtnSCListShow:pressed {
-    background-image: url(:/Normal/Resources/Normal/Icon_Spread_Click.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Click.svg);
 }
 
 QToolButton#toolBtnSCListShow:disabled {
-    background-image: url(:/Normal/Resources/Normal/Icon_Spread_Disable.svg);
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Disable.svg);
 }
 
 QListWidget#listSenderCard {
@@ -921,11 +977,57 @@ QListWidget#listSenderCard {
 
 QListWidget#listSenderCard:item {
     min-width: 228px;
-    height: 142px;
+    height: 148px;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #AFBCCC;
     text-align: center;
+}
+
+QToolButton#toolBtnAttributeExpand:!checked {
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 22px;
+    max-height: 22px;
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Normal.svg);
+    background-position: center;
+    background-origin: content;
+    background-repeat: none;
+}
+
+QToolButton#toolBtnAttributeExpand:!checked:hover {
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Hover.svg);
+}
+
+QToolButton#toolBtnAttributeExpand:!checked:pressed {
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Click.svg);
+}
+
+QToolButton#toolBtnAttributeExpand:!checked:disabled {
+    image: url(:/Normal/Resources/Normal/Icon_Hide_Disable.svg);
+}
+
+QToolButton#toolBtnAttributeExpand:checked {
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 22px;
+    max-height: 22px;
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Normal.svg);
+    background-position: center;
+    background-origin: content;
+    background-repeat: none;
+}
+
+QToolButton#toolBtnAttributeExpand:checked:hover {
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Hover.svg);
+}
+
+QToolButton#toolBtnAttributeExpand:checked:pressed {
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Click.svg);
+}
+
+QToolButton#toolBtnAttributeExpand:checked:disabled {
+    image: url(:/Normal/Resources/Normal/Icon_Spread_Disable.svg);
 }
 
 
@@ -934,7 +1036,7 @@ QListWidget#listSenderCard:item {
 QFrame#frameAttribute {
     min-width: 264px;
     background: #14202F;
-    padding-top: 16px;
+    padding-top: 3px;
 }
 
 
@@ -951,9 +1053,9 @@ QFrame#frameNavigatSecond {
 }
 
 NavigateBarFirstBtn {
-    min-width: 50px;
+    /*min-width: 50px;*/
     /*max-width: 88px;*/
-    min-height: 16px;
+    /*min-height: 16px;*/
     max-height: 36px;
     border-radius: 0px;
     border-style: solid;
@@ -962,7 +1064,7 @@ NavigateBarFirstBtn {
     background: #14202F;
     padding: 5px 15.5px 5px 15.5px;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 15px;
     color: #AFBCCC;
     text-align: center;
     qproperty-autoExclusive: 'true';
@@ -996,7 +1098,7 @@ NavigateBarSecondBtn {
     background: #1F2C3D;
     padding: 7px 18.5px 7px 18.5px;
     font-family: Microsoft YaHei;
-    font-size: 10px;
+    font-size: 12px;
     color: #AFBCCC;
     text-align: center;
     qproperty-autoExclusive: 'true';
@@ -1035,7 +1137,7 @@ QStatusBar#statusbar {
     min-height: 30px;
     background: #1F2C3D;
     font-family: Microsoft YaHei;
-    font-size: 12px;
+    font-size: 14px;
     color: #FFFFFF;
 }
 
@@ -1052,12 +1154,12 @@ SCListItemFrame {
 }
 
 SCListItemFrame>QLabel {
-    font-size: 10px;
+    font-size: 12px;
     color: #677A91;
     text-align: left;
     min-width: 50px;
     /* max-width: 16px; */
-    min-height: 14px;
+    min-height: 25px;
     /* max-height: 14px; */
     /* qproperty-alignment: 'AlignCenter'; */
 }
@@ -1114,7 +1216,7 @@ SCListItemFrame>QPushButton#btnConnect:checked:disabled {
 SCListItemFrame>QToolButton#toolBtnDetails {
     background-color: #00000000;
     font-family: Microsoft YaHei;
-    font-size: 10px;
+    font-size: 12px;
     color: #6C7785;
 }
 
@@ -1141,6 +1243,14 @@ QDialog {
     background-color: #14202F;
 }
 
+MCNT68400AdvSetting {
+    background-color: #14202F;
+}
+
 AdvancedSetting {
     background-color: #14202F;
+}
+
+ConnectionFrame {
+    background: #101B28;
 }

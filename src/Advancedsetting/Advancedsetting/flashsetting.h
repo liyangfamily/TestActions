@@ -1,13 +1,13 @@
 ﻿#ifndef FLASHSETTING_H
 #define FLASHSETTING_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class FLASHsetting;
 }
 
-class FLASHsetting : public QWidget
+class FLASHsetting : public QDialog
 {
     Q_OBJECT
 

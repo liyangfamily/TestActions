@@ -4,7 +4,10 @@
 #include <QRadioButton>
 #include <QFrame>
 #include <QProgressBar>
+#include <QMenu>
 #include <QStyle>
+#include <QSlider>
+#include <QSpinBox>
 
 class QSSPropertyBtn : public QPushButton
 {
@@ -116,5 +119,28 @@ public:
     }
 private:
     bool m_hasErroe=false;
+};
+
+class RoundedMenu : public QMenu
+{
+    Q_OBJECT
+public:
+    explicit RoundedMenu(QWidget *parent = nullptr);
+    ~RoundedMenu(){};
+
+};
+
+class BindingSliderAndSpinBox : public QObject
+{
+    Q_OBJECT
+public:
+    explicit BindingSliderAndSpinBox(QSlider* slider,QSpinBox* spinbox,QWidget *parent = nullptr);
+    ~BindingSliderAndSpinBox(){};
+    void setSingleShot(bool b);
+signals:
+    void sig_valueChanged(int value);
+    void sig_singleShotValueChange(int value);
+private:
+    bool m_singleShot = false;
 };
 #endif // MCELEVATEDCLASS_H

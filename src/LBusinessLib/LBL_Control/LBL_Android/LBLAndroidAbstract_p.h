@@ -25,8 +25,7 @@ namespace LBL
 		public:
 			LBLAndroidAbstractPrivate() {}
 			~LBLAndroidAbstractPrivate()
-			{
-				qDebug("~LBLAndroidAbstractPrivate()\n");
+            {
 			}
 			LBLAndroidAbstract *q_ptr;
 

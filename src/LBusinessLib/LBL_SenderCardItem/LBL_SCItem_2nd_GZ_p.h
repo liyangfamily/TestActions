@@ -34,8 +34,7 @@ namespace LBL
 		public:
 			SenderCardItem_2nd_GZPrivate() {}
 			~SenderCardItem_2nd_GZPrivate()
-			{
-				qDebug("~SenderCardItem_2nd_GZPrivate()\n");
+            {
 			}
 
 		public:

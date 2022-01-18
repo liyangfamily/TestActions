@@ -16,9 +16,11 @@ public:
         //通用文件传输
         EC_Common_RequestFile = 0xF001,
         EC_Common_StartSendFile = 0xF003,
+        EC_Common_StartSendFile_New = 0xF011,
         EC_Common_SendFileData = 0xF005,
         EC_Common_RequestUpgrade = 0xF00C,
         EC_Common_QueryUpgradeStatus = 0xF00E,
+        EC_Common_RequestUpgrade_New = 0xF013,
 
         //广州发送卡MCU支持的升级功能
         EC_ForMCU_RequestUpgrad = 0xC601,
@@ -41,7 +43,10 @@ public:
         EFT_ConnectionFile = 0xF024,//连接关系文件
         EFT_GammaFile = 0xF025,		//Gamma文件16K
         EFT_GammaFile_512B = 0xF026,		//Gamma文件512B
+        EFT_GammaFile_16Bit = 0xF027,		//Gamma文件,8Bit-16Bit
+        EFT_GammaFile_24Bit = 0xF028,		//Gamma文件,8Bit-24Bit
         EFT_LinearTableFile = 0xF029,   //描点表2k
+        EFT_GammaFile_10Bit_24Bit = 0xF02A,		//Gamma文件,10Bit-24Bit
         EFT_SelectFile = 0xFFFF,		//选择文件
     };
 
@@ -162,6 +167,59 @@ private:
     quint16 m_fileNameLength = 0;
 };
 
+
+class LBL_COMMUNICATENGINE_EXPORT LBLPackageFileTransfer_CommonStartSendFile_New : public LBLFileTransferPackage
+{
+    LBL_DECLARE_PACKAGECONSTRUCTOR(LBLPackageFileTransfer_CommonStartSendFile_New, LBLFileTransferPackage)
+public:
+    LBLPackageFileTransfer_CommonStartSendFile_New(quint16 fileType, quint32 fileLength, QString fileName, QByteArray fileIdentifyContent,\
+                                                   quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
+    quint16 getOperationResult() const;
+    quint8 getPortIndex() const;
+    quint16 getModuleIndex() const;
+    quint16 getFileType() const;
+    quint16 getMaxLengthOfSinglePackage() const;
+    quint32 getSendFileID() const;
+
+    void  setFileType(quint16 value) {
+        m_fileType = value;
+    }
+    void  setFileLength(quint32 value) {
+        m_fileLength = value;
+    }
+    void  setPortIndex(quint8 value) {
+        m_portIndex = value;
+    }
+    void  setModuleIndex(quint16 value) {
+        m_moduleIndex = value;
+    }
+
+    void setFileName(QString value){
+        m_fileName=value.toUtf8();
+        m_fileNameLength=m_fileName.size();
+    }
+
+    void setFileIdentifyContent(const QByteArray& value){
+        m_fileIdentifyContent=value;
+        m_fileIdentifyContentLength=m_fileIdentifyContent.size();
+    }
+
+protected:
+    quint16 CmdNum() const override {
+        return quint16(ECommand::EC_Common_StartSendFile_New);
+    }
+    QByteArray CmdContent() const override;
+private:
+    quint8 m_portIndex = 0;
+    quint16 m_moduleIndex = 0;
+    quint16 m_fileType = 0;
+    quint32 m_fileLength = 0;
+    quint16 m_fileNameLength = 0;
+    QByteArray m_fileName = 0;
+    quint16 m_fileIdentifyContentLength = 0;
+    QByteArray m_fileIdentifyContent = 0;
+};
+
 class LBL_COMMUNICATENGINE_EXPORT LBLPackageFileTransfer_CommonSendFileData : public LBLFileTransferPackage
 {
     LBL_DECLARE_PACKAGECONSTRUCTOR(LBLPackageFileTransfer_CommonSendFileData, LBLFileTransferPackage)
@@ -212,6 +270,35 @@ private:
     quint16 m_fileType = 0;
 };
 
+class LBL_COMMUNICATENGINE_EXPORT LBLPackageFileTransfer_CommonRequestUpgrade_New : public LBLFileTransferPackage
+{
+    LBL_DECLARE_PACKAGECONSTRUCTOR(LBLPackageFileTransfer_CommonRequestUpgrade_New, LBLFileTransferPackage)
+public:
+    LBLPackageFileTransfer_CommonRequestUpgrade_New(quint16 fileType ,quint8 portIndex = 0xFF, quint16 moduleIndex = 0xFFFF);
+    quint16 getOperationResult() const;
+    quint8 getOperatFailReason() const;
+
+    void  setFileType(quint16 value) {
+        m_fileType = value;
+    }
+
+    void  setPortIndex(quint8 value) {
+        m_portIndex = value;
+    }
+    void  setModuleIndex(quint16 value) {
+        m_moduleIndex = value;
+    }
+
+protected:
+    quint16 CmdNum() const override {
+        return quint16(ECommand::EC_Common_RequestUpgrade_New);
+    }
+    QByteArray CmdContent() const override;
+private:
+    quint16 m_fileType = 0;
+    quint8 m_portIndex = 0;
+    quint16 m_moduleIndex = 0;
+};
 
 class LBL_COMMUNICATENGINE_EXPORT LBLPackageFileTransfer_CommonQueryUpgradeStatus : public LBLFileTransferPackage
 {

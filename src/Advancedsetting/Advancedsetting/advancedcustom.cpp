@@ -3,13 +3,25 @@
 #include "advancedsetting.h"
 
 AdvancedCustom::AdvancedCustom(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::AdvancedCustom)
 {
     ui->setupUi(this);
 
+    Qt::WindowFlags windowFlag  = Qt::Dialog;
+    windowFlag                  |= Qt::WindowMinimizeButtonHint;
+    windowFlag                  |= Qt::WindowMaximizeButtonHint;
+    windowFlag                  |= Qt::WindowCloseButtonHint;
+    //windowFlag                  |= Qt::WindowStaysOnTopHint;
+    setWindowFlags(windowFlag);
+
     InitForm();
 }
+
+#ifdef Q_CC_MSVC
+#pragma execution_character_set("utf-8")
+#endif
+
 
 AdvancedCustom::~AdvancedCustom()
 {
@@ -24,7 +36,7 @@ void AdvancedCustom::InitForm()
     ui->tableWidget->setRowCount(CustomPara.length() / 2);
 
     QStringList header;
-    header<<QStringLiteral("Addr")<<QStringLiteral("Value");
+    header<<tr("Addr")<<tr("Value");
     ui->tableWidget->setHorizontalHeaderLabels(header);
     ui->tableWidget->setShowGrid(true);
     ui->tableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:rgb(240,240,240);color: black;}");//设置表头背景和字体颜色
@@ -38,20 +50,28 @@ void AdvancedCustom::InitForm()
     int i = 0;
     for (i=0;i<ui->tableWidget->rowCount();i++ )
     {
-        int addr = CustomPara[i * 2 + 0] + CustomPara[i * 2 + 1] * 256;
-        ui->tableWidget->setItem(i,0,new QTableWidgetItem("0x" + QString::number(addr,16)));
+        int addr = (uchar)CustomPara[i * 2 + 0] + (uchar)CustomPara[i * 2 + 1] * 256;
+
+        qDebug() << "Addr:" << addr;
+        char chBuf[20];
+        sprintf(chBuf,"%02x",addr);
+        QString key = QString::fromUtf8(chBuf);
+
+        qDebug() << "Key:" <<key;
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem("0x" + key));
+
 
         if (addr < 0x400)
         {
-            ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString::number(ModulePara[addr],16)));
+            ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString("%1").arg((uchar)ModulePara[addr],2,16,QLatin1Char('0')).toUpper()));
         }
         else if ((addr >= 0x400) && (addr < 0x800))
         {
-             ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString::number(DataPara[addr - 0x400],16)));
+             ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString("%1").arg((uchar)DataPara[addr - 0x400],2,16,QLatin1Char('0')).toUpper()));
         }
         else if ((addr >= 0x800) && (addr < 0xC00))
         {
-             ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString::number(ICPara[addr - 0x800],16)));
+             ui->tableWidget->setItem(i,1,new QTableWidgetItem("0x" + QString("%1").arg((uchar)ICPara[addr - 0x800],2,16,QLatin1Char('0')).toUpper()));
         }
     }
 
@@ -139,10 +159,10 @@ void AdvancedCustom::on_pushButton_3_clicked()
     if (result)
     {
         UniversalInterface::Writebin(LBLUIHelper::appParamDataLocation() + "//Custom.bin",CustomPara);
-        UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置成功"));
+        UniversalInterface::MessageBoxShow(tr("Set up"),tr("SetupSuccessfully"));
     }
     else{
-         UniversalInterface::MessageBoxShow(QString::fromLocal8Bit("设置"),QString::fromLocal8Bit("设置失败"));
+         UniversalInterface::MessageBoxShow(tr("Set up"),tr("Setup failed"));
     }
     this->setCursor(Qt::ArrowCursor);
 

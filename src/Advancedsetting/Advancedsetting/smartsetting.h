@@ -1,7 +1,7 @@
 ﻿#ifndef SMARTSETTING_H
 #define SMARTSETTING_H
 
-#include <QWidget>
+#include <QDialog>
 //#include "advancedsetting.h"
 #include <LAPIControl>
 
@@ -12,7 +12,7 @@ namespace Ui {
 class SmartSetting;
 }
 
-class SmartSetting : public QWidget
+class SmartSetting : public QDialog
 {
     Q_OBJECT
 

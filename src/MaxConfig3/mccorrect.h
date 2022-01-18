@@ -28,6 +28,7 @@ private:
 
 private:
     void initViewAndScene();
+    void loadCorrectFilePath(QString path);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -45,6 +46,10 @@ private slots:
     void on_btnSave_clicked();
     void on_radioBtnSixPic_clicked();
     void on_radioBtnEightPic_clicked();
+    void on_radioBtnLowGray_clicked();
+    void on_toolBtnFullScreenData_clicked();
+
+    void on_radioBtn10Pic_clicked();
 
 private:
     TestScreenHelper m_testScrrenHelper;

@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>271</width>
-        <height>629</height>
+        <width>257</width>
+        <height>718</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0">
@@ -191,6 +191,57 @@
           <string>Color</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
+          <item row="3" column="0" colspan="3">
+           <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,1,0">
+            <item>
+             <widget class="QLabel" name="labelWarm">
+              <property name="text">
+               <string>Warm(Rad)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelDefault">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="text">
+               <string>Default(White)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelCool">
+              <property name="text">
+               <string>Cool(Blue)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <widget class="QRadioButton" name="radioBtnNormal">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Normal</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QRadioButton" name="radioButtonHide2">
+            <property name="text">
+             <string>Hide</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QRadioButton" name="radioBtnWarm">
             <property name="sizePolicy">
@@ -217,27 +268,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="radioBtnNormal">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Normal</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QRadioButton" name="radioButtonHide2">
-            <property name="text">
-             <string>Hide</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+          <item row="1" column="0">
            <widget class="QRadioButton" name="radioBtnRGB">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -250,7 +281,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="1" column="1">
            <widget class="QRadioButton" name="radioBtnCCT">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -300,36 +331,116 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="3">
-           <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,1,0">
-            <item>
-             <widget class="QLabel" name="labelWarm">
-              <property name="text">
-               <string>Warm(Rad)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelDefault">
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="text">
-               <string>Default(White)</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelCool">
-              <property name="text">
-               <string>Cool(Blue)</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="4" column="0" colspan="3">
+           <widget class="QFrame" name="frameColorRGB">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item row="2" column="1">
+              <widget class="QSlider" name="hSliderColorB">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSlider" name="hSliderColorR">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="labelColorB">
+               <property name="text">
+                <string>B</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelColorG">
+               <property name="text">
+                <string>G</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelColorR">
+               <property name="text">
+                <string>R</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSlider" name="hSliderColorG">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QSpinBox" name="spinBoxColorR">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QSpinBox" name="spinBoxColorG">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QSpinBox" name="spinBoxColorB">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -421,6 +532,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="btnVideoSetting">
+            <property name="text">
+             <string>Video Setting</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -456,8 +574,6 @@
   <tabstop>radioBtnWarm</tabstop>
   <tabstop>radioBtnNormal</tabstop>
   <tabstop>radioBtnCool</tabstop>
-  <tabstop>radioBtnCCT</tabstop>
-  <tabstop>radioBtnRGB</tabstop>
   <tabstop>hSliderColorTemp</tabstop>
   <tabstop>radioButton</tabstop>
   <tabstop>radioButton_2</tabstop>

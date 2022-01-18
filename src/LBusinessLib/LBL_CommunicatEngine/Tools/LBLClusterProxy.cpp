@@ -42,7 +42,7 @@ bool LBLClusterProxy::syncSend(const LBLEnginePackage& sendPack, LBLEnginePackag
 		return false;
 	}
 	if (!m_mutex_protect.try_lock()) {
-		qDebug() << "LBLClusterProxy::syncSend Lock Failed.";
+        qDebug() << "Lock Failed.";
 		return false;
 	}
 	LBLSyncWaiter syncLocker(sendPack);
